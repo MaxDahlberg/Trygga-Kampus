@@ -19,7 +19,7 @@ The main goal of this application is to:
 - **Reflections**: 
   - A self-reflection feature that guides users to evaluate how addiction or bullying may be affecting their lives.
 - **Get in Touch**: 
-  - A contact form allowing students to easily reach out for help or connect with professional services.
+  - A contact form allowing students to easily reach out for help or connect with university counsellors or Per Olof directly through his company ["Lotusmodellen"](https://lotusmodellen.se/wp/).
 
 ### Additional Features (Future Updates)
 - **Our Stories**: 
