@@ -15,6 +15,10 @@ enum class DrawerItem(
         icon = R.drawable.baseline_person_24,
         title = "Profile"
     ),
+    Articles(
+        icon = R.drawable.baseline_articles_24,
+        title = "Articles"
+    ),
     Settings(
         icon = R.drawable.baseline_settings_24,
         title = "Settings"

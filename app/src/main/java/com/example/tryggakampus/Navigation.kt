@@ -11,6 +11,7 @@ import androidx.navigation.toRoute
 import com.example.tryggakampus.presentation.landingPage.LandingPage
 import com.example.tryggakampus.presentation.profilePage.ProfilePage
 import com.example.tryggakampus.presentation.settingsPage.SettingsPage
+import com.example.tryggakampus.presentation.articlesPage.ArticlesPage
 import kotlinx.serialization.Serializable
 
 // Define a Composition Local for NavController
@@ -22,6 +23,7 @@ sealed interface Routes {
     @Serializable data class LandingPage(val title: String = "Home"): Routes
     @Serializable data class SettingsPage(val title: String = "Settings"): Routes
     @Serializable data class ProfilePage(val title: String = "Profile"): Routes
+    @Serializable data class ArticlesPage(val title: String = "Articles"): Routes
 }
 
 @Composable
@@ -49,6 +51,11 @@ fun Navigation(
                 composable<Routes.ProfilePage> {
                     val args = it.toRoute<Routes.ProfilePage>()
                     ProfilePage(args.title)
+                }
+
+                composable<Routes.ArticlesPage> {
+                    val args = it.toRoute<Routes.ArticlesPage>()
+                    ArticlesPage(args.title)
                 }
 
                 composable<Routes.SettingsPage> {
