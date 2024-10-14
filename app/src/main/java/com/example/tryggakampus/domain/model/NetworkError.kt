@@ -6,7 +6,7 @@ data class NetworkError(
 )
 
 enum class NetworkErr(val message: String){
-    NetworkError("No Internet Connection Available"),
+    NoConnection("No Internet Connection Available"),
     UnknownResponse("An Unknown Response Has Occurred"),
     UnknownError("An Unknown Error Has Occurred")
 }
