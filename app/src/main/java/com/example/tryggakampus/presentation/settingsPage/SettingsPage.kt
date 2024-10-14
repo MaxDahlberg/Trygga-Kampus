@@ -1,14 +1,12 @@
 package com.example.tryggakampus.presentation.settingsPage
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import com.example.tryggakampus.presentation.component.PageContainer
 
 @Composable
 fun SettingsPage(title: String) {
-    Column (modifier = Modifier.fillMaxWidth()) {
+    PageContainer {
         Text(title)
     }
 }

@@ -1,14 +1,36 @@
 package com.example.tryggakampus.presentation.landingPage
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import com.example.tryggakampus.presentation.component.PageContainer
 
 @Composable
 fun LandingPage(title: String) {
-    Column (modifier = Modifier.fillMaxWidth()) {
-        Text(title)
+    PageContainer {
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+        Button(onClick = {}) { Text("Click Here") }
+        Button(onClick = {}) { Text("Click Here") }
+        Text("this is a very long sentence on my page, how will this appear on mobile screen")
+
     }
 }
