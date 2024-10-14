@@ -10,7 +10,7 @@ import com.example.tryggakampus.domain.model.NetworkError
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 fun Throwable.toNetworkError(): NetworkError {
     val error = when(this){
-        is NetworkException -> NetworkErr.NetworkError
+        is NetworkException -> NetworkErr.NoConnection
         is HttpException -> NetworkErr.UnknownResponse
         else -> NetworkErr.UnknownError
     }
