@@ -2,12 +2,14 @@ package com.example.tryggakampus.presentation
 
 import AppBar
 import android.annotation.SuppressLint
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,10 +24,11 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -82,6 +85,16 @@ fun MainScreen(
             .statusBarsPadding()
             .navigationBarsPadding()
             .fillMaxSize()
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(
+                    onHorizontalDrag = {change, dragAmount ->
+                        change.consume()
+
+                        if (dragAmount >= 40)  setDrawerState(CustomDrawerState.Opened)
+                        if (dragAmount <= -40) setDrawerState(CustomDrawerState.Closed)
+                    }
+                )
+            }
     ) {
         CustomDrawer(
             selectedDrawerItem = selectedNavItem,
