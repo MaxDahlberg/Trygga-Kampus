@@ -73,15 +73,16 @@ fun Navigation(
                 composable<Routes.SettingsPage> {
                     val args = it.toRoute<Routes.SettingsPage>()
                     SurveyPage(args.title)
-
-                composable<Routes.StoriesPage> {
-                    StoriesPage()
-
                 }
 
                 composable<Routes.SurveyPage> {
                     val args = it.toRoute<Routes.SurveyPage>()
                     SurveyPage(args.title)
+                }
+
+                composable<Routes.StoriesPage> {
+                    StoriesPage()
+
                 }
 
                 composable<Routes.SettingsPage> {
@@ -92,4 +93,4 @@ fun Navigation(
             }
         }
     }
-}}
+}
