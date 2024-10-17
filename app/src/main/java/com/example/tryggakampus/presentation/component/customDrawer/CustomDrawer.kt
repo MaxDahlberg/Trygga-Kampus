@@ -45,7 +45,7 @@ fun CustomDrawer(
             DrawerActionBar(onCloseClick = onCloseClick)
             AppLogo()
             PrimaryDrawerItems(
-                drawerItems = drawerItems.take(5),
+                drawerItems = drawerItems.take(drawerItems.size - 1),
                 selectedItem = selectedDrawerItem,
                 onClickItem = onNavigationItemClick
             )
