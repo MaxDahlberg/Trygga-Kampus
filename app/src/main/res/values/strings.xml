@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Trygga Kampus</string>
+    <string name="title">
+        Welcome to Trygga Kampus!
+    </string>
+    <string name="about_us">
+        About Us!
+    </string>
+    <string name="info1">
+        Here will be info regarding the app like what we aim to do and how it functions
+    </string>
+    <string name="button">
+        If you need serious help, please Get in touch with either your University counselor or one of our professionals using this button.
+    </string>
+    <string name="buttonInfo">
+        This button will prompt you with a form that you fill in with what you\'re dealing with and send it to someone to provide the help needed.
+    </string>
 </resources>

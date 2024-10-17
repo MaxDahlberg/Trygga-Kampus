@@ -12,6 +12,7 @@ import com.example.tryggakampus.presentation.landingPage.LandingPage
 import com.example.tryggakampus.presentation.profilePage.ProfilePage
 import com.example.tryggakampus.presentation.settingsPage.SettingsPage
 import com.example.tryggakampus.presentation.articlesPage.ArticlesPage
+import com.example.tryggakampus.presentation.formPage.FormPage
 import com.example.tryggakampus.presentation.storiesPage.StoriesPage
 import com.example.tryggakampus.presentation.surveyPage.SurveyPage
 
@@ -27,6 +28,7 @@ sealed interface Routes {
     @Serializable data class SettingsPage(val title: String = "Settings"): Routes
     @Serializable data class ProfilePage(val title: String = "Profile"): Routes
     @Serializable data class ArticlesPage(val title: String = "Articles"): Routes
+    @Serializable data class FormPage(val title: String = "Form"): Routes
     @Serializable data class StoriesPage(val title: String = "Stories"): Routes
     @Serializable data class SurveyPage(val title: String = "Survey"): Routes
 }
@@ -63,8 +65,18 @@ fun Navigation(
                     ArticlesPage(args.title)
                 }
 
+                composable<Routes.FormPage> {
+                    val args = it.toRoute<Routes.FormPage>()
+                    FormPage(args.title)
+                }
+
+                composable<Routes.SettingsPage> {
+                    val args = it.toRoute<Routes.SettingsPage>()
+                    SurveyPage(args.title)
+
                 composable<Routes.StoriesPage> {
                     StoriesPage()
+
                 }
 
                 composable<Routes.SurveyPage> {
@@ -76,6 +88,7 @@ fun Navigation(
                     val args = it.toRoute<Routes.SettingsPage>()
                     SettingsPage(args.title)
                 }
+
             }
         }
     }
