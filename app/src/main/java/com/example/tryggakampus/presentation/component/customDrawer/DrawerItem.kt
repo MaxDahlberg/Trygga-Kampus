@@ -24,6 +24,7 @@ enum class DrawerItem(
     Forum(
         icon = R.drawable.baseline_forum_24,
         title = "Forum"
+    ),
 
     Stories(
         icon = R.drawable.baseline_articles_24,
