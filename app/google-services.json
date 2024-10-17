@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "561990030259",
+    "project_id": "trygge-kampus",
+    "storage_bucket": "trygge-kampus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561990030259:android:3ef778f4cc9e2e0566f1c6",
+        "android_client_info": {
+          "package_name": "com.example.tryggakampus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7a90vVWrYowEWqbLOfvjtdpvXlSyfkMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

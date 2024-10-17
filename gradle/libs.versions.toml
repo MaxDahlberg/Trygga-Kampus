@@ -10,6 +10,9 @@ activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 kotlinxJsonSerialization = "1.7.2"
 navVersion = "2.8.2"
+navigationRuntimeKtx = "2.8.2"
+firebaseFirestoreKtx = "25.1.0"
+firebaseStorageKtx = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +35,9 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navVersion" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navVersion" }
 navigation-dynamic = { group = "androidx.navigation", name = "navigation-dynamic-features-fragment", version.ref = "navVersion" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
