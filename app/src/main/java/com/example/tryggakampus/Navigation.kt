@@ -24,6 +24,7 @@ sealed interface Routes {
     @Serializable data class SettingsPage(val title: String = "Settings"): Routes
     @Serializable data class ProfilePage(val title: String = "Profile"): Routes
     @Serializable data class ArticlesPage(val title: String = "Articles"): Routes
+    @Serializable data class Forum(val title: String = "Forum"): Routes
 }
 
 @Composable
@@ -55,6 +56,10 @@ fun Navigation(
 
                 composable<Routes.ArticlesPage> {
                     val args = it.toRoute<Routes.ArticlesPage>()
+                    ArticlesPage(args.title)
+                }
+                composable<Routes.Forum> {
+                    val args = it.toRoute<Routes.Forum>()
                     ArticlesPage(args.title)
                 }
 
