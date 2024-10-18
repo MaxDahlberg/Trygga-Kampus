@@ -3,6 +3,7 @@ package com.example.tryggakampus
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,25 +13,47 @@ import com.example.tryggakampus.presentation.landingPage.LandingPage
 import com.example.tryggakampus.presentation.profilePage.ProfilePage
 import com.example.tryggakampus.presentation.settingsPage.SettingsPage
 import com.example.tryggakampus.presentation.articlesPage.ArticlesPage
+import com.example.tryggakampus.presentation.settingsPage.SettingsPageViewModel
 import com.example.tryggakampus.presentation.formPage.FormPage
 import com.example.tryggakampus.presentation.storiesPage.StoriesPage
 import com.example.tryggakampus.presentation.surveyPage.SurveyPage
 
 import kotlinx.serialization.Serializable
 
-// Define a Composition Local for NavController
 val LocalNavController = compositionLocalOf<NavHostController> {
     error("NavController not provided")
 }
 
 sealed interface Routes {
-    @Serializable data class LandingPage(val title: String = "Home"): Routes
-    @Serializable data class SettingsPage(val title: String = "Settings"): Routes
-    @Serializable data class ProfilePage(val title: String = "Profile"): Routes
-    @Serializable data class ArticlesPage(val title: String = "Articles"): Routes
-    @Serializable data class FormPage(val title: String = "Form"): Routes
-    @Serializable data class StoriesPage(val title: String = "Stories"): Routes
-    @Serializable data class SurveyPage(val title: String = "Survey"): Routes
+    fun routeName(): String
+
+    @Serializable data class LandingPage(val title: String = "Home"): Routes {
+        override fun routeName() = "LandingPage"
+    }
+
+    @Serializable data class SettingsPage(val title: String = "Settings"): Routes {
+        override fun routeName() = "SettingsPage"
+    }
+
+    @Serializable data class ProfilePage(val title: String = "Profile"): Routes {
+        override fun routeName() = "ProfilePage"
+    }
+
+    @Serializable data class ArticlesPage(val title: String = "Articles"): Routes {
+        override fun routeName() = "ArticlesPage"
+    }
+
+    @Serializable  data class FormPage(val title: String = "Form"): Routes {
+        override fun routeName() = "FormPage"
+    }
+
+    @Serializable data class StoriesPage(val title: String = "Stories"): Routes {
+        override fun routeName() = "StoriesPage"
+    }
+
+    @Serializable data class SurveyPage(val title: String = "Survey"): Routes {
+        override fun routeName() = "SurveyPage"
+    }
 }
 
 @Composable
@@ -81,7 +104,8 @@ fun Navigation(
 
                 composable<Routes.SettingsPage> {
                     val args = it.toRoute<Routes.SettingsPage>()
-                    SettingsPage(args.title)
+                    val vm = viewModel<SettingsPageViewModel>()
+                    SettingsPage(vm, args.title)
                 }
 
             }

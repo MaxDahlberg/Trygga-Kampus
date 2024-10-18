@@ -32,6 +32,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.example.tryggakampus.presentation.component.BottomAppBar
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawer
 
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawerState
@@ -138,6 +139,9 @@ fun MainContent(
             AppBar(onNavigationIconClick = {
                 onDrawerClick(drawerState.opposite())
             })
+        },
+        bottomBar = {
+            BottomAppBar()
         }
     ) { padding ->
         Column(
