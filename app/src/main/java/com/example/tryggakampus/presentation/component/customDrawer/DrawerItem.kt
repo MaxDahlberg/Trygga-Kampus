@@ -21,9 +21,9 @@ enum class DrawerItem(
         icon = R.drawable.baseline_articles_24,
         title = "Articles"
     ),
-    Forum(
+    Form(
         icon = R.drawable.baseline_forum_24,
-        title = "Forum"
+        title = "Form"
     ),
     Survey(
         icon = R.drawable.baseline_diamond_24,
@@ -32,7 +32,6 @@ enum class DrawerItem(
     Stories(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"
-    ),
     Settings(
         icon = R.drawable.baseline_settings_24,
         title = "Settings"

@@ -10,14 +10,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.data.SurveyQuestions
+import com.example.tryggakampus.data.repository.SurveyViewModelFactory
 
 @Composable
 fun SurveyPage(title: String) {
     val questions = SurveyQuestions.questions
     var answers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
-    //still need val in order to store the questions
 
+    val viewModel: SurveyViewModel = viewModel(factory = SurveyViewModelFactory())
+    val isFormComplete by remember {
+        derivedStateOf { answers.all { it.isNotBlank() } }
+    }
     // title area
     LazyColumn(
         modifier = Modifier
@@ -80,7 +85,14 @@ fun SurveyPage(title: String) {
                     .height(16.dp))
             Button(
                 onClick = {
-                    //button logic here for storing info in dB once its setup
+                    if (isFormComplete) {
+                        // Submit answers
+                        viewModel.submitSurvey(questions, answers)
+
+                        // Clear input fields
+                        answers.clear()
+                        answers.addAll(Array(questions.size) { "" }) // Reset the answers list
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -89,7 +101,8 @@ fun SurveyPage(title: String) {
                     containerColor = Color(0xFF68C3CD),
                     contentColor = Color.White
                 ),
-                elevation = ButtonDefaults.buttonElevation(4.dp)
+                elevation = ButtonDefaults.buttonElevation(4.dp),
+                enabled = isFormComplete
             ) {
                 Text(
                     "Submit Answers",

@@ -70,7 +70,6 @@ fun Navigation(
                     FormPage(args.title)
                 }
 
-
                 composable<Routes.SurveyPage> {
                     val args = it.toRoute<Routes.SurveyPage>()
                     SurveyPage(args.title)
