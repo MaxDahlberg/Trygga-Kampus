@@ -113,7 +113,7 @@ fun PrimaryDrawerItems(
                         DrawerItem.Home -> Routes.LandingPage()
                         DrawerItem.Profile -> Routes.ProfilePage()
                         DrawerItem.Articles -> Routes.ArticlesPage()
-                        DrawerItem.Forum -> Routes.FormPage()
+                        DrawerItem.Form -> Routes.FormPage()
                         DrawerItem.Survey -> Routes.SurveyPage()
                         DrawerItem.Stories -> Routes.StoriesPage()
                         else -> {}
