@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Category Titles -->
+    <string name="preventive_advice_category_title">Preventive Advice</string>
+    <string name="support_advice_category_title">Helping a Friend</string>
+    <string name="family_advice_category_title">Talking to My Family About My Addictions</string>
+
+    <!-- Preventive Advice Cards -->
+    <string name="preventive_advice_title_1">
+        Set Clear Boundaries
+    </string>
+    <string name="preventive_advice_text_1">
+        Establishing clear personal boundaries helps you stay focused and prioritize activities
+        that support your well-being. Avoid environments and situations where
+        addictive substances are present.
+    </string>
+
+    <string name="preventive_advice_title_2">
+        Build a Support Network
+    </string>
+    <string name="preventive_advice_text_2">
+        Surround yourself with friends and mentors who encourage
+        healthy habits. A strong support network is essential for staying motivated
+        and avoiding temptation.
+    </string>
+
+    <string name="preventive_advice_title_3">
+        Develop Healthy Coping Mechanisms
+    </string>
+    <string name="preventive_advice_text_3">
+        Stress and emotions can lead to unhealthy behaviors. Practice mindfulness,
+        physical activity, or creative outlets as healthy ways to cope with stress
+        and emotional challenges.
+    </string>
+
+    <string name="preventive_advice_title_4">
+        Educate Yourself
+    </string>
+    <string name="preventive_advice_text_4">
+        Understanding the risks associated with addictive behaviors helps you make
+        informed choices. Stay aware of how substances or habits can affect your
+        body and mind.
+    </string>
+
+    <string name="preventive_advice_title_5">
+        Set Personal Goals
+    </string>
+    <string name="preventive_advice_text_5">
+        Establishing short- and long-term goals gives you a sense of purpose and direction.
+        Focus on activities and achievements that bring value and growth to your life.
+    </string>
+
+    <!-- Support Advice Cards -->
+    <string name="support_advice_title_1">
+        Be a Good Listener
+    </string>
+    <string name="support_advice_text_1">
+        Sometimes, just being there and actively listening can make a big difference.
+        Let your friend express their feelings without judgment or interruptions.
+    </string>
+
+    <string name="support_advice_title_2">
+        Avoid Enabling Behaviors
+    </string>
+    <string name="support_advice_text_2">
+        It’s important to support your friend without enabling their addictive behavior.
+        Set clear boundaries and encourage them to seek professional help when needed.
+    </string>
+
+    <string name="support_advice_title_3">
+        Offer Positive Encouragement
+    </string>
+    <string name="support_advice_text_3">
+        Motivate your friend by focusing on their strengths and achievements.
+        Remind them of their value and support their positive steps toward recovery.
+    </string>
+
+    <string name="support_advice_title_4">
+        Educate Yourself About Addiction
+    </string>
+    <string name="support_advice_text_4">
+        Understanding addiction can help you better support your friend.
+        Learn about the signs, triggers, and resources available to provide informed
+        advice and assistance.
+    </string>
+
+    <string name="support_advice_title_5">
+        Encourage Professional Help
+    </string>
+    <string name="support_advice_text_5">
+        If your friend is struggling, gently encourage them to seek help from a
+        counselor, therapist, or support group. Offer to accompany them to make the
+        process less intimidating.
+    </string>
+
+    <!-- Family Advice Cards -->
+    <string name="family_advice_title_1">
+        Prepare What You Want to Say
+    </string>
+    <string name="family_advice_text_1">
+        Take time to reflect on what you want to communicate to your family. Be honest
+        about your struggles and explain how their support can make a difference.
+    </string>
+
+    <string name="family_advice_title_2">
+        Choose the Right Moment
+    </string>
+    <string name="family_advice_text_2">
+        Find a calm, private setting where you can speak openly without distractions.
+        Make sure it’s a time when your family members are available and receptive to talking.
+    </string>
+
+    <string name="family_advice_title_3">
+        Express Your Feelings
+    </string>
+    <string name="family_advice_text_3">
+        Share how your addiction has affected you emotionally and physically.
+        Let your family know how you feel and why you’re seeking their understanding and help.
+    </string>
+
+    <string name="family_advice_title_4">
+        Be Open to Their Reactions
+    </string>
+    <string name="family_advice_text_4">
+        Your family may have a range of emotions, from concern to confusion. Be patient
+        and open to their reactions, and let them ask questions so they can better understand your situation.
+    </string>
+
+    <string name="family_advice_title_5">
+        Ask for Their Support
+    </string>
+    <string name="family_advice_text_5">
+        Let your family know how they can support you, whether it’s attending counseling sessions with you,
+        helping you find resources, or simply being there to listen. Show appreciation for their willingness to help.
+    </string>
+
+</resources>

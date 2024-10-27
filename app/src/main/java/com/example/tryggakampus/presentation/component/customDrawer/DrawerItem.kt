@@ -1,7 +1,5 @@
 package com.example.tryggakampus.presentation.component.customDrawer
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import com.example.tryggakampus.R
 
 
@@ -32,6 +30,10 @@ enum class DrawerItem(
     Stories(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"
+    ),
+    Advice(
+        icon = R.drawable.baseline_advice_24,
+        title = "Advice"
     ),
     Settings(
         icon = R.drawable.baseline_settings_24,
