@@ -81,8 +81,7 @@ fun MainScreen(
 
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.surface)
-            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f))
+            .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
             .navigationBarsPadding()
             .fillMaxSize()
@@ -147,6 +146,7 @@ fun MainContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
         ) {
             page()

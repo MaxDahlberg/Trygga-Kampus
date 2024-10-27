@@ -1,8 +1,10 @@
 package com.example.tryggakampus.presentation.surveyPage
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -23,12 +25,8 @@ fun SurveyPage(title: String) {
     val isFormComplete by remember {
         derivedStateOf { answers.all { it.isNotBlank() } }
     }
-    // title area
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp))
-    {
+
+    LazyColumn(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         item {
             Text(
                 text = title,
@@ -36,9 +34,9 @@ fun SurveyPage(title: String) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 16.dp),
+                color = MaterialTheme.colorScheme.onBackground
             )
-            Spacer(modifier = Modifier.height(16.dp))
         }
 
         // questions and inputfield area
@@ -48,16 +46,12 @@ fun SurveyPage(title: String) {
                     .fillMaxWidth()
                     .padding(8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-
+                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     Text(
                         text = "Question ${index + 1}: $question",
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium
                     )
@@ -65,13 +59,21 @@ fun SurveyPage(title: String) {
                     OutlinedTextField(
                         value = answers[index],
                         onValueChange = { answers[index] = it },
-                        label = { Text("Your Answer") },
-                        modifier = Modifier
-                            .fillMaxWidth(),
+                        label = { Text("Your Answer", color = MaterialTheme.colorScheme.onBackground) },
+                        modifier = Modifier.fillMaxWidth(),
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color.Transparent,
-                            //color of trygga klassen - light blue
-                            focusedIndicatorColor = Color(0xFF68C3CD),
+                            focusedContainerColor = MaterialTheme.colorScheme.background,
+                            focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
+
+                            unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                            unfocusedIndicatorColor = Color.Transparent,
+
+                            cursorColor = MaterialTheme.colorScheme.secondary,
+
+                            selectionColors = TextSelectionColors(
+                                handleColor = MaterialTheme.colorScheme.secondary,
+                                backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
+                            )
                         )
                     )
                 }
@@ -80,34 +82,29 @@ fun SurveyPage(title: String) {
 
         // button area after the questions
         item {
-            Spacer(
-                modifier = Modifier
-                    .height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+
             Button(
                 onClick = {
                     if (isFormComplete) {
-                        // Submit answers
                         viewModel.submitSurvey(questions, answers)
 
-                        // Clear input fields
                         answers.clear()
-                        answers.addAll(Array(questions.size) { "" }) // Reset the answers list
+                        // Reset the answers list
+                        answers.addAll(Array(questions.size) { "" })
                     }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF68C3CD),
-                    contentColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.onSecondary
                 ),
                 elevation = ButtonDefaults.buttonElevation(4.dp),
                 enabled = isFormComplete
             ) {
-                Text(
-                    "Submit Answers",
-                    fontSize = 18.sp
-                    )
+                Text("Submit Answers", fontSize = 18.sp)
             }
         }
     }

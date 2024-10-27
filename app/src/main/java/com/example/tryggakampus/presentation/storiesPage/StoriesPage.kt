@@ -12,12 +12,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -32,8 +34,8 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
     }
 
     LazyColumn(
-        modifier = Modifier.padding(10.dp),
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         items(viewModel.stories) { item: StoryModel ->
             StoryBox(item, onClick = {})
@@ -47,10 +49,10 @@ fun StoryBox(story: StoryModel, onClick: () -> Unit) {
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
             .clickable { onClick() }
-            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp))
+            .background(MaterialTheme.colorScheme.primary)
             .padding(10.dp)
             .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         StoryBoxHeader(story.title?: "", story.author?: "Anonymous")
         StoryBoxBody(story.content)
@@ -61,9 +63,9 @@ fun StoryBox(story: StoryModel, onClick: () -> Unit) {
 fun StoryBoxHeader(title: String, author: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        Text(title, fontSize = 20.sp)
+        Text(title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
         Text(author, fontSize = 12.sp)
     }
 }

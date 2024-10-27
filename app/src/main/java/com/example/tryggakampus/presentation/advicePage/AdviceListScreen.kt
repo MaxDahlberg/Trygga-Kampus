@@ -1,5 +1,6 @@
 package com.example.tryggakampus.presentation.advicePage
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,31 +22,32 @@ fun AdviceListScreen(title: String, adviceItems: List<AdviceItem>, onBack: () ->
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        OutlinedButton(
-            onClick = onBack,
-            modifier = Modifier.align(Alignment.Start),
-            colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = MaterialTheme.colorScheme.primary
-            ),
-            shape = MaterialTheme.shapes.small,
-            border = ButtonDefaults.outlinedButtonBorder
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Back")
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            OutlinedButton(
+                onClick = onBack,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.secondary
+                ),
+                shape = MaterialTheme.shapes.small,
+                border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary)
+            ) {
+                Text("Back")
+            }
         }
 
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        LazyColumn {
+        LazyColumn (verticalArrangement = Arrangement.spacedBy(15.dp)) {
             items(adviceItems) { adviceItem ->
                 AdviceCard(adviceItem = adviceItem)
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }

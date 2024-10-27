@@ -39,7 +39,7 @@ fun AdvicePage() {
 
 @Composable
 fun CategorySelectionScreen(onCategorySelected: (AdviceCategory) -> Unit) {
-    Column {
+    Column (modifier = Modifier.padding(15.dp)) {
         Text(
             text = "Select Category",
             style = MaterialTheme.typography.titleLarge,

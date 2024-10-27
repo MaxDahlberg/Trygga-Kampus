@@ -1,13 +1,16 @@
 package com.example.tryggakampus.presentation.advicePage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -41,49 +45,46 @@ fun AdviceCard(adviceItem: AdviceItem) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             //display picture on the top
             Image(
                 modifier = Modifier
-                        .fillMaxWidth()
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
                     .height(150.dp),
                 painter = painterResource(id = adviceItem.image),
                 contentDescription = "banner picture",
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier =  Modifier.height(4.dp))
-
             //title of the advice
             Text(
-                modifier = Modifier
-                    .padding(vertical = 4.dp),
+                modifier = Modifier.padding(vertical = 4.dp),
                 text = adviceItem.title,
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimary
             )
-
-            Spacer(modifier =  Modifier.height(4.dp))
 
             //text of advice content
             Text(
                 text = adviceItem.text,
                 style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = maxLines,
             )
 
-            Spacer(modifier =  Modifier.height(4.dp))
-
-            //expand button and expand logic
             if(!expand && adviceItem.text.length > 100){
                 Box(
-                   modifier = Modifier
-                       .fillMaxWidth(),
+                   modifier = Modifier.fillMaxWidth(),
                    contentAlignment = Alignment.Center,
                 ) {
                     TextButton(onClick = {expand = true}) {
-                        Text("Read More")
+                        Text("Read More", color = MaterialTheme.colorScheme.secondary)
                     }
                 }
             }
@@ -95,34 +96,33 @@ fun AdviceCard(adviceItem: AdviceItem) {
 // card for the category picking
 @Composable
 fun CategoryCard(title: String, image: Int, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(8.dp),
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(10.dp)
+        .clickable { onClick() },
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
-        ){
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
             Image(
                 painter = painterResource(id = image),
                 contentDescription = "Support Picture",
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(10.dp))
                     .height(150.dp),
                 contentScale = ContentScale.Crop
-            )
-
-            Spacer(
-                modifier = Modifier
-                    .height(8.dp)
             )
 
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(4.dp)
             )
         }
