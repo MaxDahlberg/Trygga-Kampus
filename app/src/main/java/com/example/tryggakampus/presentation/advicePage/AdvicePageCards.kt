@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -84,7 +85,7 @@ fun AdviceCard(adviceItem: AdviceItem) {
                    contentAlignment = Alignment.Center,
                 ) {
                     TextButton(onClick = {expand = true}) {
-                        Text("Read More", color = MaterialTheme.colorScheme.secondary)
+                        Text("Read More", color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Bold)
                     }
                 }
             }
