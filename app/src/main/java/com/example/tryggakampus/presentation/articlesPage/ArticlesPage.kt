@@ -15,17 +15,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,20 +47,46 @@ import com.example.tryggakampus.domain.model.ArticleModel
 @Composable
 fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel<ArticlesPageViewModel>()) {
     val localContext = LocalContext.current
+    var showAddDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.loadArticles(localContext)
     }
 
-    LazyColumn(
-        modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(15.dp)
-    ) {
-        items(viewModel.articles) { item: ArticleModel ->
-            ArticleBox(item, onClick = {})
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { showAddDialog = true },
+                modifier = Modifier
+                    .background(Color.Transparent)
+            ) {
+                Icon(imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Article",
+                    )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
+    ) { paddingValues ->
+        if (showAddDialog) {
+            AddArticleDialog(
+                onDismiss = { showAddDialog = false },
+                viewModel = viewModel
+            )
+        }
+
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues).padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            items(viewModel.articles) { item: ArticleModel ->
+                ArticleBox(item, onClick = {})
+            }
+    
         }
     }
 }
+
+
 
 @Composable
 fun ArticleBox(article: ArticleModel, onClick: () -> Unit) {
@@ -90,20 +129,17 @@ fun ArticleBoxBody(content: String, webpage: String) {
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         Text(content, fontSize = 16.sp, color = MaterialTheme.colorScheme.onPrimary)
+        Text(
+            buildAnnotatedString {
+                withLink(LinkAnnotation.Url(url = webpage)) {
+                    append("Read More")
+                }
 
-        ClickableText(
-            text = AnnotatedString("Read More"),
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.secondary,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp
-            ),
-            onClick = {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(webpage))
-                context.startActivity(intent)
             },
+            color = Color(0xFFF19107),
+            fontWeight = FontWeight.Medium,
+            fontSize = 14.sp,
             modifier = Modifier.padding(top = 8.dp)
         )
     }
 }
-
