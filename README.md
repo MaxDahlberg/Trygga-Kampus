@@ -5,27 +5,29 @@ Inspired by Per Olof Mårtensson's ["Trygga Klassen"](https://tryggaklassen.se/)
 
 ## Purpose
 The main goal of this application is to:
-- Raise awareness about addiction (substance abuse, behavioral addictions) among university students.
+- Raise awareness about addiction (substance abuse, behavioural addictions) among university students.
 - Provide students with accessible resources, support, and tools to reflect on their challenges.
 - Facilitate the first step toward seeking help by offering a contact form to connect with support services.
 
 ## Features
 - **Information Base/Bank**: 
-  - A repository of detailed articles covering different forms of addiction, including drugs, alcohol, and behavioral issues.
+  - A repository of detailed articles covering different forms of addiction, including drugs, alcohol, and behavioural issues.
 - **Drug Articles**: 
   - Focused resources on substance addiction, providing educational content on risks, signs, and recovery paths.
-- **Surveys for ANDT and Bullying**: 
-  - Interactive surveys on alcohol, narcotics, doping, tobacco (ANDT), and bullying to encourage students to reflect on their own experiences.
+- **Surveys**: 
+  - Interactive surveys to encourage students to reflect on their own experiences.
 - **Reflections**: 
   - A self-reflection feature that guides users to evaluate how addiction or bullying may be affecting their lives.
 - **Get in Touch**: 
   - A contact form allowing students to easily reach out for help or connect with university counsellors or Per Olof directly through his company ["Lotusmodellen"](https://lotusmodellen.se/wp/).
+- **Our Stories**:
+  - Stories shared by student with their own experience with addiction. The goal of this feature is so that students can maybe relate with some struggles or recognize some signs of addictions.
+- **Advice Page**:  
+  - Some advice cards to help with certain scenarios such as "Prevention", "Supporting a friend" or "How to talk to your family about your addictions". This is to encourage students to take the first steps in supporting, managing or confronting their addiction.
 
 ### Additional Features (Future Updates)
-- **Our Stories**: 
-  - A feature allowing students to share their personal stories about addiction and recovery, fostering a supportive community.
-- **Map of Help Centers**: 
-  - A location-based map showing nearby help centers such as women's shelters, Alcoholics Anonymous (AA), and Narcotics Anonymous (NA).
+- **Currently Updating**: 
+
 
 ## Target Audience
 This app primarily targets university students, starting with HKR, with plans to expand to other institutions as needed.
@@ -34,7 +36,6 @@ This app primarily targets university students, starting with HKR, with plans to
 - **Language**: Kotlin
 - **Framework**: Jetpack Compose
 - **Backend**: Firebase (Firestore for database, authentication)
-- **Other Tools**: Vertex AI (optional for future updates)
 
 ## Installation and Setup
 1. Clone the repository:
@@ -47,6 +48,4 @@ This app primarily targets university students, starting with HKR, with plans to
 5. Run the app on an emulator or connected device.
 
 ## Future Development
-- Integration of a **Map of Help Centers** to show the nearest AA, NA, and women's shelters.
-- Addition of an **Our Stories** feature where students can share their personal recovery journeys.
 - More tbd

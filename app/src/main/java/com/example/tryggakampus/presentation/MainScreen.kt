@@ -32,6 +32,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.example.tryggakampus.presentation.component.BottomAppBar
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawer
 
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawerState
@@ -80,8 +81,7 @@ fun MainScreen(
 
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.surface)
-            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f))
+            .background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
             .navigationBarsPadding()
             .fillMaxSize()
@@ -138,14 +138,31 @@ fun MainContent(
             AppBar(onNavigationIconClick = {
                 onDrawerClick(drawerState.opposite())
             })
+        },
+        bottomBar = {
+            BottomAppBar()
         }
     ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            page()
+        Box {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                page()
+            }
+
+            if (drawerState == CustomDrawerState.Opened) {
+                Column (
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.08f))
+                        .clickable {
+                            onDrawerClick(CustomDrawerState.Closed)
+                        },
+                    content = {}
+                )
+            }
         }
     }
 }

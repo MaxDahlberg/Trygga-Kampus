@@ -36,9 +36,9 @@ fun NavigationItemView(
             .background(
                 color =
                     if (selected)
-                        MaterialTheme.colorScheme.surfaceColorAtElevation(4.dp)
+                        MaterialTheme.colorScheme.secondary
                     else
-                        Color.Unspecified,
+                        MaterialTheme.colorScheme.background,
                 shape = RoundedCornerShape(99.dp)
             )
             .padding(horizontal = 12.dp, vertical = 10.dp),
@@ -49,17 +49,20 @@ fun NavigationItemView(
             contentDescription = "Navigation Item Icon",
             tint =
                 if (selected)
-                    MaterialTheme.colorScheme.primary
+                    MaterialTheme.colorScheme.onSecondary
                 else
-                    MaterialTheme.colorScheme.onSurface
+                    MaterialTheme.colorScheme.onBackground
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
         Text(
             text = drawerItem.title,
-            color = if (selected) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.onSurface,
+            color =
+                if (selected)
+                    MaterialTheme.colorScheme.onSecondary
+                else
+                    MaterialTheme.colorScheme.onBackground,
             fontWeight =
                 if (selected)
                     FontWeight.Bold
