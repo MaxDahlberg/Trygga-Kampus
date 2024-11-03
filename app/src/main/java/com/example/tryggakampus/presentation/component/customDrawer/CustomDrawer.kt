@@ -116,7 +116,7 @@ fun PrimaryDrawerItems(
                         DrawerItem.Form -> Routes.FormPage()
                         DrawerItem.Survey -> Routes.SurveyPage()
                         DrawerItem.Advice -> Routes.AdvicePage()
-                        DrawerItem.Stories -> Routes.StoriesPage()
+                        DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
                         else -> {}
                     })
                 }

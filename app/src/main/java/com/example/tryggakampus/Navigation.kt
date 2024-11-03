@@ -1,14 +1,19 @@
 package com.example.tryggakampus
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import androidx.navigation.toRoute
+
 import com.example.tryggakampus.presentation.landingPage.LandingPage
 import com.example.tryggakampus.presentation.profilePage.ProfilePage
 import com.example.tryggakampus.presentation.settingsPage.SettingsPage
@@ -16,6 +21,8 @@ import com.example.tryggakampus.presentation.articlesPage.ArticlesPage
 import com.example.tryggakampus.presentation.settingsPage.SettingsPageViewModel
 import com.example.tryggakampus.presentation.formPage.FormPage
 import com.example.tryggakampus.presentation.storiesPage.StoriesPage
+import com.example.tryggakampus.presentation.storiesPage.StoriesPageViewModel
+import com.example.tryggakampus.presentation.storiesPage.StoryPage
 import com.example.tryggakampus.presentation.advicePage.AdvicePage
 import com.example.tryggakampus.presentation.surveyPage.SurveyPage
 
@@ -48,8 +55,14 @@ sealed interface Routes {
         override fun routeName() = "FormPage"
     }
 
-    @Serializable data class StoriesPage(val title: String = "Stories"): Routes {
-        override fun routeName() = "StoriesPage"
+    @Serializable object StoriesNavGraph {
+        @Serializable data object StoriesPage: Routes {
+            override fun routeName() = "StoriesPage"
+        }
+
+        @Serializable data class StoryPage(val storyModelId: String = "n07f0und"): Routes {
+            override fun routeName() = "StoryPage"
+        }
     }
 
     @Serializable data class AdvicePage(val title: String = "Advice"): Routes {
@@ -59,6 +72,7 @@ sealed interface Routes {
     @Serializable data class SurveyPage(val title: String = "Survey"): Routes {
         override fun routeName() = "SurveyPage"
     }
+
 }
 
 @Composable
@@ -102,9 +116,24 @@ fun Navigation(
                     SurveyPage(args.title)
                 }
 
-                composable<Routes.StoriesPage> {
-                    StoriesPage()
+                navigation<Routes.StoriesNavGraph> (startDestination = Routes.StoriesNavGraph.StoriesPage) {
+                    composable<Routes.StoriesNavGraph.StoriesPage> (
+                        enterTransition = { slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right) },
+                        exitTransition = { slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left) }
+                    ) {
+                        val vm: StoriesPageViewModel = viewModel<StoriesPageViewModel>()
+                        StoriesPage(vm)
+                    }
 
+                    composable<Routes.StoriesNavGraph.StoryPage> (
+                        enterTransition = { slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left) },
+                        exitTransition = { slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right) },
+                    ) {
+                        val storiesBackStackEntry = remember { navController.getBackStackEntry(Routes.StoriesNavGraph.StoriesPage) }
+                        val vm: StoriesPageViewModel = viewModel(storiesBackStackEntry)
+                        val args = it.toRoute<Routes.StoriesNavGraph.StoryPage>()
+                        StoryPage(vm, args.storyModelId)
+                    }
                 }
 
                 composable<Routes.AdvicePage> {
@@ -116,7 +145,6 @@ fun Navigation(
                     val vm = viewModel<SettingsPageViewModel>()
                     SettingsPage(vm, args.title)
                 }
-
             }
         }
     }
