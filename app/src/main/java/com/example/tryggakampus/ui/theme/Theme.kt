@@ -1,9 +1,7 @@
 package com.example.tryggakampus.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -20,6 +18,9 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color(0xFF023A40),
     primary = Color(0xFF32383F),
     onPrimary = Color(0xFFC9D6E5),
+    error = Color(0xFFFF4B4B),
+    errorContainer = Color(0xFFFF4B4B),
+    onErrorContainer = Color(0xFFFFFFFF)
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -28,7 +29,10 @@ private val LightColorScheme = lightColorScheme(
     primary = Color(0xFFFBFBFB),
     onPrimary = Color(0xFF3A3A3A),
     secondary = Color(0xFF2DC3D3),
-    onSecondary = Color(0xFFFFFFFF)
+    onSecondary = Color(0xFFFFFFFF),
+    error = Color(0xFFFF4B4B),
+    errorContainer = Color(0xFFFF4B4B),
+    onErrorContainer = Color(0xFFFFFFFF)
 )
 
 @Composable

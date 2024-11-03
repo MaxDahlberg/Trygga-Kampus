@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.auth.ktx)
     implementation(libs.datastore.preferences.core)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.navigation.compose)
