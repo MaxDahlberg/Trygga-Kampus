@@ -14,6 +14,7 @@ navigationRuntimeKtx = "2.8.2"
 firebaseFirestoreKtx = "25.1.0"
 firebaseStorageKtx = "21.0.1"
 datastoreVersion = "1.1.1"
+appcompat = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,8 +41,8 @@ navigation-dynamic = { group = "androidx.navigation", name = "navigation-dynamic
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
