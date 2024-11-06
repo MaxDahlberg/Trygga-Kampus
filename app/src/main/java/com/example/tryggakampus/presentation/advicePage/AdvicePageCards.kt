@@ -3,18 +3,9 @@ package com.example.tryggakampus.presentation.advicePage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,28 +28,29 @@ import com.example.tryggakampus.domain.model.AdviceItem
 // layout for card with the advice on it
 @Composable
 fun AdviceCard(adviceItem: AdviceItem) {
-    var expand by remember { mutableStateOf(false)}
+    var expand by remember { mutableStateOf(false) }
     val maxLines = if (expand) Int.MAX_VALUE else 3
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .shadow(8.dp, RoundedCornerShape(12.dp)),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(10.dp))
-                .background(MaterialTheme.colorScheme.primary)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             //display picture on the top
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .height(150.dp),
+                    .clip(RoundedCornerShape(10.dp))
+                    .height(160.dp),
                 painter = painterResource(id = adviceItem.image),
                 contentDescription = "banner picture",
                 contentScale = ContentScale.Crop
@@ -64,10 +58,11 @@ fun AdviceCard(adviceItem: AdviceItem) {
 
             //title of the advice
             Text(
-                modifier = Modifier.padding(vertical = 4.dp),
                 text = adviceItem.title,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimary
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
             )
 
             //text of advice content
@@ -79,17 +74,20 @@ fun AdviceCard(adviceItem: AdviceItem) {
                 maxLines = maxLines,
             )
 
-            if(!expand && adviceItem.text.length > 100){
+            if (!expand && adviceItem.text.length > 80) {
                 Box(
-                   modifier = Modifier.fillMaxWidth(),
-                   contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    TextButton(onClick = {expand = true}) {
-                        Text("Read More", color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Bold)
+                    TextButton(onClick = { expand = true }) {
+                        Text(
+                            "Read More",
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }
-
         }
     }
 }
@@ -97,34 +95,45 @@ fun AdviceCard(adviceItem: AdviceItem) {
 // card for the category picking
 @Composable
 fun CategoryCard(title: String, image: Int, onClick: () -> Unit) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(10.dp)
-        .clickable { onClick() },
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+            .clickable { onClick() }
+            .shadow(6.dp, RoundedCornerShape(12.dp)),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(10.dp))
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(15.dp)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.85f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+                        )
+                    )
+                )
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Image(
                 painter = painterResource(id = image),
-                contentDescription = "Support Picture",
+                contentDescription = "Category Picture",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(10.dp))
+                    .clip(RoundedCornerShape(10.dp))
                     .height(150.dp),
                 contentScale = ContentScale.Crop
             )
 
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
                 color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier
+                    .padding(horizontal = 4.dp,)
+                    .fillMaxWidth()
             )
         }
     }
