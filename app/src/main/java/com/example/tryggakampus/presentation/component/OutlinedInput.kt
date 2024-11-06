@@ -15,7 +15,8 @@ fun OutlinedInput(
     label: String,
     value: String = "",
     onValueChange: (v: String) -> Unit,
-    isError: Boolean = false
+    isError: Boolean = false,
+    singleLine: Boolean = false
 ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
@@ -36,6 +37,7 @@ fun OutlinedInput(
                 handleColor = MaterialTheme.colorScheme.secondary,
                 backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
             )
-        )
+        ),
+        singleLine = singleLine
     )
 }
