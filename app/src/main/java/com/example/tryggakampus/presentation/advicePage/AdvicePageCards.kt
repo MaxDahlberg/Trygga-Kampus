@@ -79,7 +79,7 @@ fun AdviceCard(adviceItem: AdviceItem) {
                 maxLines = maxLines,
             )
 
-            if(!expand && adviceItem.text.length > 100){
+            if(!expand && adviceItem.text.length > 50){
                 Box(
                    modifier = Modifier.fillMaxWidth(),
                    contentAlignment = Alignment.Center,
