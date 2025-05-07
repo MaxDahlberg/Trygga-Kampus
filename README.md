@@ -3,6 +3,8 @@ Trygga Campus is designed to help university students, starting with Högskola K
 The app provides a safe and supportive platform for students struggling with addiction to access information, reflect on their experiences, and take the first step toward seeking help. 
 Inspired by Per Olof Mårtensson's ["Trygga Klassen"](https://tryggaklassen.se/) we adapted the concept to meet the needs of university students.
 
+Demonstration Video of the application can be found here: ["Demonstration Video"](https://drive.google.com/file/d/1aV7b9xLmaFKdzx-TV30xixSAnBv16wVk/view)
+
 ## Purpose
 The main goal of this application is to:
 - Raise awareness about addiction (substance abuse, behavioural addictions) among university students.
