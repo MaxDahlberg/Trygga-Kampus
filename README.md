@@ -52,3 +52,39 @@ This app primarily targets university students, starting with HKR, with plans to
 3. Make sure you have all dependencies installed (see `build.gradle` for required dependencies).
 4. Sync the project and build it.
 5. Run the app on an emulator or connected device.
+
+# Custom Open Source License — Trygga Campus
+
+Copyright (c) 2025 [Ibrahim Mohamed](ibrahim.mohamed.im2002@gmail.com]), [Anne-Claire Koch](ackoch@hotmail.com), [Nedim Kanat](nedim.kanat.lp@gmail.com), [Omar Zarifa]()
+
+You are welcome to use and contribute to this project, but **permission is required** for modification, redistribution, or commercial use:
+
+1. **Attribution**  
+   All copies, modifications, or distributions of this Software must include
+   clear and visible credit to the original creators:
+   - Ibrahim Mohamed  
+   - Anne-Claire Koch  
+   - Nedim Kanat
+   - Omar Zarifa
+
+2. **Permission for Modification & Redistribution**  
+   Anyone wishing to modify, fork, or redistribute this Software (in whole or in part)
+   must first obtain **written permission** from at least one of the original creators.  
+   This includes both open-source and commercial use cases.
+
+3. **Non-Commercial Use Without Permission**  
+   The Software may not be sold, sublicensed, or used for commercial purposes
+   without explicit written consent from the original creators.
+
+4. **Disclaimer of Warranty**  
+   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+   INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+   PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+   FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+By using this Software, you agree to the above terms.
+
+## 📝 License
+
+This project is licensed under a **Custom Open Source License**.  
