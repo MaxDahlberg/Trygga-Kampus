@@ -72,7 +72,7 @@ You are welcome to use and contribute to this project, but **permission is requi
    must first obtain **written permission** from at least one of the original creators.  
    This includes both open-source and commercial use cases.
 
-3. **Non-Commercial Use Without Permission**  
+3. **Commercial Use Without Permission**  
    The Software may not be sold, sublicensed, or used for commercial purposes
    without explicit written consent from the original creators.
 
