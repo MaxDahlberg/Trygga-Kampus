@@ -6,6 +6,7 @@ import com.example.tryggakampus.presentation.component.PageContainer
 
 @Composable
 fun ProfilePage(title: String) {
+    // Adding temp comment for testing commit issues.
     PageContainer {
         Text(title)
     }
