@@ -18,8 +18,9 @@ import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.BlockButton
 import com.example.tryggakampus.presentation.component.FormContainer
 import com.example.tryggakampus.presentation.component.ErrorBox
-
 import com.example.tryggakampus.presentation.component.OutlinedInput
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun LoginPage() {
@@ -46,7 +47,9 @@ fun LoginPage() {
                 label = "Password",
                 value = vm.password,
                 onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid
+                isError = !vm.passwordIsValid,
+                visualTransformation = PasswordVisualTransformation()
+
             )
 
             BlockButton (

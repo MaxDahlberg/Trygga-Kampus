@@ -9,6 +9,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun OutlinedInput(
@@ -16,9 +17,12 @@ fun OutlinedInput(
     value: String = "",
     onValueChange: (v: String) -> Unit,
     isError: Boolean = false,
-    singleLine: Boolean = false
+    singleLine: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
+
 ) {
     OutlinedTextField(
+        visualTransformation = visualTransformation,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(label) },
         value = value,
