@@ -23,6 +23,9 @@ fun AdviceListScreen(title: String, adviceItems: List<AdviceItem>, onBack: () ->
             .padding(16.dp)
     ) {
         Row (
+//testing commit
+
+
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
