@@ -109,7 +109,7 @@ fun Navigation(
 
                 composable<Routes.ProfilePage> {
                     val args = it.toRoute<Routes.ProfilePage>()
-                    ProfilePage(args.title)
+                    ProfilePage()
                 }
 
                 composable<Routes.ArticlesPage> {
