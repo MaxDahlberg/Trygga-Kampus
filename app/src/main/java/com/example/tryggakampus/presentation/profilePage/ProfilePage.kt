@@ -84,6 +84,52 @@ fun ProfilePage() {
         }
 
         Spacer(modifier = Modifier.height(30.dp))
+
+
+        // Change password
+        FormContainer {
+            Text("Change Password", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedInput(
+                label = "Current Password",
+                value = vm.currentPassword,
+                onValueChange = { vm.currentPassword = it },
+                isError = !vm.currentPasswordIsValid
+            )
+
+            OutlinedInput(
+                label = "New Password",
+                value = vm.newPassword,
+                onValueChange = { vm.newPassword = it },
+                isError = !vm.newPasswordIsValid
+            )
+
+            OutlinedInput(
+                label = "Repeat New Password",
+                value = vm.repeatNewPassword,
+                onValueChange = { vm.repeatNewPassword = it },
+                isError = vm.newPassword != vm.repeatNewPassword
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            BlockButton(
+                onClick = { if (!vm.updatingPassword) vm.onChangePassword() },
+                enabled = vm.passwordChangeFormValid
+            ) {
+                if (vm.updatingPassword) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        color = MaterialTheme.colorScheme.onSecondary,
+                        trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                    )
+                } else {
+                    Text("Update Password")
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
     }
 }
 

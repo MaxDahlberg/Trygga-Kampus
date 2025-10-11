@@ -20,6 +20,20 @@ class ProfileViewModel : ViewModel() {
     var newUsernameIsValid by mutableStateOf(true)
     var usernameChangePasswordIsValid by mutableStateOf(true)
 
+    // Change password
+    var currentPassword by mutableStateOf("")
+    var newPassword by mutableStateOf("")
+    var repeatNewPassword by mutableStateOf("")
+    var updatingPassword by mutableStateOf(false)
+    var currentPasswordIsValid by mutableStateOf(true)
+    var newPasswordIsValid by mutableStateOf(true)
+
+    val passwordChangeFormValid: Boolean
+        get() = currentPasswordIsValid &&
+                newPasswordIsValid &&
+                newPassword == repeatNewPassword &&
+                newPassword.length >= 8
+
     // Error
     var error by mutableStateOf<AuthError?>(null)
 
@@ -43,6 +57,24 @@ class ProfileViewModel : ViewModel() {
             newUsername = ""
             usernameChangePassword = ""
             updatingUsername = false
+        }
+    }
+
+    fun onChangePassword() {
+        if (!passwordChangeFormValid) {
+            error = AuthError("Passwords do not match or are invalid.")
+            return
+        }
+
+        viewModelScope.launch {
+            updatingPassword = true
+            delay(1000)
+            // todo: replace with real backend call.
+            // val response = AuthRepositoryImpl.changePassword(email, currentPassword, newPassword)
+            currentPassword = ""
+            newPassword = ""
+            repeatNewPassword = ""
+            updatingPassword = false
         }
     }
 }
