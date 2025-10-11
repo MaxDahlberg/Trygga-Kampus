@@ -3,12 +3,12 @@ package com.example.tryggakampus.domain.repository
 import android.util.Log
 import com.example.tryggakampus.domain.model.ArticleModel
 import com.example.tryggakampus.domain.repository.ArticleRepository.RepositoryResult
+import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 interface ArticleRepository {

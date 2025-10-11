@@ -1,26 +1,45 @@
 {
   "project_info": {
-    "project_number": "561990030259",
-    "project_id": "trygge-kampus",
-    "storage_bucket": "trygge-kampus.appspot.com"
+    "project_number": "987815613065",
+    "firebase_url": "https://trygga-kampus-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "trygga-kampus",
+    "storage_bucket": "trygga-kampus.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:561990030259:android:3ef778f4cc9e2e0566f1c6",
+        "mobilesdk_app_id": "1:987815613065:android:0f960e214273137abaac58",
         "android_client_info": {
           "package_name": "com.example.tryggakampus"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "987815613065-2ti3s818hhe98hj7pufdjolfann64tn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tryggakampus",
+            "certificate_hash": "65c91680652670267280cc5c420f1cae76a96a70"
+          }
+        },
+        {
+          "client_id": "987815613065-v2hc0082pjvsehu5q5oe0028ch4b877o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7a90vVWrYowEWqbLOfvjtdpvXlSyfkMI"
+          "current_key": "AIzaSyALso1nlYIclmUKXwmc4OKMehhkSVFV60s"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987815613065-v2hc0082pjvsehu5q5oe0028ch4b877o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

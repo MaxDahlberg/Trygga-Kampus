@@ -1,14 +1,13 @@
 package com.example.tryggakampus.domain.repository
 
 import android.util.Log
+import com.google.firebase.Firebase
 
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.ktx.auth
-
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
 sealed class AuthResponse {
