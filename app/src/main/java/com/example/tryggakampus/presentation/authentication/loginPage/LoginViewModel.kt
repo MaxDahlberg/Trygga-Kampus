@@ -107,5 +107,20 @@ class LoginViewModel : ViewModel() {
     fun dismissPasswordResetMessage() {
         passwordResetEmailSent = false
     }
+    fun onSignInWithGoogle(idToken: String) {
+        viewModelScope.launch {
+            signingIn = true
+            val authResponse = AuthRepositoryImpl.signInWithGoogle(idToken)
+            error = when (authResponse) {
+                AuthResponse.SignIn.ERROR -> AuthError("Google sign-in failed.")
+                else -> null
+            }
+            signingIn = false
+        }
+    }
+
+    fun showSignInError(message: String) {
+        error = AuthError(message)
+    }
 }
 
