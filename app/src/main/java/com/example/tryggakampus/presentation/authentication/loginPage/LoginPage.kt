@@ -98,7 +98,10 @@ fun ForgotPasswordButton(
         horizontalArrangement = Arrangement.End
     ) {
         TextButton(onClick = onClick, enabled = enabled) {
-            Text("Forgot Password?")
+            Text(
+                text = "Forgot Password?",
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }
@@ -129,8 +132,3 @@ fun LoginFormFooter() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewLoginFeature() {
-    LoginPage()
-}
