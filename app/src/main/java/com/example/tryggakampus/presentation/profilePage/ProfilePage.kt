@@ -130,7 +130,39 @@ fun ProfilePage() {
         }
 
         Spacer(modifier = Modifier.height(30.dp))
+
+
+        // Account and data
+        FormContainer {
+            Text("Account & Data", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            BlockButton(
+                onClick = { vm.showRequestDataDialog = true },
+                enabled = true
+            ) {
+                Text("Request My Data")
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            BlockButton(
+                onClick = { vm.showDeleteAccountDialog = true },
+                enabled = true
+            ) {
+                Text("Delete My Data and Account")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+        vm.error?.let {
+            ErrorBox(it.message, onClick = { vm.clearError() })
+        }
     }
+
+    // Dialogs
+    if (vm.showDeleteAccountDialog) ConfirmDeleteAccountDialog(vm)
+    if (vm.showRequestDataDialog) RequestDataDialog(vm)
 }
 
 @Composable
@@ -140,5 +172,61 @@ fun ProfileHeader() {
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground
+    )
+}
+
+@Composable
+fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
+    AlertDialog(
+        onDismissRequest = { vm.showDeleteAccountDialog = false },
+        title = { Text("Confirm Account Deletion") },
+        text = {
+            Column {
+                Text(
+                    "Your personal data and account will be deleted in compliance with GDPR.\n\n This action is permanent and cannot be undone.",
+                    color = MaterialTheme.colorScheme.error
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                OutlinedInput(
+                    label = "Enter Password",
+                    value = vm.deletePassword,
+                    onValueChange = { vm.deletePassword = it },
+                    isError = vm.deletePassword.isEmpty()
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { vm.onDeleteAccount() }) {
+                Text("Delete", color = MaterialTheme.colorScheme.onPrimary)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { vm.showDeleteAccountDialog = false }) {
+                Text("Cancel", color = MaterialTheme.colorScheme.onPrimary)
+            }
+        }
+    )
+}
+
+@Composable
+fun RequestDataDialog(vm: ProfileViewModel) {
+    AlertDialog(
+        onDismissRequest = { vm.showRequestDataDialog = false },
+        title = { Text("Request Personal Data") },
+        text = {
+            Text(
+                "Press Request to fetch your personal data from the server. When it's ready you'll be able to download it."
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = {}) {  // todo: open new dialog for the download.
+                Text("Request", color = MaterialTheme.colorScheme.onPrimary)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { vm.showRequestDataDialog = false }) {
+                Text("Cancel", color = MaterialTheme.colorScheme.onPrimary)
+            }
+        }
     )
 }

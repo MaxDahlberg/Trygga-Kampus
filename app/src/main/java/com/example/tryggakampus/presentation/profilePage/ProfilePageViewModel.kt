@@ -34,6 +34,11 @@ class ProfileViewModel : ViewModel() {
                 newPassword == repeatNewPassword &&
                 newPassword.length >= 8
 
+    // Account deletion and user data
+    var deletePassword by mutableStateOf("")
+    var showDeleteAccountDialog by mutableStateOf(false)
+    var showRequestDataDialog by mutableStateOf(false)
+
     // Error
     var error by mutableStateOf<AuthError?>(null)
 
@@ -60,6 +65,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    // Change password
     fun onChangePassword() {
         if (!passwordChangeFormValid) {
             error = AuthError("Passwords do not match or are invalid.")
@@ -77,4 +83,24 @@ class ProfileViewModel : ViewModel() {
             updatingPassword = false
         }
     }
+
+    // Delete account
+    fun onDeleteAccount() {
+        if (deletePassword.isEmpty()) {
+            error = AuthError("Password required to delete account.")
+            return
+        }
+
+        viewModelScope.launch {
+            delay(1000)
+            // todo: replace with real backend call.
+            // val response = AuthRepositoryImpl.deleteAccount(email, deletePassword)
+            showDeleteAccountDialog = false
+            error = AuthError("Account deletion not yet implemented.")
+        }
+    }
+
+    // Request personal data.
+    // fun onRequestData() {}
+    // todo: add implementation.
 }
