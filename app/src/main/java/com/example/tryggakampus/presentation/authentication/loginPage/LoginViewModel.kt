@@ -24,6 +24,9 @@ class LoginViewModel : ViewModel() {
     var password by mutableStateOf("")
         private set
 
+    var isPasswordVisible by mutableStateOf(false)
+        private set
+
     var passwordResetEmailSent by mutableStateOf(false)
         private set
 
@@ -44,7 +47,11 @@ class LoginViewModel : ViewModel() {
 
     fun onPasswordChange(newPassword: String) {
         password = newPassword
-        passwordIsValid = password.length >= 8
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\\\-_{}.*]).{8,20}$".toRegex()
+        passwordIsValid = password.matches(passwordPattern)
+    }
+    fun togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible
     }
 
     fun onRequestLogin() {

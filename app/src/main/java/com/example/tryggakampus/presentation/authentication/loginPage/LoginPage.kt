@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.Routes
@@ -53,7 +52,10 @@ fun LoginPage() {
                 label = "Password",
                 value = vm.password,
                 onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid
+                isError = !vm.passwordIsValid,
+                isPassword = true,
+                isPasswordVisible = vm.isPasswordVisible,
+                onVisibilityChange = { vm.togglePasswordVisibility() }
             )
             ForgotPasswordButton(
                 onClick = { vm.onForgotPassword() },
