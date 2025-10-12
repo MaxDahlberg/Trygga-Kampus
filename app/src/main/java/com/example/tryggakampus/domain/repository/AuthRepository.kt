@@ -7,6 +7,7 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
@@ -88,6 +89,15 @@ object AuthRepositoryImpl: AuthRepository {
         } catch (e: Exception) {
 
             AuthResponse.PasswordReset.FAILURE
+        }
+    }
+    suspend fun signInWithGoogle(idToken: String): AuthResponse.SignIn {
+        return try {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            Firebase.auth.signInWithCredential(credential).await()
+            AuthResponse.SignIn.SUCCESS
+        } catch (e: Exception) {
+            AuthResponse.SignIn.ERROR
         }
     }
 }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import com.example.tryggakampus.presentation.component.SuccessBox
 import com.example.tryggakampus.presentation.component.OutlinedInput
 
+
 @Composable
 fun LoginPage() {
     val vm: LoginViewModel = viewModel<LoginViewModel>()
