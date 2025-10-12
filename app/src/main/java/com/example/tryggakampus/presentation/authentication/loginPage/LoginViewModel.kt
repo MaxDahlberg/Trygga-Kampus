@@ -24,6 +24,9 @@ class LoginViewModel : ViewModel() {
     var password by mutableStateOf("")
         private set
 
+    var passwordResetEmailSent by mutableStateOf(false)
+        private set
+
     var signingIn by mutableStateOf(false)
     var error by mutableStateOf<AuthError?>(null)
 
@@ -55,19 +58,47 @@ class LoginViewModel : ViewModel() {
 
             val authResponse = AuthRepositoryImpl.authenticateUser(email, password)
 
-            when (authResponse) {
+            error = when (authResponse) {
                 AuthResponse.SignIn.FAILURE -> {
-                    error = AuthError("Wrong username or password")
+                    AuthError("Wrong username or password")
                 }
 
                 AuthResponse.SignIn.ERROR -> {
-                    error = AuthError("Something went wrong, please try again later.")
+                    AuthError("Something went wrong, please try again later.")
                 }
 
-                else -> error = null
+                else -> null
             }
 
             signingIn = false
         }
     }
+    fun onForgotPassword() {
+        if (!emailIsValid) {
+            error = AuthError("Please enter a valid email address.")
+            return
+        }
+
+        viewModelScope.launch {
+            signingIn = true
+            val resetResponse = AuthRepositoryImpl.sendPasswordResetEmail(email)
+
+            when (resetResponse) {
+                AuthResponse.PasswordReset.SUCCESS -> {
+                    error = null
+                    passwordResetEmailSent = true
+                }
+                AuthResponse.PasswordReset.FAILURE -> {
+                    error = AuthError("Failed to send reset email. Please ensure the email is correct.")
+                    passwordResetEmailSent = false
+                }
+            }
+            signingIn = false
+        }
+    }
+
+    fun dismissPasswordResetMessage() {
+        passwordResetEmailSent = false
+    }
 }
+

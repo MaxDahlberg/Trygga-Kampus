@@ -5,7 +5,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -18,12 +17,20 @@ import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.BlockButton
 import com.example.tryggakampus.presentation.component.FormContainer
 import com.example.tryggakampus.presentation.component.ErrorBox
-
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import com.example.tryggakampus.presentation.component.SuccessBox
 import com.example.tryggakampus.presentation.component.OutlinedInput
 
 @Composable
 fun LoginPage() {
     val vm: LoginViewModel = viewModel<LoginViewModel>()
+    if (vm.passwordResetEmailSent) {
+        SuccessBox(
+            message = "A password reset link has been sent to your email. Please check your inbox.",
+            onClick = { vm.dismissPasswordResetMessage() }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -48,10 +55,16 @@ fun LoginPage() {
                 onValueChange = { vm.onPasswordChange(it) },
                 isError = !vm.passwordIsValid
             )
+            ForgotPasswordButton(
+                onClick = { vm.onForgotPassword() },
+                enabled = !vm.signingIn
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             BlockButton (
                 onClick = { vm.onRequestLogin() },
-                enabled = (vm.emailIsValid && vm.passwordIsValid)
+                enabled = (vm.emailIsValid && vm.passwordIsValid && !vm.signingIn)
             ) {
                 if (vm.signingIn) {
                     CircularProgressIndicator(
@@ -75,6 +88,20 @@ fun LoginPage() {
     }
 }
 
+@Composable
+fun ForgotPasswordButton(
+    onClick: () -> Unit,
+    enabled: Boolean
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
+        TextButton(onClick = onClick, enabled = enabled) {
+            Text("Forgot Password?")
+        }
+    }
+}
 @Composable
 fun LoginFormHeader() {
     Text(

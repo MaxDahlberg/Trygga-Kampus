@@ -23,6 +23,10 @@ sealed class AuthResponse {
         FAILURE,
         EMAIL_TAKEN
     }
+    enum class PasswordReset {
+        SUCCESS,
+        FAILURE
+    }
 }
 
 
@@ -76,5 +80,14 @@ object AuthRepositoryImpl: AuthRepository {
         }
 
         return AuthResponse.SignUp.ERROR
+    }
+    suspend fun sendPasswordResetEmail(email: String): AuthResponse.PasswordReset {
+        return try {
+            Firebase.auth.sendPasswordResetEmail(email).await()
+            AuthResponse.PasswordReset.SUCCESS
+        } catch (e: Exception) {
+
+            AuthResponse.PasswordReset.FAILURE
+        }
     }
 }
