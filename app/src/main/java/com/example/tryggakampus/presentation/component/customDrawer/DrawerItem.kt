@@ -35,6 +35,11 @@ enum class DrawerItem(
         title = "Survey",
         accessLevel = AccessLevel.AUTH_ONLY
     ),
+    Habits( //
+        icon = R.drawable.baseline_check_circle_24,
+        title = "Habit Tracker",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
     Stories(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"
