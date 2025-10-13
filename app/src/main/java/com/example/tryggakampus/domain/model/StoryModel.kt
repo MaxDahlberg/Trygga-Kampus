@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class StoryModel(
     var id: String? = null,
     val title: String? = null,
-    // val userId: String,
+    val userId: String? = null,
     val author: String? = null,
     val content: String = "No content",
     // val createdAt: Timestamp = Timestamp.now()

@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.tryggakampus.domain.model.StoryModel
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.firestore
@@ -12,7 +13,6 @@ import kotlinx.coroutines.tasks.await
 interface StoryRepository {
     suspend fun getAllStories(source: Source): List<StoryModel>
     suspend fun postStory(
-        // userId: String,
         title: String?,
         content: String,
         isAnonymous: Boolean? = true
@@ -68,27 +68,35 @@ object StoryRepositoryImpl: StoryRepository {
     }
 
     override suspend fun postStory(
-        // userId: String,
         title: String?,
         content: String,
         isAnonymous: Boolean?
     ): StoryModel? {
-        try {
-            val result = Firebase.firestore.collection(COLLECTION_NAME).add(
-                StoryModel(
-                    //userId = userId,
-                    title = title,
-                    content = content,
-                    author = if (isAnonymous == false) "Jimmy" else null
-                )
-            ).await()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        // Make sure user is signed in
+        if (currentUser == null) {
+            Log.d("FATAL", "No signed-in user")
+            return null
+        }
 
-            return result.get().await().toObject(StoryModel::class.java)?.apply {
-                this.id = result.id
-            }
+        return try {
+            val collection = Firebase.firestore.collection(COLLECTION_NAME)
+            val docRef = collection.document() // generate a new document ID
+
+            val story = StoryModel(
+                id = docRef.id,
+                userId = currentUser.uid,
+                title = title,
+                content = content,
+                author = if (isAnonymous == false) "Jimmy" else null // todo: add actual usernames instead of hardcoded ones.
+            )
+
+            docRef.set(story).await()
+            story
+
         } catch (e: Exception) {
             Log.d("FATAL", e.stackTraceToString())
-            return null
+            null
         }
     }
 }
