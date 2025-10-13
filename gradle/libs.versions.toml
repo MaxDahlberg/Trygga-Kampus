@@ -44,7 +44,12 @@ firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 
+# Added for habit tracker
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.7.0" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" } # ADD THIS LINE
+google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
