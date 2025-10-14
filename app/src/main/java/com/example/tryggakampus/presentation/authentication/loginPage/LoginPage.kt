@@ -261,7 +261,7 @@ fun LoginFormHeader() {
         contentDescription = "Trygga Kampus Logo",
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .height(150.dp)
     )
     Spacer(modifier = Modifier.size(10.dp))
 }
