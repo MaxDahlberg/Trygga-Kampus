@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +38,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 
 @Composable
 fun LoginPage() {
@@ -63,6 +69,31 @@ fun LoginPage() {
             vm.showSignInError("Google sign-in failed. Please try again.")
         }
     }
+    val callbackManager = remember { CallbackManager.Factory.create() }
+    val facebookAuthLauncher = rememberLauncherForActivityResult(
+        contract = LoginManager.getInstance().createLogInActivityResultContract(callbackManager, null)
+    ) { /* The result is handled in the callback below */ }
+
+    DisposableEffect(Unit) {
+        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+            override fun onSuccess(result: LoginResult) {
+                vm.onSignInWithFacebook(result.accessToken.token)
+            }
+
+            override fun onCancel() {
+                vm.showSignInError("Facebook sign-in was cancelled.")
+            }
+
+            override fun onError(error: FacebookException) {
+                vm.showSignInError("Facebook sign-in failed.")
+            }
+        })
+
+        onDispose {
+            LoginManager.getInstance().unregisterCallback(callbackManager)
+        }
+    }
+
 
     Column(
         modifier = Modifier
@@ -152,8 +183,16 @@ fun LoginPage() {
                 enabled = !vm.signingIn,
                 onClick = { googleAuthLauncher.launch(googleSignInClient.signInIntent) }
             )
+            Spacer(modifier = Modifier.width(24.dp))
 
-
+            SocialLoginIcon(
+                iconId = R.drawable.ic_facebook_logo,
+                contentDescription = "Sign in with Facebook",
+                enabled = !vm.signingIn,
+                onClick = {
+                    facebookAuthLauncher.launch(listOf("email", "public_profile"))
+                }
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))

@@ -122,5 +122,16 @@ class LoginViewModel : ViewModel() {
     fun showSignInError(message: String) {
         error = AuthError(message)
     }
+    fun onSignInWithFacebook(token: String) {
+        viewModelScope.launch {
+            signingIn = true
+            val authResponse = AuthRepositoryImpl.signInWithFacebook(token)
+            error = when (authResponse) {
+                AuthResponse.SignIn.ERROR -> AuthError("Facebook sign-in failed.")
+                else -> null
+            }
+            signingIn = false
+        }
+    }
 }
 
