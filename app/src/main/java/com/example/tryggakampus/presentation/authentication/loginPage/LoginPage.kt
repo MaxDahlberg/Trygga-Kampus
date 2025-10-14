@@ -256,13 +256,14 @@ fun ForgotPasswordButton(
 
 @Composable
 fun LoginFormHeader() {
-    Text(
-        text = "Trygga Campus - Sign In",
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
+    Image(
+        painter = painterResource(id = R.drawable.trygga_kampus_new_logo),
+        contentDescription = "Trygga Kampus Logo",
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
     )
-    Spacer(modifier = Modifier.size(30.dp))
+    Spacer(modifier = Modifier.size(10.dp))
 }
 
 @Composable
