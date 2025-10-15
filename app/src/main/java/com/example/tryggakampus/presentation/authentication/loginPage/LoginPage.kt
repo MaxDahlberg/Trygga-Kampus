@@ -16,16 +16,16 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.LocalNavController
+import com.example.tryggakampus.LocalShowBars
 import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.BlockButton
@@ -48,6 +48,7 @@ import com.facebook.login.LoginResult
 fun LoginPage() {
     val vm: LoginViewModel = viewModel<LoginViewModel>()
     val context = LocalContext.current
+    val showBars = LocalShowBars.current
 
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -74,6 +75,10 @@ fun LoginPage() {
         contract = LoginManager.getInstance().createLogInActivityResultContract(callbackManager, null)
     ) { /* The result is handled in the callback below */ }
 
+    LaunchedEffect(Unit) {
+        showBars.value = false
+    }
+
     DisposableEffect(Unit) {
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
@@ -91,6 +96,7 @@ fun LoginPage() {
 
         onDispose {
             LoginManager.getInstance().unregisterCallback(callbackManager)
+            showBars.value = true
         }
     }
 

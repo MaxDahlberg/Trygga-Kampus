@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -93,13 +94,19 @@ sealed interface Routes {
 
 @Composable
 fun Navigation(
-    children: @Composable() (page: @Composable()() -> Unit) -> Unit
+    children: @Composable (page: @Composable () -> Unit) -> Unit
 ) {
     val navController = rememberNavController()
+    // Create the state that will be passed down
+    val showBars = remember { mutableStateOf(true) }
 
     observeAuthStateChanges(navController)
 
-    CompositionLocalProvider(LocalNavController provides navController) {
+    // Provide both the NavController and the ShowBars state
+    CompositionLocalProvider(
+        LocalNavController provides navController,
+        LocalShowBars provides showBars // Providing the new state
+    ) {
         children {
             NavHost(navController = navController, startDestination = Routes.LandingPage()) {
                 composable<Routes.LandingPage> {
@@ -211,3 +218,4 @@ private fun navigateBasedOnAuthState(isAuthenticated: Boolean, navController: Na
         }
     }
 }
+
