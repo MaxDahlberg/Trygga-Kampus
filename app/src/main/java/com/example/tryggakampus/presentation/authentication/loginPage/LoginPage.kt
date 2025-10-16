@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,7 +49,6 @@ import com.facebook.login.LoginResult
 fun LoginPage() {
     val vm: LoginViewModel = viewModel<LoginViewModel>()
     val context = LocalContext.current
-    val showBars = LocalShowBars.current
 
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -75,9 +75,6 @@ fun LoginPage() {
         contract = LoginManager.getInstance().createLogInActivityResultContract(callbackManager, null)
     ) { /* The result is handled in the callback below */ }
 
-    LaunchedEffect(Unit) {
-        showBars.value = false
-    }
 
     DisposableEffect(Unit) {
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -92,11 +89,12 @@ fun LoginPage() {
             override fun onError(error: FacebookException) {
                 vm.showSignInError("Facebook sign-in failed.")
             }
+
         })
+
 
         onDispose {
             LoginManager.getInstance().unregisterCallback(callbackManager)
-            showBars.value = true
         }
     }
 
@@ -223,7 +221,7 @@ fun SocialLoginIcon(
 ) {
     Box(
         modifier = Modifier
-            .size(50.dp)
+            .size(60.dp)
             .clip(CircleShape)
             .border(
                 width = 1.dp,

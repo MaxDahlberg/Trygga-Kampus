@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TryggaKampusTheme {
-                Navigation { pageToView -> MainScreen(pageToView) }
+                Navigation { navController, pageToView -> MainScreen(navController, pageToView) }
             }
         }
     }

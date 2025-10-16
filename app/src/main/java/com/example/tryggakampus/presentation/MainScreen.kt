@@ -19,7 +19,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.example.tryggakampus.LocalShowBars // Correct import
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.tryggakampus.LocalShowBars
+import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.BottomAppBar
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawer
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawerState
@@ -31,6 +34,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun MainScreen(
+    navController: NavController,
     page: @Composable () -> Unit
 ) {
     val (drawerState, setDrawerState) = remember { mutableStateOf(CustomDrawerState.Closed) }
@@ -39,8 +43,13 @@ fun MainScreen(
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current.density
 
-    // Read the visibility state directly from the local provider
-    val showTopAndBottomBars by LocalShowBars.current
+    val showBars = LocalShowBars.current
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    LaunchedEffect(navBackStackEntry) {
+        val currentRoute = navBackStackEntry?.destination?.route
+        showBars.value = currentRoute != Routes.Authentication.LoginPage::class.qualifiedName && currentRoute != Routes.Authentication.RegisterPage::class.qualifiedName
+    }
 
     val screenWidth = remember {
         derivedStateOf { (configuration.screenWidthDp * density).roundToInt() }
@@ -49,18 +58,18 @@ fun MainScreen(
 
     val animatedOffset by animateDpAsState(
         targetValue =
-            if (drawerState.isOpened())
-                offsetValue.value
-            else
-                0.dp,
+        if (drawerState.isOpened())
+            offsetValue.value
+        else
+            0.dp,
         label = "Animated Offset"
     )
     val animatedScale by animateFloatAsState(
         targetValue =
-            if (drawerState.isOpened())
-                0.9f
-            else
-                1f,
+        if (drawerState.isOpened())
+            0.9f
+        else
+            1f,
         label = "Animated Scale"
     )
 
@@ -105,7 +114,7 @@ fun MainScreen(
             drawerState = drawerState,
             onDrawerClick = { setDrawerState(it) },
             page = page,
-            showTopBar = showTopAndBottomBars // Use the value here
+            showTopBar = showBars.value
         )
     }
 }

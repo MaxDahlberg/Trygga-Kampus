@@ -94,7 +94,7 @@ sealed interface Routes {
 
 @Composable
 fun Navigation(
-    children: @Composable (page: @Composable () -> Unit) -> Unit
+    children: @Composable (navController: NavHostController, page: @Composable () -> Unit) -> Unit
 ) {
     val navController = rememberNavController()
     // Create the state that will be passed down
@@ -107,7 +107,7 @@ fun Navigation(
         LocalNavController provides navController,
         LocalShowBars provides showBars // Providing the new state
     ) {
-        children {
+        children(navController) {
             NavHost(navController = navController, startDestination = Routes.LandingPage()) {
                 composable<Routes.LandingPage> {
                     val args = it.toRoute<Routes.LandingPage>()
