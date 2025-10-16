@@ -97,15 +97,13 @@ fun Navigation(
     children: @Composable (navController: NavHostController, page: @Composable () -> Unit) -> Unit
 ) {
     val navController = rememberNavController()
-    // Create the state that will be passed down
     val showBars = remember { mutableStateOf(true) }
 
     observeAuthStateChanges(navController)
 
-    // Provide both the NavController and the ShowBars state
     CompositionLocalProvider(
         LocalNavController provides navController,
-        LocalShowBars provides showBars // Providing the new state
+        LocalShowBars provides showBars
     ) {
         children(navController) {
             NavHost(navController = navController, startDestination = Routes.LandingPage()) {
