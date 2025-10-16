@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.Firebase
 
 import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -94,6 +95,15 @@ object AuthRepositoryImpl: AuthRepository {
     suspend fun signInWithGoogle(idToken: String): AuthResponse.SignIn {
         return try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
+            Firebase.auth.signInWithCredential(credential).await()
+            AuthResponse.SignIn.SUCCESS
+        } catch (e: Exception) {
+            AuthResponse.SignIn.ERROR
+        }
+    }
+    suspend fun signInWithFacebook(token: String): AuthResponse.SignIn {
+        return try {
+            val credential = FacebookAuthProvider.getCredential(token)
             Firebase.auth.signInWithCredential(credential).await()
             AuthResponse.SignIn.SUCCESS
         } catch (e: Exception) {
