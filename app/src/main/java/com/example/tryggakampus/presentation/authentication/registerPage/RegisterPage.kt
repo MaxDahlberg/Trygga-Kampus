@@ -1,5 +1,6 @@
 package com.example.tryggakampus.presentation.authentication.registerPage
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,22 +10,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-
 import androidx.compose.material3.Text
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.LocalNavController
+import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.BlockButton
 import com.example.tryggakampus.presentation.component.FormContainer
@@ -87,13 +84,14 @@ fun RegisterPage() {
 
 @Composable
 fun RegisterFormHeader() {
-    Text(
-        text = "Trygga Campus - Sign Up",
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
+    Image(
+        painter = painterResource(id = R.drawable.trygga_kampus_new_logo),
+        contentDescription = "Trygga Kampus Logo",
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
     )
-    Spacer(modifier = Modifier.size(30.dp))
+    Spacer(modifier = Modifier.size(10.dp))
 }
 
 @Composable

@@ -7,9 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-
 import androidx.datastore.preferences.preferencesDataStore
-
 import com.example.tryggakampus.presentation.MainScreen
 import com.example.tryggakampus.ui.theme.TryggaKampusTheme
 
@@ -21,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TryggaKampusTheme {
-                Navigation { pageToView -> MainScreen(pageToView) }
+                Navigation { navController, pageToView -> MainScreen(navController, pageToView) }
             }
         }
     }
