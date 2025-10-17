@@ -1,6 +1,7 @@
 package com.example.tryggakampus.presentation.storiesPage
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 
@@ -132,5 +133,19 @@ class StoriesPageViewModel : ViewModel() {
 
         val username = userInfo?.username ?: "Unknown User"
         return story.copy(author = username)
+    }
+
+    fun deleteStory(story: StoryModel) {
+        viewModelScope.launch {
+            if (story.id.isEmpty()) return@launch
+
+            val success = StoryRepositoryImpl.deleteStory(story.id)
+            if (success) {
+                stories.removeAll { it.id == story.id }
+                Log.d("StoriesVM", "Deleted story locally: ${story.id}")
+            } else {
+                Log.d("StoriesVM", "Failed to delete story: ${story.id}")
+            }
+        }
     }
 }

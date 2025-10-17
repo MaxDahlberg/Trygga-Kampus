@@ -19,6 +19,7 @@ interface StoryRepository {
     ): StoryModel?
 
     suspend fun fetchAll(source: Source): QuerySnapshot?
+    suspend fun deleteStory(storyId: String): Boolean
 }
 
 object StoryRepositoryImpl: StoryRepository {
@@ -97,6 +98,21 @@ object StoryRepositoryImpl: StoryRepository {
         } catch (e: Exception) {
             Log.d("FATAL", e.stackTraceToString())
             null
+        }
+    }
+
+    override suspend fun deleteStory(storyId: String): Boolean {
+        return try {
+            Firebase.firestore
+                .collection(COLLECTION_NAME)
+                .document(storyId)
+                .delete()
+                .await()
+            Log.d("StoryRepository", "Deleted story: $storyId")
+            true
+        } catch (e: Exception) {
+            Log.d("StoryRepository", "Error deleting story: ${e.stackTraceToString()}")
+            false
         }
     }
 }

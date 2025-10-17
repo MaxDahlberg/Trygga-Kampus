@@ -29,6 +29,11 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.surface)
     ) {
-        StoryBox(story.value, onClick = {})
+        StoryBox(
+            story = story.value,
+            onDelete = { viewModel.deleteStory(story.value) },
+            onCommentClick = { /* todo: show comments */ },
+            onClick = {}
+        )
     }
 }
