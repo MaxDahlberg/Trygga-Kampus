@@ -1,29 +1,13 @@
 package com.example.tryggakampus.presentation.component.customDrawer
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.LocalDrink // ✅ NEW ICON for SoberActivity
 import androidx.compose.material.icons.sharp.Close
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -53,6 +37,7 @@ fun CustomDrawer(
         Column {
             DrawerActionBar(onCloseClick = onCloseClick)
             AppLogo()
+            // Primary items (we’ll include SoberActivity here as part of main features)
             PrimaryDrawerItems(
                 drawerItems = drawerItems.take(drawerItems.size - 2),
                 selectedItem = selectedDrawerItem,
@@ -70,7 +55,7 @@ fun CustomDrawer(
 
 @Composable
 fun AppLogo() {
-    Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Image(
             modifier = Modifier.size(100.dp),
             painter = painterResource(id = R.drawable.logo),
@@ -78,10 +63,8 @@ fun AppLogo() {
             alignment = Alignment.Center
         )
     }
-
     Spacer(modifier = Modifier.height(40.dp))
 }
-
 
 @Composable
 fun DrawerActionBar(onCloseClick: () -> Unit) {
@@ -98,10 +81,8 @@ fun DrawerActionBar(onCloseClick: () -> Unit) {
             )
         }
     }
-
     Spacer(modifier = Modifier.height(24.dp))
 }
-
 
 @Composable
 fun PrimaryDrawerItems(
@@ -124,23 +105,28 @@ fun PrimaryDrawerItems(
                 selected = drawerItem == selectedItem,
                 onClick = {
                     onClickItem(drawerItem)
-                    navController.navigate(when(drawerItem) {
-                        DrawerItem.Home -> Routes.LandingPage()
-                        DrawerItem.Profile -> Routes.ProfilePage()
-                        DrawerItem.Articles -> Routes.ArticlesPage()
-                        DrawerItem.Form -> Routes.FormPage()
-                        DrawerItem.Survey -> Routes.SurveyPage()
-                        DrawerItem.Advice -> Routes.AdvicePage()
-                        DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
-                        DrawerItem.Login -> Routes.Authentication.LoginPage
-                        else -> {}
-                    })
+                    navController.navigate(
+                        when (drawerItem) {
+                            DrawerItem.Home -> Routes.LandingPage()
+                            DrawerItem.Profile -> Routes.ProfilePage()
+                            DrawerItem.Articles -> Routes.ArticlesPage()
+                            DrawerItem.Form -> Routes.FormPage()
+                            DrawerItem.Survey -> Routes.SurveyPage()
+                            DrawerItem.Advice -> Routes.AdvicePage()
+                            DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                            DrawerItem.Login -> Routes.Authentication.LoginPage
+
+                            // ✅ NEW FEATURE: SoberActivity
+                            DrawerItem.SoberActivity -> Routes.SoberActivityPage()
+
+                            else -> {}
+                        }
+                    )
                 }
             )
         }
     }
 }
-
 
 @Composable
 fun SecondaryDrawerItems(
@@ -177,10 +163,12 @@ fun SecondaryDrawerItems(
                     if (drawerItem == DrawerItem.Logout) {
                         setRequestLogoutConfirm(true)
                     } else {
-                        navController.navigate(when(drawerItem) {
-                            DrawerItem.Settings -> Routes.SettingsPage()
-                            else -> {}
-                        })
+                        navController.navigate(
+                            when (drawerItem) {
+                                DrawerItem.Settings -> Routes.SettingsPage()
+                                else -> {}
+                            }
+                        )
                     }
                 }
             )
@@ -196,12 +184,9 @@ fun ConfirmLogout(
     AlertDialog(
         containerColor = MaterialTheme.colorScheme.background,
         titleContentColor = MaterialTheme.colorScheme.onBackground,
-
         icon = { Icon(Icons.Default.Warning, contentDescription = "Warning Icon") },
         title = { Text(text = "You are about to logout!") },
-
         onDismissRequest = { onReject() },
-
         confirmButton = {
             Button(
                 onClick = { onAccept() },
@@ -210,7 +195,6 @@ fun ConfirmLogout(
                 Text("Confirm")
             }
         },
-
         dismissButton = {
             Button(
                 onClick = { onReject() },
@@ -220,5 +204,4 @@ fun ConfirmLogout(
             }
         }
     )
-
 }

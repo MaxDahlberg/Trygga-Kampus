@@ -49,6 +49,16 @@ enum class DrawerItem(
         accessLevel = AccessLevel.UNAUTH_ONLY
     ),
 
+    // ✅ NEW FEATURE: SoberActivity
+    // ✅ NEW (using your custom PNG icon)
+    // ✅ Correct SoberActivity icon (does NOT affect Trygga Kampus app logo)
+    SoberActivity(
+        icon = android.R.drawable.ic_input_add,   // ✅ reverted back to Material Design icon
+        title = "Sober",
+        accessLevel = AccessLevel.ALL
+    ),
+
+
     // BUTTONS ON BOTTOM
     Logout(
         icon = R.drawable.baseline_person_24,
