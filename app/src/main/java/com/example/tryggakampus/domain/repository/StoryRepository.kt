@@ -73,7 +73,6 @@ object StoryRepositoryImpl: StoryRepository {
         isAnonymous: Boolean?
     ): StoryModel? {
         val currentUser = FirebaseAuth.getInstance().currentUser
-        // Make sure user is signed in
         if (currentUser == null) {
             Log.d("FATAL", "No signed-in user")
             return null
@@ -88,7 +87,8 @@ object StoryRepositoryImpl: StoryRepository {
                 userId = currentUser.uid,
                 title = title,
                 content = content,
-                author = if (isAnonymous == false) "Jimmy" else null // todo: add actual usernames instead of hardcoded ones.
+                author = null, // don’t store username in Firestore
+                anonymous = isAnonymous ?: true
             )
 
             docRef.set(story).await()

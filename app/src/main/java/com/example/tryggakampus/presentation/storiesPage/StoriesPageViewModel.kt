@@ -1,7 +1,6 @@
 package com.example.tryggakampus.presentation.storiesPage
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 
@@ -16,6 +15,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.dataStore
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
+import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 
 import com.google.firebase.firestore.Source
 
@@ -23,16 +23,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class StoriesPageViewModel: ViewModel() {
+class StoriesPageViewModel : ViewModel() {
     var stories = mutableStateListOf<StoryModel>()
         private set
 
-    var showNewStoryForm = mutableStateOf<Boolean>(false)
+    var showNewStoryForm = mutableStateOf(false)
         private set
 
     var storyFormValue = mutableStateOf(TextFieldValue(""))
     var storyTitleValue = mutableStateOf(TextFieldValue(""))
-    var storyAnonymity = mutableStateOf<Boolean>(true)
+    var storyAnonymity = mutableStateOf(true)
         private set
 
     var loadingStories = mutableStateOf(false)
@@ -67,7 +67,9 @@ class StoriesPageViewModel: ViewModel() {
             )
 
             story?.let {
-                stories.add(0, story)
+                // enrich the new story before adding it
+                val enriched = enrichStoryWithUsername(it)
+                stories.add(0, enriched)
             }
 
             setStoryTitleValue(TextFieldValue())
@@ -81,7 +83,6 @@ class StoriesPageViewModel: ViewModel() {
         viewModelScope.launch {
             setLoadingStories(true)
 
-            stories.clear()
             val lastFetchTimeKey = longPreferencesKey("stories_last_fetch_time")
             val lastFetchTime: Long = context.dataStore.data
                 .map { preferences -> preferences[lastFetchTimeKey] ?: 0L }
@@ -89,14 +90,18 @@ class StoriesPageViewModel: ViewModel() {
 
             val currentTimeMillis = System.currentTimeMillis()
             val timeDifference = (currentTimeMillis - lastFetchTime) / 1000
-            val source = dataSource ?: if (timeDifference >= 20) {
-                Source.SERVER
-            } else {
-                Source.CACHE
+            val source = dataSource ?: if (timeDifference >= 20) Source.SERVER else Source.CACHE
+
+            // Fetch stories
+            val fetchedStories = StoryRepositoryImpl.getAllStories(source)
+
+            // Enrich with usernames
+            val enrichedStories = fetchedStories.map { story ->
+                enrichStoryWithUsername(story)
             }
 
-            stories.addAll(StoryRepositoryImpl.getAllStories(source))
-            Log.d("STORIES", stories.toList().toString())
+            stories.clear()
+            stories.addAll(enrichedStories.distinctBy { it.id })
 
             if (source == Source.SERVER) {
                 updateStoriesFetchTime(context)
@@ -108,9 +113,24 @@ class StoriesPageViewModel: ViewModel() {
 
     private suspend fun updateStoriesFetchTime(context: Context) {
         val lastFetchTimeKey = longPreferencesKey("stories_last_fetch_time")
-
         context.dataStore.edit { settings ->
             settings[lastFetchTimeKey] = System.currentTimeMillis()
         }
+    }
+
+    private suspend fun enrichStoryWithUsername(story: StoryModel): StoryModel {
+        if (story.anonymous) return story.copy(author = "Anonymous")
+
+        // Try SERVER first
+        var (_, userInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.SERVER)
+
+        // Fallback to CACHE if server fails
+        if (userInfo == null) {
+            val (_, cachedUserInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.CACHE)
+            userInfo = cachedUserInfo
+        }
+
+        val username = userInfo?.username ?: "Unknown User"
+        return story.copy(author = username)
     }
 }
