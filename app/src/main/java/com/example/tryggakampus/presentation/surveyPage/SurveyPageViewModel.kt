@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.data.models.Evaluation
 import com.example.tryggakampus.data.models.EvaluationType
-import com.example.tryggakampus.data.repository.EvaluationRepository
+import com.example.tryggakampus.domain.repository.EvaluationRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
