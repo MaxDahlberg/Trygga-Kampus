@@ -14,8 +14,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.example.tryggakampus.dataStore
+import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
+import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 
 import com.google.firebase.firestore.Source
 
@@ -23,16 +25,17 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class StoriesPageViewModel: ViewModel() {
+class StoriesPageViewModel : ViewModel() {
+    // Story state
     var stories = mutableStateListOf<StoryModel>()
         private set
 
-    var showNewStoryForm = mutableStateOf<Boolean>(false)
+    var showNewStoryForm = mutableStateOf(false)
         private set
 
     var storyFormValue = mutableStateOf(TextFieldValue(""))
     var storyTitleValue = mutableStateOf(TextFieldValue(""))
-    var storyAnonymity = mutableStateOf<Boolean>(true)
+    var storyAnonymity = mutableStateOf(true)
         private set
 
     var loadingStories = mutableStateOf(false)
@@ -67,7 +70,8 @@ class StoriesPageViewModel: ViewModel() {
             )
 
             story?.let {
-                stories.add(0, story)
+                val enriched = enrichStoryWithUsername(it)
+                stories.add(0, enriched)
             }
 
             setStoryTitleValue(TextFieldValue())
@@ -81,7 +85,6 @@ class StoriesPageViewModel: ViewModel() {
         viewModelScope.launch {
             setLoadingStories(true)
 
-            stories.clear()
             val lastFetchTimeKey = longPreferencesKey("stories_last_fetch_time")
             val lastFetchTime: Long = context.dataStore.data
                 .map { preferences -> preferences[lastFetchTimeKey] ?: 0L }
@@ -89,14 +92,16 @@ class StoriesPageViewModel: ViewModel() {
 
             val currentTimeMillis = System.currentTimeMillis()
             val timeDifference = (currentTimeMillis - lastFetchTime) / 1000
-            val source = dataSource ?: if (timeDifference >= 20) {
-                Source.SERVER
-            } else {
-                Source.CACHE
+            val source = dataSource ?: if (timeDifference >= 20) Source.SERVER else Source.CACHE
+
+            val fetchedStories = StoryRepositoryImpl.getAllStories(source)
+
+            val enrichedStories = fetchedStories.map { story ->
+                enrichStoryWithUsername(story)
             }
 
-            stories.addAll(StoryRepositoryImpl.getAllStories(source))
-            Log.d("STORIES", stories.toList().toString())
+            stories.clear()
+            stories.addAll(enrichedStories.distinctBy { it.id })
 
             if (source == Source.SERVER) {
                 updateStoriesFetchTime(context)
@@ -108,9 +113,66 @@ class StoriesPageViewModel: ViewModel() {
 
     private suspend fun updateStoriesFetchTime(context: Context) {
         val lastFetchTimeKey = longPreferencesKey("stories_last_fetch_time")
-
         context.dataStore.edit { settings ->
             settings[lastFetchTimeKey] = System.currentTimeMillis()
         }
+    }
+
+    private suspend fun enrichStoryWithUsername(story: StoryModel): StoryModel {
+        if (story.anonymous) return story.copy(author = "Anonymous")
+
+        var (_, userInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.SERVER)
+
+        if (userInfo == null) {
+            val (_, cachedUserInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.CACHE)
+            userInfo = cachedUserInfo
+        }
+
+        val username = userInfo?.username ?: "Unknown User"
+        return story.copy(author = username)
+    }
+
+    fun deleteStory(story: StoryModel) {
+        viewModelScope.launch {
+            if (story.id.isEmpty()) return@launch
+
+            val success = StoryRepositoryImpl.deleteStory(story.id)
+            if (success) {
+                stories.removeAll { it.id == story.id }
+                Log.d("StoriesVM", "Deleted story locally: ${story.id}")
+            } else {
+                Log.d("StoriesVM", "Failed to delete story: ${story.id}")
+            }
+        }
+    }
+
+    // Comment state
+    var comments = mutableStateListOf<StoryCommentModel>()
+        private set
+
+    var commentText = mutableStateOf(TextFieldValue(""))
+        private set
+
+    var commentAnonymity = mutableStateOf(false)
+        private set
+
+    fun setCommentText(value: TextFieldValue) {
+        commentText.value = value
+    }
+
+    fun setCommentAnonymity(value: Boolean) {
+        commentAnonymity.value = value
+    }
+
+    fun loadComments(storyId: String) {
+        // todo
+    }
+
+    fun postComment(storyId: String) {
+        // todo
+    }
+
+    fun deleteComment(comment: StoryCommentModel) {
+        // todo
     }
 }

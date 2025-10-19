@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -46,6 +48,7 @@ import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.NetworkConnectivityObserver
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.domain.model.StoryModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Source
 import kotlin.math.roundToInt
 
@@ -132,10 +135,12 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
             modifier = Modifier.padding(vertical = 10.dp, horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            items(viewModel.stories) { item: StoryModel ->
-                StoryBox(item, short = true, onClick = {
-                    navigator.navigate(Routes.StoriesNavGraph.StoryPage(item.id!!))
-                })
+            items(viewModel.stories) { story ->
+                StoryBox(
+                    story = story,
+                    onDelete = { viewModel.deleteStory(story) },
+                    onCommentClick = { navigator.navigate(Routes.StoriesNavGraph.StoryPage(storyModelId = story.id)) },
+                )
             }
         }
 
@@ -147,23 +152,63 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
 }
 
 @Composable
-fun StoryBox(story: StoryModel, short: Boolean? = false, onClick: () -> Unit) {
-    Column(
+fun StoryBox(
+    story: StoryModel,
+    onDelete: () -> Unit,
+    onCommentClick: () -> Unit,
+    showCommentButton: Boolean = true
+) {
+    Box(
         modifier = Modifier
-            .clip(shape = RoundedCornerShape(10.dp))
-            .clickable { onClick() }
+            .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colorScheme.primary)
+            .fillMaxWidth()
             .padding(10.dp)
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        StoryBoxHeader(story.title?: "", story.author?: "Anonymous")
-        StoryBoxBody(
-            if (story.content.length > 200 && short == true)
-                story.content.substring(0, 200) + "..."
-            else
-                story.content
-        )
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            StoryBoxHeader(story.title ?: "", story.author ?: "Anonymous")
+
+            StoryBoxBody(
+                if (story.content.length > 200)
+                    story.content.substring(0, 200) + "..."
+                else
+                    story.content
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Bottom left: Comments button (only if enabled)
+                if (showCommentButton) {
+                    Text(
+                        text = "Comments",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFF19107),
+                        modifier = Modifier.clickable { onCommentClick() }
+                    )
+                } else {
+                    Spacer(Modifier.width(1.dp)) // Balances layout if on comments page.
+                }
+
+                // Bottom right: Delete only if signed-in user is author
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                if (currentUser?.uid == story.userId) {
+                    Text(
+                        text = "Delete",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Red,
+                        modifier = Modifier.clickable { onDelete() }
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -171,7 +216,7 @@ fun StoryBox(story: StoryModel, short: Boolean? = false, onClick: () -> Unit) {
 fun StoryBoxHeader(title: String, author: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(title, fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
         Text(author, fontSize = 12.sp)
