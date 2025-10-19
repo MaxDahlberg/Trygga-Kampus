@@ -18,6 +18,12 @@ object DateUtils {
         return formatter.format(date)
     }
 
+    fun getWeekOfYear(date: Date): Int {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        return calendar.get(Calendar.WEEK_OF_YEAR)
+    }
+
     fun isSameDay(date1: Date, date2: Date): Boolean {
         val cal1 = Calendar.getInstance().apply { time = date1 }
         val cal2 = Calendar.getInstance().apply { time = date2 }
