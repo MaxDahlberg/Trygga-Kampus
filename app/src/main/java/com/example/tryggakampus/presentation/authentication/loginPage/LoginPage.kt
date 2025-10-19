@@ -218,15 +218,14 @@ fun SocialLoginIcon(
 ) {
     Box(
         modifier = Modifier
-            .size(60.dp)
+            .size(40.dp)
             .clip(CircleShape)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
                 shape = CircleShape
             )
-            .clickable(enabled = enabled, onClick = onClick)
-            .padding(12.dp),
+            .clickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
         Image(
