@@ -17,30 +17,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.tryggakampus.R
 
 @Composable
 fun DailyProgressDiagram(viewModel: HabitTrackerViewModel) {
     val dailyProgress by viewModel.dailyProgress.collectAsState()
     val animatedProgress by animateFloatAsState(targetValue = dailyProgress, label = "")
 
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val primaryContainerColor = MaterialTheme.colorScheme.primaryContainer
+
     Column(
         modifier = Modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Daily Progress", style = MaterialTheme.typography.titleLarge)
+        Text(stringResource(id = R.string.daily_progress), style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
         Box(contentAlignment = Alignment.Center, modifier = Modifier.size(150.dp)) {
             Canvas(modifier = Modifier.size(150.dp)) {
                 drawArc(
-                    color = MaterialTheme.colorScheme.primaryContainer,
+                    color = primaryContainerColor,
                     startAngle = -90f,
                     sweepAngle = 360f,
                     useCenter = false,
                     style = Stroke(width = 15f, cap = StrokeCap.Round)
                 )
                 drawArc(
-                    color = MaterialTheme.colorScheme.primary,
+                    color = primaryColor,
                     startAngle = -90f,
                     sweepAngle = 360 * animatedProgress,
                     useCenter = false,

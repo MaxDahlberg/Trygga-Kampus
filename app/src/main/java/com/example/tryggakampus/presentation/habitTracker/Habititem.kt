@@ -11,16 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
+import com.example.tryggakampus.domain.model.Habit
 
 @Composable
 fun HabitItem(
-    habit: com.example.tryggakampus.domain.model.Habit,
+    habit: Habit,
     isCompleted: Boolean,
     onToggleCompletion: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (isCompleted) MaterialTheme.colorScheme.primaryContainer
             else MaterialTheme.colorScheme.surface
@@ -39,7 +42,7 @@ fun HabitItem(
                     modifier = Modifier
                         .size(16.dp)
                         .clip(MaterialTheme.shapes.small)
-                        .background(Color(android.graphics.Color.parseColor(habit.color)))
+                        .background(Color(habit.color.toColorInt()))
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))

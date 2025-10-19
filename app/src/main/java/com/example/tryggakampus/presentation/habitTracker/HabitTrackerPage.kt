@@ -1,17 +1,33 @@
 package com.example.tryggakampus.presentation.habitTracker
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import java.util.*
+import com.example.tryggakampus.R
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,14 +41,25 @@ fun HabitTrackerPage(
 
     var showAddHabitDialog by remember { mutableStateOf(false) }
 
+    val currentLocale = LocalConfiguration.current.locales[0]
+    val todaysDayOfWeek = remember(currentLocale) { SimpleDateFormat("EEEE", currentLocale).format(Date()) }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Habit Tracker") },
+                title = {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Habit Tracker")
+                        Text(
+                            text = todaysDayOfWeek,
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -47,41 +74,85 @@ fun HabitTrackerPage(
             }
         }
     ) { padding ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            // Date selector
-            DateSelector(
-                selectedDate = selectedDate, // This should be Date type
-                onDateSelected = viewModel::setSelectedDate
-            )
+            item {
+                DateSelector(
+                    selectedDate = selectedDate,
+                    onDateSelected = viewModel::setSelectedDate
+                )
+            }
 
-            // Habits list
+            item {
+                DailyProgressDiagram(viewModel = viewModel)
+            }
+
             if (habits.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "No habits yet. Add your first habit!",
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                item {
+                    Box(
+                        modifier = Modifier.fillParentMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            "No habits yet. Add your first habit!",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 }
             } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp)
-                ) {
-                    items(habits) { habit ->
-                        HabitItem(
-                            habit = habit,
-                            isCompleted = completions[habit.id] == true,
-                            onToggleCompletion = { viewModel.toggleHabitCompletion(habit.id) },
-                            onDelete = { viewModel.deleteHabit(habit.id) }
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                items(habits) { habit ->
+                    HabitItem(
+                        habit = habit,
+                        isCompleted = completions[habit.id] == true,
+                        onToggleCompletion = { viewModel.toggleHabitCompletion(habit.id) },
+                        onDelete = { viewModel.deleteHabit(habit.id) },
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                item {
+                    var showWeeklyProgress by remember { mutableStateOf(false) }
+
+                    LaunchedEffect(showWeeklyProgress) {
+                        if (showWeeklyProgress) {
+                            viewModel.loadWeeklyProgress()
+                        }
+                    }
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { showWeeklyProgress = !showWeeklyProgress }
+                                .padding(16.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.weekly_progress_title),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Icon(
+                                    imageVector = if (showWeeklyProgress) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                    contentDescription = if (showWeeklyProgress) "Collapse" else "Expand"
+                                )
+                            }
+                            if (showWeeklyProgress) {
+                                Spacer(modifier = Modifier.height(16.dp))
+                                WeeklyProgressView(viewModel = viewModel)
+                            }
+                        }
                     }
                 }
             }

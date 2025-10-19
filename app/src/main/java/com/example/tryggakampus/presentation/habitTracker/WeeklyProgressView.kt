@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Card
@@ -49,8 +47,8 @@ fun WeeklyProgressView(viewModel: HabitTrackerViewModel) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn {
-            items(items = habits, key = { it.id }) { habit ->
+        Column {
+            habits.forEach { habit ->
                 val progressForHabit: List<Boolean> = weeklyProgress[habit.id] ?: emptyList()
                 HabitProgressRow(
                     habit = habit,
