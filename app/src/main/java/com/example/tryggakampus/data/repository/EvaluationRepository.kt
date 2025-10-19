@@ -1,5 +1,6 @@
-package com.example.tryggakampus.domain.repositories
+package com.example.tryggakampus.data.repository
 
+import androidx.compose.animation.graphics.vector.Timestamp
 import com.example.tryggakampus.data.models.Evaluation
 import kotlinx.coroutines.flow.Flow
 
@@ -8,5 +9,5 @@ interface EvaluationRepository {
 
     fun getEvaluationsFlow(): Flow<List<Evaluation>>
 
-    suspend fun getEvaluationsForDateRange(from: androidx.compose.animation.graphics.vector.Timestamp, to: androidx.compose.animation.graphics.vector.Timestamp): Result<List<Evaluation>>
+    suspend fun getEvaluationsForDateRange(from: Timestamp, to: Timestamp): Result<List<Evaluation>>
 }
