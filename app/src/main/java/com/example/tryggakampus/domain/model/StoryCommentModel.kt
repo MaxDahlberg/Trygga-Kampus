@@ -5,9 +5,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class StoryCommentModel(
     var id: String = "",
-    var storyId: String,
-    val userId: String,
+    var storyId: String= "",
+    val userId: String= "",
     val author: String? = null,
     val content: String = "No content",
+    val anonymous: Boolean = false,
     val createdAt: Long = System.currentTimeMillis()
 )

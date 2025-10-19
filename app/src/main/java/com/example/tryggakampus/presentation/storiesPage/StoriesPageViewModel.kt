@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.example.tryggakampus.dataStore
+import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class StoriesPageViewModel : ViewModel() {
+    // Story state
     var stories = mutableStateListOf<StoryModel>()
         private set
 
@@ -68,7 +70,6 @@ class StoriesPageViewModel : ViewModel() {
             )
 
             story?.let {
-                // enrich the new story before adding it
                 val enriched = enrichStoryWithUsername(it)
                 stories.add(0, enriched)
             }
@@ -93,10 +94,8 @@ class StoriesPageViewModel : ViewModel() {
             val timeDifference = (currentTimeMillis - lastFetchTime) / 1000
             val source = dataSource ?: if (timeDifference >= 20) Source.SERVER else Source.CACHE
 
-            // Fetch stories
             val fetchedStories = StoryRepositoryImpl.getAllStories(source)
 
-            // Enrich with usernames
             val enrichedStories = fetchedStories.map { story ->
                 enrichStoryWithUsername(story)
             }
@@ -122,10 +121,8 @@ class StoriesPageViewModel : ViewModel() {
     private suspend fun enrichStoryWithUsername(story: StoryModel): StoryModel {
         if (story.anonymous) return story.copy(author = "Anonymous")
 
-        // Try SERVER first
         var (_, userInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.SERVER)
 
-        // Fallback to CACHE if server fails
         if (userInfo == null) {
             val (_, cachedUserInfo) = UserInformationRepositoryImpl.getUserInformation(story.userId, Source.CACHE)
             userInfo = cachedUserInfo
@@ -147,5 +144,35 @@ class StoriesPageViewModel : ViewModel() {
                 Log.d("StoriesVM", "Failed to delete story: ${story.id}")
             }
         }
+    }
+
+    // Comment state
+    var comments = mutableStateListOf<StoryCommentModel>()
+        private set
+
+    var commentText = mutableStateOf(TextFieldValue(""))
+        private set
+
+    var commentAnonymity = mutableStateOf(false)
+        private set
+
+    fun setCommentText(value: TextFieldValue) {
+        commentText.value = value
+    }
+
+    fun setCommentAnonymity(value: Boolean) {
+        commentAnonymity.value = value
+    }
+
+    fun loadComments(storyId: String) {
+        // todo
+    }
+
+    fun postComment(storyId: String) {
+        // todo
+    }
+
+    fun deleteComment(comment: StoryCommentModel) {
+        // todo
     }
 }

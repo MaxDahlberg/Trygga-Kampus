@@ -139,8 +139,7 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
                 StoryBox(
                     story = story,
                     onDelete = { viewModel.deleteStory(story) },
-                    onCommentClick = { /* todo: open comments */ },
-                    onClick = { /* todo: full story page */ }
+                    onCommentClick = { navigator.navigate(Routes.StoriesNavGraph.StoryPage(storyModelId = story.id)) },
                 )
             }
         }
@@ -157,7 +156,7 @@ fun StoryBox(
     story: StoryModel,
     onDelete: () -> Unit,
     onCommentClick: () -> Unit,
-    onClick: () -> Unit,
+    showCommentButton: Boolean = true
 ) {
     Box(
         modifier = Modifier
@@ -165,12 +164,12 @@ fun StoryBox(
             .background(MaterialTheme.colorScheme.primary)
             .fillMaxWidth()
             .padding(10.dp)
-            .clickable { onClick() }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             StoryBoxHeader(story.title ?: "", story.author ?: "Anonymous")
+
             StoryBoxBody(
                 if (story.content.length > 200)
                     story.content.substring(0, 200) + "..."
@@ -184,14 +183,18 @@ fun StoryBox(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Bottom left: Comments placeholder
-                Text(
-                    text = "Comments",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFFF19107),
-                    modifier = Modifier.clickable { onCommentClick() }
-                )
+                // Bottom left: Comments button (only if enabled)
+                if (showCommentButton) {
+                    Text(
+                        text = "Comments",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFF19107),
+                        modifier = Modifier.clickable { onCommentClick() }
+                    )
+                } else {
+                    Spacer(Modifier.width(1.dp)) // Balances layout if on comments page.
+                }
 
                 // Bottom right: Delete only if signed-in user is author
                 val currentUser = FirebaseAuth.getInstance().currentUser
