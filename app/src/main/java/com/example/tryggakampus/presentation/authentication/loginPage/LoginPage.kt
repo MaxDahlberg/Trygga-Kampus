@@ -221,7 +221,7 @@ fun SocialLoginIcon(
             .size(40.dp)
             .clip(CircleShape)
             .border(
-                width = 1.dp,
+                width = 0.dp,
                 color = MaterialTheme.colorScheme.outline,
                 shape = CircleShape
             )

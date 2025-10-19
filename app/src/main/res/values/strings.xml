@@ -18,6 +18,7 @@
     <string
         name="facebook_app_id">1742868223033407
     </string>
+    <string name="fb_login_protocol_scheme">fb1742868223033407</string>
     <string name="facebook_client_token">7be65d0c45a0a5076fb19f2f685d12be</string>
 
     <!-- Stories Begin -->
