@@ -9,59 +9,57 @@ enum class AccessLevel {
 }
 
 enum class DrawerItem(
-    val title: String,
+    val titleResId: Int, // Change from String to resource ID
     val icon: Int,
     val accessLevel: AccessLevel = AccessLevel.ALL
 ) {
     Home(
         icon = R.drawable.baseline_home_filled_24,
-        title = "Home"
+        titleResId = R.string.drawer_home
     ),
     Profile(
         icon = R.drawable.baseline_person_24,
-        title = "Profile",
+        titleResId = R.string.drawer_profile,
         accessLevel = AccessLevel.AUTH_ONLY
     ),
     Articles(
         icon = R.drawable.baseline_articles_24,
-        title = "Articles"
+        titleResId = R.string.drawer_articles
     ),
     Form(
         icon = R.drawable.baseline_forum_24,
-        title = "Form"
+        titleResId = R.string.drawer_form
     ),
     Survey(
         icon = R.drawable.baseline_diamond_24,
-        title = "Survey",
+        titleResId = R.string.drawer_survey,
         accessLevel = AccessLevel.AUTH_ONLY
     ),
-    Habits( //
+    Habits(
         icon = R.drawable.baseline_check_circle_24,
-        title = "Habit Tracker",
+        titleResId = R.string.drawer_habits,
         accessLevel = AccessLevel.AUTH_ONLY
     ),
     Stories(
         icon = R.drawable.baseline_articles_24,
-        title = "Stories"
+        titleResId = R.string.drawer_stories
     ),
     Advice(
         icon = R.drawable.baseline_advice_24,
-        title = "Advice"
+        titleResId = R.string.drawer_advice
     ),
     Login(
         icon = R.drawable.baseline_articles_24,
-        title = "Login",
+        titleResId = R.string.drawer_login,
         accessLevel = AccessLevel.UNAUTH_ONLY
     ),
-
-    // BUTTONS ON BOTTOM
     Logout(
         icon = R.drawable.baseline_person_24,
-        title = "Logout",
+        titleResId = R.string.drawer_logout,
         accessLevel = AccessLevel.AUTH_ONLY
     ),
     Settings(
         icon = R.drawable.baseline_settings_24,
-        title = "Settings"
+        titleResId = R.string.drawer_settings
     )
 }
