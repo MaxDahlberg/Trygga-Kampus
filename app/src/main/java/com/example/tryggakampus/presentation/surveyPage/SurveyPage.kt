@@ -20,8 +20,7 @@ import com.example.tryggakampus.di.AppContainer
 import com.example.tryggakampus.di.ViewModelFactory
 import kotlinx.coroutines.launch
 
-// This defines the questions for our new dynamic survey.
-// In the future, you could fetch this list from Firestore as well.
+
 val morningCheckInQuestions = listOf(
     Question(id = "q_mood", text = "How are you feeling this morning?", type = QuestionType.SLIDER_1_5),
     Question(id = "q_sleep_quality", text = "How would you rate your sleep quality?", type = QuestionType.SLIDER_1_5),
@@ -30,17 +29,13 @@ val morningCheckInQuestions = listOf(
 
 @Composable
 fun SurveyPage(title: String) {
-    // 1. USE THE CORRECT ViewModelFactory
     val viewModel: SurveyPageViewModel = viewModel(
         factory = ViewModelFactory(AppContainer.provideEvaluationRepository())
     )
 
-    // 2. USE THE NEW DYNAMIC questions list
     val questions = morningCheckInQuestions
-    // Create a state map to hold answers, keyed by question ID
     val answers = remember { mutableStateMapOf<String, Any>() }
 
-    // Form is complete if we have an answer for every question
     val isFormComplete by remember {
         derivedStateOf { answers.size == questions.size }
     }
@@ -67,7 +62,6 @@ fun SurveyPage(title: String) {
                 )
             }
 
-            // 3. RENDER a different UI element based on the QuestionType
             itemsIndexed(questions) { _, question ->
                 Card(
                     modifier = Modifier
@@ -83,23 +77,21 @@ fun SurveyPage(title: String) {
                         )
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // Dynamically choose the input based on question type
                         when (question.type) {
                             QuestionType.SLIDER_1_5, QuestionType.SLIDER_1_10 -> {
                                 val maxRange = if (question.type == QuestionType.SLIDER_1_10) 10f else 5f
-                                // Get the current slider value, defaulting to 1
-                                val currentSliderValue = (answers[question.id] as? Float) ?: 1f
+                                val sliderValue = (answers[question.id] as? Float) ?: 1f
 
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Slider(
-                                        value = currentSliderValue,
+                                        value = sliderValue,
                                         onValueChange = { answers[question.id] = it },
                                         valueRange = 1f..maxRange,
                                         steps = (maxRange - 2).toInt(),
                                         modifier = Modifier.weight(1f)
                                     )
                                     Text(
-                                        text = currentSliderValue.toInt().toString(),
+                                        text = sliderValue.toInt().toString(),
                                         modifier = Modifier.padding(start = 16.dp)
                                     )
                                 }
@@ -112,7 +104,7 @@ fun SurveyPage(title: String) {
                                     modifier = Modifier.fillMaxWidth()
                                 )
                             }
-                            // You can add more types like MULTIPLE_CHOICE here later
+                            // We can add more types like MULTIPLE_CHOICE here later
                             else -> {}
                         }
                     }
@@ -125,7 +117,7 @@ fun SurveyPage(title: String) {
                     onClick = {
                         isSubmitting = true
                         scope.launch {
-                            // 4. PREPARE and SUBMIT the data in the correct format
+                            // PREPARE and SUBMIT the data in the correct format
                             val selfEsteemAnswer = (answers["q_self_esteem"] as? Float)?.toInt()
 
                             viewModel.submitEvaluation(
