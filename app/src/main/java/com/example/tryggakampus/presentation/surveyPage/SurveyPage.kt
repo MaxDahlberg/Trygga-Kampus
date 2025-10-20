@@ -2,7 +2,7 @@ package com.example.tryggakampus.presentation.surveyPage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
@@ -20,20 +20,30 @@ import com.example.tryggakampus.di.AppContainer
 import com.example.tryggakampus.di.ViewModelFactory
 import kotlinx.coroutines.launch
 
-
+// Define the questions for all survey types in one place for organization.
 val morningCheckInQuestions = listOf(
     Question(id = "q_mood", text = "How are you feeling this morning?", type = QuestionType.SLIDER_1_5),
     Question(id = "q_sleep_quality", text = "How would you rate your sleep quality?", type = QuestionType.SLIDER_1_5),
     Question(id = "q_self_esteem", text = "On a scale of 1-10, how high is your self-esteem right now?", type = QuestionType.SLIDER_1_10)
 )
 
+val eveningReflectionQuestions = listOf(
+    Question(id = "q_day_rating", text = "How would you rate your day overall?", type = QuestionType.SLIDER_1_5),
+    Question(id = "q_accomplishment", text = "What is one thing you accomplished today?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_challenge", text = "What was the biggest challenge you faced today?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_self_esteem_evening", text = "On a scale of 1-10, how high is your self-esteem this evening?", type = QuestionType.SLIDER_1_10)
+)
+
 @Composable
-fun SurveyPage(title: String) {
+fun SurveyTemplate(
+    title: String,
+    questions: List<Question>,
+    evaluationType: EvaluationType
+) {
     val viewModel: SurveyPageViewModel = viewModel(
         factory = ViewModelFactory(AppContainer.provideEvaluationRepository())
     )
 
-    val questions = morningCheckInQuestions
     val answers = remember { mutableStateMapOf<String, Any>() }
 
     val isFormComplete by remember {
@@ -62,7 +72,7 @@ fun SurveyPage(title: String) {
                 )
             }
 
-            itemsIndexed(questions) { _, question ->
+            items(questions) { question ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -104,8 +114,10 @@ fun SurveyPage(title: String) {
                                     modifier = Modifier.fillMaxWidth()
                                 )
                             }
-                            // We can add more types like MULTIPLE_CHOICE here later
-                            else -> {}
+                            QuestionType.MULTIPLE_CHOICE -> {
+
+                                Text("Multiple choice UI not implemented yet.")
+                            }
                         }
                     }
                 }
@@ -117,22 +129,25 @@ fun SurveyPage(title: String) {
                     onClick = {
                         isSubmitting = true
                         scope.launch {
-                            // PREPARE and SUBMIT the data in the correct format
-                            val selfEsteemAnswer = (answers["q_self_esteem"] as? Float)?.toInt()
+                            // Find any answer that could be a self-esteem score
+                            val selfEsteemScore = answers.entries
+                                .find { it.key.contains("self_esteem", ignoreCase = true) }
+                                ?.let { (it.value as? Float)?.toInt() }
 
                             viewModel.submitEvaluation(
-                                type = EvaluationType.MORNING_CHECK_IN,
-                                answers = answers.toMap(), // Convert the state map to a regular map
-                                selfEsteemScore = selfEsteemAnswer
+                                type = evaluationType,
+                                answers = answers.toMap(),
+                                selfEsteemScore = selfEsteemScore
                             )
 
-                            // Show success message and clear the form
                             snackbarHostState.showSnackbar("Evaluation submitted successfully!")
                             answers.clear()
                             isSubmitting = false
                         }
                     },
-                    modifier = Modifier.fillMaxWidth().height(50.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
                     enabled = isFormComplete && !isSubmitting
                 ) {
                     if (isSubmitting) {
@@ -148,4 +163,22 @@ fun SurveyPage(title: String) {
             }
         }
     }
+}
+
+@Composable
+fun MorningSurveyPage(title: String) {
+    SurveyTemplate(
+        title = title,
+        questions = morningCheckInQuestions,
+        evaluationType = EvaluationType.MORNING_CHECK_IN
+    )
+}
+
+@Composable
+fun EveningSurveyPage(title: String) {
+    SurveyTemplate(
+        title = title,
+        questions = eveningReflectionQuestions,
+        evaluationType = EvaluationType.EVENING_REFLECTION
+    )
 }

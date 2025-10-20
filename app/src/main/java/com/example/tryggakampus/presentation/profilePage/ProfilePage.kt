@@ -14,7 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
 
 @Composable
-fun ProfilePage() {
+fun ProfilePage(title: String) {
     val vm: ProfileViewModel = viewModel<ProfileViewModel>()
     val scrollState = rememberScrollState()
 
@@ -26,7 +26,7 @@ fun ProfilePage() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        ProfileHeader()
+        ProfileHeader(title = title)
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -166,9 +166,9 @@ fun ProfilePage() {
 }
 
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(title: String) {
     Text(
-        text = "Profile",
+        text = title,
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground

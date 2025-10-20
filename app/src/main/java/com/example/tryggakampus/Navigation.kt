@@ -28,9 +28,10 @@ import com.example.tryggakampus.presentation.storiesPage.StoriesPage
 import com.example.tryggakampus.presentation.storiesPage.StoriesPageViewModel
 import com.example.tryggakampus.presentation.storiesPage.StoryPage
 import com.example.tryggakampus.presentation.advicePage.AdvicePage
-import com.example.tryggakampus.presentation.surveyPage.SurveyPage
 import com.example.tryggakampus.presentation.authentication.loginPage.LoginPage
 import com.example.tryggakampus.presentation.authentication.registerPage.RegisterPage
+import com.example.tryggakampus.presentation.surveyPage.EveningSurveyPage
+import com.example.tryggakampus.presentation.surveyPage.MorningSurveyPage
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -77,8 +78,11 @@ sealed interface Routes {
         override fun routeName() = "AdvicePage"
     }
 
-    @Serializable data class SurveyPage(val title: String = "Survey"): Routes {
+    @Serializable data class SurveyPage(val title: String = "Morning Check-In"): Routes {
         override fun routeName() = "SurveyPage"
+    }
+    @Serializable data class EveningSurveyPage(val title: String = "Evening Reflection") : Routes {
+        override fun routeName() = "EveningSurveyPage"
     }
 
     @Serializable data object Authentication {
@@ -114,7 +118,7 @@ fun Navigation(
 
                 composable<Routes.ProfilePage> {
                     val args = it.toRoute<Routes.ProfilePage>()
-                    ProfilePage()
+                    ProfilePage(args.title)
                 }
 
                 composable<Routes.ArticlesPage> {
@@ -128,7 +132,11 @@ fun Navigation(
 
                 composable<Routes.SurveyPage> {
                     val args = it.toRoute<Routes.SurveyPage>()
-                    SurveyPage(args.title)
+                    MorningSurveyPage(args.title)
+                }
+                composable<Routes.EveningSurveyPage> {
+                    val args = it.toRoute<Routes.EveningSurveyPage>()
+                    EveningSurveyPage(args.title)
                 }
 
                 navigation<Routes.StoriesNavGraph> (startDestination = Routes.StoriesNavGraph.StoriesPage) {
