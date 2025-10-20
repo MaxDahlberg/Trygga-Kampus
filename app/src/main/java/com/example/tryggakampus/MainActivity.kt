@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/tryggakampus/MainActivity.kt
 package com.example.tryggakampus
 
 import android.content.Context
@@ -28,7 +27,7 @@ class MainActivity : ComponentActivity() {
             TryggaKampusTheme {
                 // Initialize and watch for language changes
                 LanguageManager.InitializeLanguage()
-                Navigation { pageToView -> MainScreen(pageToView) }
+                Navigation { navController, pageToView -> MainScreen(navController, pageToView) }
             }
         }
     }

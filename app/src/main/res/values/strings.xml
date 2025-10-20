@@ -15,6 +15,11 @@
     <string name="buttonInfo">
         This button will prompt you with a form that you fill in with what you\'re dealing with and send it to someone to provide the help needed.
     </string>
+    <string
+        name="facebook_app_id" translatable="false">1742868223033407
+    </string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
+    <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
 
     <!-- Stories Begin -->
     <string name="stories_page_title">Share your story with others</string>

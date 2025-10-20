@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -101,14 +102,18 @@ sealed interface Routes {
 
 @Composable
 fun Navigation(
-    children: @Composable() (page: @Composable()() -> Unit) -> Unit
+    children: @Composable (navController: NavHostController, page: @Composable () -> Unit) -> Unit
 ) {
     val navController = rememberNavController()
+    val showBars = remember { mutableStateOf(true) }
 
     observeAuthStateChanges(navController)
 
-    CompositionLocalProvider(LocalNavController provides navController) {
-        children {
+    CompositionLocalProvider(
+        LocalNavController provides navController,
+        LocalShowBars provides showBars
+    ) {
+        children(navController) {
             NavHost(navController = navController, startDestination = Routes.LandingPage()) {
                 composable<Routes.LandingPage> {
                     val args = it.toRoute<Routes.LandingPage>()
@@ -117,7 +122,7 @@ fun Navigation(
 
                 composable<Routes.ProfilePage> {
                     val args = it.toRoute<Routes.ProfilePage>()
-                    ProfilePage(args.title)
+                    ProfilePage()
                 }
 
                 composable<Routes.ArticlesPage> {

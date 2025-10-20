@@ -1,14 +1,15 @@
 package com.example.tryggakampus.domain.repository
 
 import android.util.Log
+import com.google.firebase.Firebase
 
 import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.ktx.auth
-
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
 sealed class AuthResponse {
@@ -23,6 +24,10 @@ sealed class AuthResponse {
         SUCCESS,
         FAILURE,
         EMAIL_TAKEN
+    }
+    enum class PasswordReset {
+        SUCCESS,
+        FAILURE
     }
 }
 
@@ -77,5 +82,32 @@ object AuthRepositoryImpl: AuthRepository {
         }
 
         return AuthResponse.SignUp.ERROR
+    }
+    suspend fun sendPasswordResetEmail(email: String): AuthResponse.PasswordReset {
+        return try {
+            Firebase.auth.sendPasswordResetEmail(email).await()
+            AuthResponse.PasswordReset.SUCCESS
+        } catch (e: Exception) {
+
+            AuthResponse.PasswordReset.FAILURE
+        }
+    }
+    suspend fun signInWithGoogle(idToken: String): AuthResponse.SignIn {
+        return try {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            Firebase.auth.signInWithCredential(credential).await()
+            AuthResponse.SignIn.SUCCESS
+        } catch (e: Exception) {
+            AuthResponse.SignIn.ERROR
+        }
+    }
+    suspend fun signInWithFacebook(token: String): AuthResponse.SignIn {
+        return try {
+            val credential = FacebookAuthProvider.getCredential(token)
+            Firebase.auth.signInWithCredential(credential).await()
+            AuthResponse.SignIn.SUCCESS
+        } catch (e: Exception) {
+            AuthResponse.SignIn.ERROR
+        }
     }
 }

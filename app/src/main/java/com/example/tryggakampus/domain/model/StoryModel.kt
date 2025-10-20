@@ -1,14 +1,15 @@
 package com.example.tryggakampus.domain.model
 
-import com.google.firebase.Timestamp
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class StoryModel(
-    var id: String? = null,
+    var id: String = "",
     val title: String? = null,
-    // val userId: String,
+    val userId: String = "",
     val author: String? = null,
+    val anonymous: Boolean = true,
     val content: String = "No content",
-    // val createdAt: Timestamp = Timestamp.now()
+    val commentIds: List<String> = emptyList(),
+    val createdAt: Long = System.currentTimeMillis()
 )

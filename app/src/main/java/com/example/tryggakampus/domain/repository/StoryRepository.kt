@@ -2,26 +2,24 @@ package com.example.tryggakampus.domain.repository
 
 import android.util.Log
 import com.example.tryggakampus.domain.model.StoryModel
+import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.QuerySnapshot
-
 import com.google.firebase.firestore.Source
-
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
-import okhttp3.internal.wait
 
 interface StoryRepository {
     suspend fun getAllStories(source: Source): List<StoryModel>
     suspend fun postStory(
-        // userId: String,
         title: String?,
         content: String,
         isAnonymous: Boolean? = true
     ): StoryModel?
 
     suspend fun fetchAll(source: Source): QuerySnapshot?
+    suspend fun deleteStory(storyId: String): Boolean
 }
 
 object StoryRepositoryImpl: StoryRepository {
@@ -71,27 +69,50 @@ object StoryRepositoryImpl: StoryRepository {
     }
 
     override suspend fun postStory(
-        // userId: String,
         title: String?,
         content: String,
         isAnonymous: Boolean?
     ): StoryModel? {
-        try {
-            val result = Firebase.firestore.collection(COLLECTION_NAME).add(
-                StoryModel(
-                    //userId = userId,
-                    title = title,
-                    content = content,
-                    author = if (isAnonymous == false) "Jimmy" else null
-                )
-            ).await()
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) {
+            Log.d("FATAL", "No signed-in user")
+            return null
+        }
 
-            return result.get().await().toObject(StoryModel::class.java)?.apply {
-                this.id = result.id
-            }
+        return try {
+            val collection = Firebase.firestore.collection(COLLECTION_NAME)
+            val docRef = collection.document() // generate a new document ID
+
+            val story = StoryModel(
+                id = docRef.id,
+                userId = currentUser.uid,
+                title = title,
+                content = content,
+                author = null, // don’t store username in Firestore
+                anonymous = isAnonymous ?: true
+            )
+
+            docRef.set(story).await()
+            story
+
         } catch (e: Exception) {
             Log.d("FATAL", e.stackTraceToString())
-            return null
+            null
+        }
+    }
+
+    override suspend fun deleteStory(storyId: String): Boolean {
+        return try {
+            Firebase.firestore
+                .collection(COLLECTION_NAME)
+                .document(storyId)
+                .delete()
+                .await()
+            Log.d("StoryRepository", "Deleted story: $storyId")
+            true
+        } catch (e: Exception) {
+            Log.d("StoryRepository", "Error deleting story: ${e.stackTraceToString()}")
+            false
         }
     }
 }
