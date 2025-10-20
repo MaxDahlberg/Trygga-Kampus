@@ -34,6 +34,9 @@ import com.example.tryggakampus.presentation.authentication.registerPage.Registe
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
+import com.example.tryggakampus.presentation.game.ScratchGamePage
+import com.example.tryggakampus.presentation.selfassessment.SelfAssessmentPage
+
 import kotlinx.serialization.Serializable
 
 val LocalNavController = compositionLocalOf<NavHostController> {
@@ -46,6 +49,7 @@ sealed interface Routes {
     @Serializable data class LandingPage(val title: String = "Home"): Routes {
         override fun routeName() = "LandingPage"
     }
+
 
     @Serializable data class SettingsPage(val title: String = "Settings"): Routes {
         override fun routeName() = "SettingsPage"
@@ -73,6 +77,17 @@ sealed interface Routes {
         }
     }
 
+    // New Videos nav graph
+    @kotlinx.serialization.Serializable object VideosNavGraph {
+        @kotlinx.serialization.Serializable data object VideosPage: Routes {
+            override fun routeName() = "VideosPage"
+        }
+        // Pass only the file name to avoid slashes in route params
+        @kotlinx.serialization.Serializable data class VideoPlayer(val fileName: String = ""): Routes {
+            override fun routeName() = "VideoPlayer"
+        }
+    }
+
     @Serializable data class AdvicePage(val title: String = "Advice"): Routes {
         override fun routeName() = "AdvicePage"
     }
@@ -80,7 +95,11 @@ sealed interface Routes {
     @Serializable data class SurveyPage(val title: String = "Survey"): Routes {
         override fun routeName() = "SurveyPage"
     }
-
+    // inside sealed interface Routes
+    @Serializable
+    data class ScratchGamePage(val title: String = "Game"): Routes {
+        override fun routeName() = "ScratchGamePage"
+    }
     @Serializable data object Authentication {
         @Serializable data object LoginPage: Routes {
             override fun routeName() = "LoginPage"
@@ -89,6 +108,10 @@ sealed interface Routes {
         @Serializable data object RegisterPage: Routes {
             override fun routeName() = "RegisterPage"
         }
+    }
+
+    @kotlinx.serialization.Serializable data class SelfAssessmentPage(val title: String = "Self-assessment"): Routes {
+        override fun routeName() = "SelfAssessmentPage"
     }
 }
 
@@ -117,6 +140,11 @@ fun Navigation(
                     ProfilePage()
                 }
 
+                composable<Routes.ScratchGamePage> {
+                    ScratchGamePage() // we’ll create this Composable below
+                }
+
+
                 composable<Routes.ArticlesPage> {
                     ArticlesPage()
                 }
@@ -129,6 +157,10 @@ fun Navigation(
                 composable<Routes.SurveyPage> {
                     val args = it.toRoute<Routes.SurveyPage>()
                     SurveyPage(args.title)
+                }
+
+                composable<Routes.SelfAssessmentPage> {
+                    SelfAssessmentPage()
                 }
 
                 navigation<Routes.StoriesNavGraph> (startDestination = Routes.StoriesNavGraph.StoriesPage) {
@@ -148,6 +180,18 @@ fun Navigation(
                         val vm: StoriesPageViewModel = viewModel(storiesBackStackEntry)
                         val args = it.toRoute<Routes.StoriesNavGraph.StoryPage>()
                         StoryPage(vm, args.storyModelId)
+                    }
+                }
+
+                // Videos navigation graph
+                navigation<Routes.VideosNavGraph>(startDestination = Routes.VideosNavGraph.VideosPage) {
+                    composable<Routes.VideosNavGraph.VideosPage> {
+                        com.example.tryggakampus.presentation.videosPage.VideosPage()
+                    }
+                    composable<Routes.VideosNavGraph.VideoPlayer> {
+                        val args = it.toRoute<Routes.VideosNavGraph.VideoPlayer>()
+                        val assetPath = "videos/" + args.fileName
+                        com.example.tryggakampus.presentation.videosPage.VideoPlayerPage(assetPath = assetPath)
                     }
                 }
 
@@ -216,4 +260,3 @@ private fun navigateBasedOnAuthState(isAuthenticated: Boolean, navController: Na
         }
     }
 }
-

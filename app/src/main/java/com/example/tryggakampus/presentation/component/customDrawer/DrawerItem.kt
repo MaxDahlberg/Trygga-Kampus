@@ -39,9 +39,17 @@ enum class DrawerItem(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"
     ),
+    Videos(
+        icon = R.drawable.baseline_articles_24,
+        title = "Videos"
+    ),
     Advice(
         icon = R.drawable.baseline_advice_24,
         title = "Advice"
+    ),
+    Game(
+        icon = R.drawable.baseline_diamond_24,
+        title = "Game"
     ),
     Login(
         icon = R.drawable.baseline_articles_24,

@@ -1,6 +1,7 @@
 package com.example.tryggakampus.presentation.component.customDrawer
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.sharp.Close
@@ -52,6 +54,39 @@ fun CustomDrawer(
 
         Column {
             DrawerActionBar(onCloseClick = onCloseClick)
+            AppLogo()
+            PrimaryDrawerItems(
+                drawerItems = drawerItems.take(drawerItems.size - 2),
+                selectedItem = selectedDrawerItem,
+                onClickItem = onNavigationItemClick
+            )
+        }
+
+        SecondaryDrawerItems(
+            drawerItems = drawerItems.takeLast(2),
+            selectedItem = selectedDrawerItem,
+            onClickItem = onNavigationItemClick
+        )
+    }
+}
+
+@Composable
+fun PermanentSidebar(
+    selectedDrawerItem: DrawerItem,
+    onNavigationItemClick: (DrawerItem) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val drawerItems: Array<DrawerItem> = DrawerItem.entries.toTypedArray()
+    Column(
+        modifier = modifier
+            .width(240.dp)
+            .fillMaxHeight()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(horizontal = 12.dp, vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             AppLogo()
             PrimaryDrawerItems(
                 drawerItems = drawerItems.take(drawerItems.size - 2),
@@ -132,6 +167,8 @@ fun PrimaryDrawerItems(
                         DrawerItem.Survey -> Routes.SurveyPage()
                         DrawerItem.Advice -> Routes.AdvicePage()
                         DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                        DrawerItem.Videos -> Routes.VideosNavGraph.VideosPage
+                        DrawerItem.Game -> Routes.ScratchGamePage()
                         DrawerItem.Login -> Routes.Authentication.LoginPage
                         else -> {}
                     })

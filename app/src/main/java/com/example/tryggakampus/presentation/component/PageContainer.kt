@@ -18,13 +18,15 @@ fun PageContainer(
     modifier: Modifier = Modifier,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    children: @Composable()() -> Unit
+    enableScroll: Boolean = true,
+    children: @Composable () -> Unit
 ) {
-    Column (modifier = modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)
-        .padding(top = 0.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
-        .verticalScroll(rememberScrollState()),
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = 0.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+            .let { base -> if (enableScroll) base.verticalScroll(rememberScrollState()) else base },
         verticalArrangement = verticalArrangement,
         horizontalAlignment = horizontalAlignment
     ) {

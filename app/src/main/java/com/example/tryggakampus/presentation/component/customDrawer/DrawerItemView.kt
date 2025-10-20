@@ -11,12 +11,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,46 +26,32 @@ fun NavigationItemView(
     selected: Boolean,
     onClick: () -> Unit
 ) {
+    val selectedBg = MaterialTheme.colorScheme.secondary
+    val unselectedBg = MaterialTheme.colorScheme.surfaceVariant
+    val selectedFg = MaterialTheme.colorScheme.onSecondary
+    val unselectedFg = MaterialTheme.colorScheme.onSurface
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(size = 99.dp))
             .clickable { onClick() }
-            .background(
-                color =
-                    if (selected)
-                        MaterialTheme.colorScheme.secondary
-                    else
-                        MaterialTheme.colorScheme.background,
-                shape = RoundedCornerShape(99.dp)
-            )
+            .background(color = if (selected) selectedBg else unselectedBg, shape = RoundedCornerShape(99.dp))
             .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(id = drawerItem.icon),
             contentDescription = "Navigation Item Icon",
-            tint =
-                if (selected)
-                    MaterialTheme.colorScheme.onSecondary
-                else
-                    MaterialTheme.colorScheme.onBackground
+            tint = if (selected) selectedFg else unselectedFg
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
         Text(
             text = drawerItem.title,
-            color =
-                if (selected)
-                    MaterialTheme.colorScheme.onSecondary
-                else
-                    MaterialTheme.colorScheme.onBackground,
-            fontWeight =
-                if (selected)
-                    FontWeight.Bold
-                else
-                    FontWeight.Normal,
+            color = if (selected) selectedFg else unselectedFg,
+            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
             lineHeight = 20.sp
         )
     }

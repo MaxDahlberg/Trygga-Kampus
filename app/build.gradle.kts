@@ -96,4 +96,12 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-firestore")
+    implementation(libs.firebase.firestore.ktx)
+
+    // Compose foundation for LazyVerticalGrid
+    implementation("androidx.compose.foundation:foundation")
+
+    // Media3 ExoPlayer for video playback and UI PlayerView
+    implementation("androidx.media3:media3-exoplayer:1.4.1")
+    implementation("androidx.media3:media3-ui:1.4.1")
 }

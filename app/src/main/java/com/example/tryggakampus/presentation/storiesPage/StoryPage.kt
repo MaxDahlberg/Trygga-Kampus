@@ -34,7 +34,8 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
     PageContainer(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surface),
+        enableScroll = false
     ) {
         Column(
             modifier = Modifier

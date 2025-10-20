@@ -27,4 +27,20 @@
     <string name="stories_content_label">What would you like to share?</string>
     <string name="stories_anonymous_label">Anonymous</string>
     <!-- Stories End -->
+
+    <!-- Self-assessment Begin -->
+    <string name="self_assessment_title">Self-assessment</string>
+    <string name="self_assessment_notes_label">Notes (optional, private)</string>
+    <string name="self_assessment_save">Save</string>
+    <string name="self_assessment_saved">Saved</string>
+    <string name="self_assessment_saved_offline">Saved offline</string>
+    <string name="self_assessment_delete">Delete entry for this day</string>
+    <string name="self_assessment_history">History</string>
+    <string name="empty_state_no_data">No data yet.</string>
+    <string name="select">Select</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="self_image">Self-image</string>
+    <string name="self_esteem">Self-esteem</string>
+    <string name="self_reliance">Self-reliance</string>
+    <!-- Self-assessment End -->
 </resources>
