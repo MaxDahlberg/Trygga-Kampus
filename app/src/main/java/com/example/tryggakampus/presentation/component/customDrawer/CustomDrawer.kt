@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material3.AlertDialog
@@ -132,6 +133,7 @@ fun PrimaryDrawerItems(
                         DrawerItem.Survey -> Routes.SurveyPage()
                         DrawerItem.Advice -> Routes.AdvicePage()
                         DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                        DrawerItem.Habits -> Routes.HabitTrackerPage() // Added habit tracker
                         DrawerItem.Login -> Routes.Authentication.LoginPage
                         else -> {}
                     })
@@ -220,5 +222,4 @@ fun ConfirmLogout(
             }
         }
     )
-
 }

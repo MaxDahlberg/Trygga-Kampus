@@ -15,6 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.presentation.component.OutlinedInput
+import com.example.tryggakampus.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
@@ -30,25 +32,25 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
             viewModel.clearErrorMessage()
             onDismiss()
         },
-        title = { Text("New Article") },
+        title = { Text(stringResource(R.string.new_article)) },
         text = {
             Column {
                 OutlinedInput(
-                    label = "Title",
+                    label = stringResource(R.string.title),
                     value = title,
                     onValueChange = { title = it; showError = false },
                     isError = showError && title.isBlank()
                 )
 
                 OutlinedInput(
-                    label = "Summary",
+                    label = stringResource(R.string.summary),
                     value = summary,
                     onValueChange = { summary = it; showError = false },
                     isError = showError && summary.isBlank()
                 )
 
                 OutlinedInput(
-                    label = "Webpage URL",
+                    label = stringResource(R.string.webpage_url),
                     value = webpage,
                     onValueChange = { webpage = it; showError = false },
                     isError = showError && webpage.isBlank()
@@ -56,7 +58,7 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
 
                 if (showError) {
                     Text(
-                        text = "All fields are required.",
+                        text = stringResource(R.string.all_fields_required),
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -76,7 +78,7 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
                 onClick = {
                     if (title.isNotBlank() && summary.isNotBlank() && webpage.isNotBlank()) {
                         viewModel.addArticle(title, summary, webpage)
-                        if (viewModel.errorMessage.value == null) { // Only close if no error occurred
+                        if (viewModel.errorMessage.value == null) {
                             onDismiss()
                         }
                     } else {
@@ -84,7 +86,7 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
                     }
                 },
             ) {
-                Text("Add")
+                Text(stringResource(R.string.add))
             }
         },
         dismissButton = {
@@ -94,7 +96,7 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
                     onDismiss()
                 },
             ) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     )

@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">Trygga Campus</string>
+    <string name="title">Välkommen till Trygga Campus!</string>
+    <string name="about_us">Om oss!</string>
+    <string name="info1">Här kommer information om appen, som vad vi siktar på att göra och hur den fungerar.</string>
+    <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
+    <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
+
+    <!-- Berättelser Börjar -->
+    <string name="stories_page_title">Dela din berättelse med andra</string>
+    <string name="stories_title_label">Titel (Valfritt)</string>
+    <string name="stories_content_label">Vad skulle du vilja dela med dig av?</string>
+    <string name="stories_anonymous_label">Anonym</string>
+    <!-- Berättelser Slutar -->
+
+    <!-- sidomeny -->
+    <string name="drawer_home">Hem</string>
+    <string name="drawer_profile">Profil</string>
+    <string name="drawer_articles">Artiklar</string>
+    <string name="drawer_form">Formulär</string>
+    <string name="drawer_survey">Enkät</string>
+    <string name="drawer_habits">Vane-spårare</string>
+    <string name="drawer_stories">Berättelser</string>
+    <string name="drawer_advice">Råd</string>
+    <string name="drawer_login">Logga in</string>
+    <string name="drawer_logout">Logga ut</string>
+    <string name="drawer_settings">Inställningar</string>
+
+    <!-- Artikelsida -->
+    <string name="new_article">Ny artikel</string>
+    <string name="delete_article">Ta bort artikel</string>
+    <string name="summary">Sammanfattning</string>
+    <string name="webpage_url">Webbadress</string>
+    <string name="all_fields_required">Alla fält är obligatoriska.</string>
+    <string name="add">Lägg till</string>
+    <string name="cancel">Avbryt</string>
+    <string name="loading_articles">Laddar artiklar...</string>
+    <string name="no_articles_available">Inga artiklar tillgängliga. Vänligen kontrollera igen senare eller försök uppdatera.</string>
+    <string name="cancel_delete_mode">Avbryt raderingsläge</string>
+    <string name="add_article">Lägg till artikel</string>
+    <string name="enable_delete_mode">Aktivera raderingsläge</string>
+    <string name="confirm_deletion">Bekräfta radering</string>
+    <string name="delete_confirmation">Är du säker på att du vill ta bort den här artikeln?</string>
+    <string name="delete">Ta bort</string>
+    <string name="error">Fel</string>
+    <string name="unknown_error">Ett okänt fel inträffade.</string>
+    <string name="ok">OK</string>
+    <string name="read_more">Läs mer</string>
+    <string name="no_link">Ingen länk</string>
+
+    <!-- app/src/main/res/values-sv/strings.xml -->
+    <string name="survey_title">Enkät</string>
+    <string name="question_prefix">Fråga %d:</string>
+    <string name="your_answer">Ditt svar</string>
+    <string name="submit_answers">Skicka svar</string>
+    <string name="survey_complete_title">Enkät slutförd</string>
+    <string name="survey_complete_message">Tack för att du slutförde enkäten!</string>
+
+    <!-- Enkätfrågor -->
+    <string name="survey_question_1">Hur ofta tänker du på effekterna av droger eller alkohol på dina studier?</string>
+    <string name="survey_question_2">Har du någonsin känt dig pressad att använda droger eller alkohol för att passa in med dina kamrater?</string>
+    <string name="survey_question_3">Känner du att substansanvändning är normaliserat i din universitetsmiljö?</string>
+    <string name="survey_question_4">Hur självsäker känner du dig när det gäller att säga \'nej\' till droger eller alkohol i en social situation?</string>
+    <string name="survey_question_5">Hur ofta använder du substanser (t.ex. alkohol, droger) för att hantera stress eller press från universitetslivet?</string>
+    <string name="survey_question_6">Tror du att det finns ett stigma kring att söka hjälp för beroende på ditt universitet?</string>
+    <string name="weekly_progress">Veckoframsteg - Vecka %1$d</string>
+    <string name="daily_progress">Dagliga framsteg</string>
+    <string-array name="weekdays">
+        <item>Mån</item>
+        <item>Tis</item>
+        <item>Ons</item>
+        <item>Tors</item>
+        <item>Fre</item>
+        <item>Lör</item>
+        <item>Sön</item>
+    </string-array>
+
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">Logga ut</string>
+    <string name="email_hint">E-post *</string>
+    <string name="password_hint">Lösenord *</string>
+    <string name="log_in_button_text">Logga in</string>
+    <string name="forgot_password_text">Glömt lösenord?</string>
+    <string name="create_account_text">Skapa konto</string>
+    <string name="home">Hem</string>
+    <string name="news">Nyheter</string>
+    <string name="map">Karta</string>
+    <string name="faq">FAQ</string>
+    <string name="report">Rapportera</string>
+    <string name="weekly_progress_title">Veckovis framsteg</string>
+
+</resources>

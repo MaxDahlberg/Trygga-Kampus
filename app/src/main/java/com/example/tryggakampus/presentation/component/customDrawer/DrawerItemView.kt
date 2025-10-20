@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun NavigationItemView(
@@ -57,7 +58,7 @@ fun NavigationItemView(
         Spacer(modifier = Modifier.width(12.dp))
 
         Text(
-            text = drawerItem.title,
+            text = stringResource(id = drawerItem.titleResId), // Use stringResource here
             color =
                 if (selected)
                     MaterialTheme.colorScheme.onSecondary

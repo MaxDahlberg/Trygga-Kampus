@@ -52,6 +52,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.ConnectivityObserver
 import com.example.tryggakampus.NetworkConnectivityObserver
 import com.example.tryggakampus.domain.model.ArticleModel
+import com.example.tryggakampus.R
+import androidx.compose.ui.res.stringResource
+
 
 @Composable
 fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
@@ -77,7 +80,7 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Loading articles ...")
+            Text(stringResource(R.string.loading_articles))
             Spacer(modifier = Modifier.size(20.dp))
             CircularProgressIndicator(
                 modifier = Modifier.width(64.dp),
@@ -98,7 +101,7 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
             ) {
                 if (viewModel.articles.isEmpty()) {
                     Text(
-                        text = "No articles available. Please check back later or try refreshing.",
+                        text = stringResource(R.string.no_articles_available),
                         modifier = Modifier.align(Alignment.Center),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodyLarge
@@ -139,7 +142,7 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
                     ) {
                         Icon(
                             Icons.Filled.Close,
-                            contentDescription = "Cancel Delete Mode",
+                            contentDescription = stringResource(R.string.cancel_delete_mode),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -159,7 +162,7 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
                             containerColor = MaterialTheme.colorScheme.secondary,
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         ) {
-                            Icon(Icons.Filled.Add, contentDescription = "Add Article")
+                            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_article))
                         }
 
                         FloatingActionButton(
@@ -170,7 +173,7 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
                             containerColor = MaterialTheme.colorScheme.secondary,
                             contentColor = MaterialTheme.colorScheme.onSecondary
                         ) {
-                            Icon(Icons.Filled.Delete, contentDescription = "Enable Delete Mode")
+                            Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.enable_delete_mode))
                         }
                     }
                 }
@@ -186,8 +189,8 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
             if (articleToDelete != null) {
                 AlertDialog(
                     onDismissRequest = { articleToDelete = null },
-                    title = { Text("Confirm Deletion") },
-                    text = { Text("Are you sure you want to delete this article?") },
+                    title = { Text(stringResource(R.string.confirm_deletion)) },
+                    text = { Text(stringResource(R.string.delete_confirmation)) },
                     confirmButton = {
                         Button(
                             onClick = {
@@ -195,14 +198,14 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
                                 articleToDelete = null
                             }
                         ) {
-                            Text("Delete")
+                            Text(stringResource(R.string.delete))
                         }
                     },
                     dismissButton = {
                         Button(
                             onClick = { articleToDelete = null }
                         ) {
-                            Text("Cancel")
+                            Text(stringResource(R.string.cancel))
                         }
                     }
                 )
@@ -211,11 +214,11 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel()) {
             if (errorMessage != null) {
                 AlertDialog(
                     onDismissRequest = { viewModel.clearErrorMessage() },
-                    title = { Text("Error") },
-                    text = { Text(errorMessage ?: "An unknown error occurred.") },
+                    title = { Text(stringResource(R.string.error)) },
+                    text = { Text(errorMessage ?: stringResource(R.string.unknown_error)) },
                     confirmButton = {
                         Button(onClick = { viewModel.clearErrorMessage() }) {
-                            Text("OK")
+                            Text(stringResource(R.string.ok))
                         }
                     }
                 )
@@ -243,7 +246,7 @@ fun ArticleBox(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             ArticleBoxHeader(article.title ?: "")
-            ArticleBoxBody(article.summary, article.webpage ?: "No Link")
+            ArticleBoxBody(article.summary, article.webpage ?: stringResource(R.string.no_link))
         }
 
         if (deleteMode) {
@@ -255,12 +258,11 @@ fun ArticleBox(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = "Delete Article",
+                    contentDescription = stringResource(R.string.delete_article),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(25.dp)
                 )
             }
-
         }
     }
 }
@@ -286,7 +288,7 @@ fun ArticleBoxBody(content: String, webpage: String) {
         Text(
             buildAnnotatedString {
                 withLink(LinkAnnotation.Url(url = webpage)) {
-                    append("Read More")
+                    append(stringResource(R.string.read_more))
                 }
             },
             color = Color(0xFFF19107),
@@ -296,4 +298,3 @@ fun ArticleBoxBody(content: String, webpage: String) {
         )
     }
 }
-
