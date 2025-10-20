@@ -35,6 +35,16 @@ enum class DrawerItem(
         title = "Survey",
         accessLevel = AccessLevel.AUTH_ONLY
     ),
+    MorningCheckIn(
+        icon = R.drawable.baseline_morning_24,
+        title = "Morning Check-In",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
+    EveningReflection(
+        icon = R.drawable.baseline_evening_24,
+        title = "Evening Reflection",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
     Stories(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"

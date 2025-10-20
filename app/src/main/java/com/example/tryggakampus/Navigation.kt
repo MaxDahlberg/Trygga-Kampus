@@ -31,7 +31,9 @@ import com.example.tryggakampus.presentation.advicePage.AdvicePage
 import com.example.tryggakampus.presentation.authentication.loginPage.LoginPage
 import com.example.tryggakampus.presentation.authentication.registerPage.RegisterPage
 import com.example.tryggakampus.presentation.surveyPage.EveningSurveyPage
+import com.example.tryggakampus.presentation.surveyPage.MonthlySurveyPage
 import com.example.tryggakampus.presentation.surveyPage.MorningSurveyPage
+import com.example.tryggakampus.presentation.surveyPage.WeeklySurveyPage
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -83,6 +85,12 @@ sealed interface Routes {
     }
     @Serializable data class EveningSurveyPage(val title: String = "Evening Reflection") : Routes {
         override fun routeName() = "EveningSurveyPage"
+    }
+    @Serializable data class WeeklySurveyPage(val title: String = "Weekly Review") : Routes {
+        override fun routeName() = "WeeklySurveyPage"
+    }
+    @Serializable data class MonthlySurveyPage(val title: String = "Monthly Evaluation") : Routes {
+        override fun routeName() = "MonthlySurveyPage"
     }
 
     @Serializable data object Authentication {
@@ -137,6 +145,14 @@ fun Navigation(
                 composable<Routes.EveningSurveyPage> {
                     val args = it.toRoute<Routes.EveningSurveyPage>()
                     EveningSurveyPage(args.title)
+                }
+                composable<Routes.WeeklySurveyPage> {
+                    val args = it.toRoute<Routes.WeeklySurveyPage>()
+                    WeeklySurveyPage(args.title)
+                }
+                composable<Routes.MonthlySurveyPage> {
+                    val args = it.toRoute<Routes.MonthlySurveyPage>()
+                    MonthlySurveyPage(args.title)
                 }
 
                 navigation<Routes.StoriesNavGraph> (startDestination = Routes.StoriesNavGraph.StoriesPage) {

@@ -22,8 +22,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -111,6 +113,7 @@ fun PrimaryDrawerItems(
 ) {
     val navController = LocalNavController.current
     val userIsAuthenticated = Firebase.auth.currentUser != null
+    var isSurveyExpanded by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         drawerItems.forEach { drawerItem ->
@@ -123,20 +126,44 @@ fun PrimaryDrawerItems(
                 drawerItem = drawerItem,
                 selected = drawerItem == selectedItem,
                 onClick = {
-                    onClickItem(drawerItem)
-                    navController.navigate(when(drawerItem) {
-                        DrawerItem.Home -> Routes.LandingPage()
-                        DrawerItem.Profile -> Routes.ProfilePage()
-                        DrawerItem.Articles -> Routes.ArticlesPage()
-                        DrawerItem.Form -> Routes.FormPage()
-                        DrawerItem.Survey -> Routes.SurveyPage()
-                        DrawerItem.Advice -> Routes.AdvicePage()
-                        DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
-                        DrawerItem.Login -> Routes.Authentication.LoginPage
-                        else -> {}
-                    })
+                    if (drawerItem == DrawerItem.Survey) {
+                        isSurveyExpanded = !isSurveyExpanded
+                    } else {
+                        onClickItem(drawerItem)
+                        navController.navigate(when(drawerItem) {
+                            DrawerItem.Home -> Routes.LandingPage()
+                            DrawerItem.Profile -> Routes.ProfilePage()
+                            DrawerItem.Articles -> Routes.ArticlesPage()
+                            DrawerItem.Form -> Routes.FormPage()
+                            DrawerItem.Advice -> Routes.AdvicePage()
+                            DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                            DrawerItem.Login -> Routes.Authentication.LoginPage
+                            else -> {}
+                        })
+                    }
                 }
             )
+
+            if (drawerItem == DrawerItem.Survey && isSurveyExpanded) {
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+                    NavigationItemView(
+                        drawerItem = DrawerItem.MorningCheckIn,
+                        selected = selectedItem == DrawerItem.MorningCheckIn,
+                        onClick = {
+                            onClickItem(DrawerItem.MorningCheckIn)
+                            navController.navigate(Routes.SurveyPage())
+                        }
+                    )
+                    NavigationItemView(
+                        drawerItem = DrawerItem.EveningReflection,
+                        selected = selectedItem == DrawerItem.EveningReflection,
+                        onClick = {
+                            onClickItem(DrawerItem.EveningReflection)
+                            navController.navigate(Routes.EveningSurveyPage())
+                        }
+                    )
+                }
+            }
         }
     }
 }

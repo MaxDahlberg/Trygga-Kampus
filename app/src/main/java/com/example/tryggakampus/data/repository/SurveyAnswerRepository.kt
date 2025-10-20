@@ -1,4 +1,4 @@
-package com.example.tryggakampus.data
+package com.example.tryggakampus.data.repository
 
 import com.example.tryggakampus.domain.model.SurveyAnswer
 import com.example.tryggakampus.domain.model.SurveySubmission

@@ -33,6 +33,17 @@ val eveningReflectionQuestions = listOf(
     Question(id = "q_challenge", text = "What was the biggest challenge you faced today?", type = QuestionType.TEXT_INPUT),
     Question(id = "q_self_esteem_evening", text = "On a scale of 1-10, how high is your self-esteem this evening?", type = QuestionType.SLIDER_1_10)
 )
+val weeklyReviewQuestions = listOf(
+    Question(id = "q_week_high", text = "What was the high point of your week?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_week_low", text = "What was the low point of your week, and what did you learn from it?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_week_progress", text = "On a scale of 1-10, how would you rate your progress on your personal goals this week?", type = QuestionType.SLIDER_1_10)
+)
+val monthlyEvaluationQuestions = listOf(
+    Question(id = "q_month_theme", text = "What was the overarching theme or feeling of your past month?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_month_growth", text = "Describe one area where you saw significant personal growth.", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_month_next", text = "What is one key intention you want to set for the upcoming month?", type = QuestionType.TEXT_INPUT),
+    Question(id = "q_month_self_esteem", text = "Reflecting on the whole month, how would you rate your average self-esteem on a scale of 1-10?", type = QuestionType.SLIDER_1_10)
+)
 
 @Composable
 fun SurveyTemplate(
@@ -180,5 +191,21 @@ fun EveningSurveyPage(title: String) {
         title = title,
         questions = eveningReflectionQuestions,
         evaluationType = EvaluationType.EVENING_REFLECTION
+    )
+}
+@Composable
+fun WeeklySurveyPage(title: String) {
+    SurveyTemplate(
+        title = title,
+        questions = weeklyReviewQuestions,
+        evaluationType = EvaluationType.WEEKLY_REVIEW
+    )
+}
+@Composable
+fun MonthlySurveyPage(title: String) {
+    SurveyTemplate(
+        title = title,
+        questions = monthlyEvaluationQuestions,
+        evaluationType = EvaluationType.MONTHLY_EVALUATION
     )
 }
