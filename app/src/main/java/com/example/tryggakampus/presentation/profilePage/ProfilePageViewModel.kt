@@ -55,6 +55,7 @@ class ProfileViewModel : ViewModel() {
     var deletePassword by mutableStateOf("")
     var showDeleteAccountDialog by mutableStateOf(false)
     var showRequestDataDialog by mutableStateOf(false)
+    var jsonData by mutableStateOf<String?>(null)
 
     // Error
     var error by mutableStateOf<AuthError?>(null)
@@ -180,7 +181,22 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    // Request personal data.
-    // fun onRequestData() {}
-    // todo: add implementation.
+    // Request personal data
+    fun onRequestData() {
+        viewModelScope.launch {
+            if (jsonData == null) {
+                try {
+                    // Fetch JSON from helper
+                    jsonData = GdprUserDataHelper().fetchUserData(currentUserId)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    // Reset JSON.
+    fun resetJsonData() {
+        jsonData = null
+    }
 }

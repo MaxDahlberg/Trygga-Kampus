@@ -7,11 +7,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
+import com.example.tryggakampus.util.saveJsonToDownloads
 
 @Composable
 fun ProfilePage() {
@@ -223,17 +225,32 @@ fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
 
 @Composable
 fun RequestDataDialog(vm: ProfileViewModel) {
+    // val context = LocalContext.current : todo: needed in the json download
+
     AlertDialog(
         onDismissRequest = { vm.showRequestDataDialog = false },
-        title = { Text("Request Personal Data") },
+        title = { Text("Personal Data Request") },
         text = {
             Text(
-                "Press Request to fetch your personal data from the server. When it's ready you'll be able to download it."
+                if (vm.jsonData == null)
+                    "Press Request to fetch your personal data from the server. When it's ready, you'll be able to download it."
+                else
+                    "Your personal data is ready. Press Download to save it to your device."
             )
         },
         confirmButton = {
-            TextButton(onClick = {}) {  // todo: open new dialog for the download.
-                Text("Request", color = MaterialTheme.colorScheme.onPrimary)
+            TextButton(onClick = {
+                if (vm.jsonData == null) {
+                    vm.onRequestData() // fetch JSON
+                } /*else {
+                    vm.jsonData?.let { data ->
+                        saveJsonToDownloads(context, data, "personal_data.json") todo
+                        vm.showRequestDataDialog = false
+                        vm.resetJsonData()
+                    }
+                }*/
+            }) {
+                Text(if (vm.jsonData == null) "Request" else "Download", color = MaterialTheme.colorScheme.onPrimary)
             }
         },
         dismissButton = {
