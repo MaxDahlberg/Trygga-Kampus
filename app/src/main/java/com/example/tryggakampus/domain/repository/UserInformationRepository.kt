@@ -24,6 +24,7 @@ interface UserInformationRepository {
         userInfo: UserInfoModel,
         updateFields: Map<String, Any>? = null
     ): RepositoryResult
+    suspend fun isUsernameAvailable(username: String): Boolean
 }
 
 object UserInformationRepositoryImpl : UserInformationRepository {
@@ -69,6 +70,22 @@ object UserInformationRepositoryImpl : UserInformationRepository {
         } catch (e: Exception) {
             Log.d("UserInfoRepository", "Unknown error: ${e.stackTraceToString()}")
             UserInformationRepository.RepositoryResult.ERROR_UNKNOWN
+        }
+    }
+
+    override suspend fun isUsernameAvailable(username: String): Boolean {
+        return try {
+            val querySnapshot = Firebase.firestore
+                .collection(COLLECTION_NAME)
+                .whereEqualTo("username", username)
+                .get()
+                .await()
+
+            // Username is available if no documents exist with this username
+            querySnapshot.isEmpty
+        } catch (e: Exception) {
+            Log.d("UserInfoRepository", "Error checking username: ${e.message}")
+            false // Consider unavailable on error
         }
     }
 }

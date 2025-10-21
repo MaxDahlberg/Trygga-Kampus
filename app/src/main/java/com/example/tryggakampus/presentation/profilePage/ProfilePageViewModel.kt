@@ -3,13 +3,13 @@ package com.example.tryggakampus.presentation.profilePage
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tryggakampus.domain.model.UserInfoModel
 import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 import com.example.tryggakampus.util.GdprUserDataHelper
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -75,20 +75,53 @@ class ProfileViewModel : ViewModel() {
 
     // Change username
     fun onChangeUsername() {
-        if (newUsername.isEmpty() || usernameChangePassword.isEmpty()) {
+        if (newUsername.isBlank() || usernameChangePassword.isBlank()) {
             error = AuthError("Please fill in all fields.")
+            return
+        }
+
+        val email = currentUser?.email
+        if (email.isNullOrBlank()) {
+            error = AuthError("User email not available.")
             return
         }
 
         viewModelScope.launch {
             updatingUsername = true
-            delay(1000)
-            // todo: replace with real backend call.
-            // val response = AuthRepositoryImpl.changeUsername(email, usernameChangePassword, newUsername)
-            username = newUsername
-            newUsername = ""
-            usernameChangePassword = ""
-            updatingUsername = false
+            error = null
+
+            try {
+                // Reauthenticate user
+                val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
+                currentUser?.reauthenticate(credential)?.await()
+
+                // Check username availability
+                val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
+                if (!available) {
+                    error = AuthError("This username is already taken.")
+                    updatingUsername = false
+                    return@launch
+                }
+
+                // Update username
+                val result = UserInformationRepositoryImpl.addOrUpdateUserInformation(
+                    userInfo = UserInfoModel(userId = currentUserId),
+                    updateFields = mapOf("username" to newUsername)
+                )
+
+                if (result == UserInformationRepository.RepositoryResult.SUCCESS) {
+                    username = newUsername
+                    newUsername = ""
+                    usernameChangePassword = ""
+                } else {
+                    error = AuthError("Failed to update username: $result")
+                }
+
+            } catch (e: Exception) {
+                error = AuthError("Failed to update username: ${e.message}")
+            } finally {
+                updatingUsername = false
+            }
         }
     }
 
