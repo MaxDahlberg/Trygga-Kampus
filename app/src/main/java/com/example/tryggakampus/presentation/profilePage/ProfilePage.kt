@@ -225,7 +225,7 @@ fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
 
 @Composable
 fun RequestDataDialog(vm: ProfileViewModel) {
-    // val context = LocalContext.current : todo: needed in the json download
+    val context = LocalContext.current
 
     AlertDialog(
         onDismissRequest = { vm.showRequestDataDialog = false },
@@ -242,13 +242,13 @@ fun RequestDataDialog(vm: ProfileViewModel) {
             TextButton(onClick = {
                 if (vm.jsonData == null) {
                     vm.onRequestData() // fetch JSON
-                } /*else {
+                } else {
                     vm.jsonData?.let { data ->
-                        saveJsonToDownloads(context, data, "personal_data.json") todo
+                        saveJsonToDownloads(context, data, "personal_data.json")
                         vm.showRequestDataDialog = false
                         vm.resetJsonData()
                     }
-                }*/
+                }
             }) {
                 Text(if (vm.jsonData == null) "Request" else "Download", color = MaterialTheme.colorScheme.onPrimary)
             }
