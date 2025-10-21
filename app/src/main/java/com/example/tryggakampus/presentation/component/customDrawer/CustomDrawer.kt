@@ -113,7 +113,7 @@ fun PrimaryDrawerItems(
 ) {
     val navController = LocalNavController.current
     val userIsAuthenticated = Firebase.auth.currentUser != null
-    var isSurveyExpanded by remember { mutableStateOf(false) }
+    var isEvaluationsExpanded by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         drawerItems.forEach { drawerItem ->
@@ -122,12 +122,16 @@ fun PrimaryDrawerItems(
                 return@forEach
             }
 
+            if (drawerItem in listOf(DrawerItem.MorningCheckIn, DrawerItem.EveningReflection, DrawerItem.WeeklyReview, DrawerItem.MonthlyEvaluation)) {
+                return@forEach
+            }
+
             NavigationItemView(
                 drawerItem = drawerItem,
                 selected = drawerItem == selectedItem,
                 onClick = {
-                    if (drawerItem == DrawerItem.Survey) {
-                        isSurveyExpanded = !isSurveyExpanded
+                    if (drawerItem == DrawerItem.Evaluations) {
+                        isEvaluationsExpanded = !isEvaluationsExpanded
                     } else {
                         onClickItem(drawerItem)
                         navController.navigate(when(drawerItem) {
@@ -137,6 +141,7 @@ fun PrimaryDrawerItems(
                             DrawerItem.Form -> Routes.FormPage()
                             DrawerItem.Advice -> Routes.AdvicePage()
                             DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                            DrawerItem.Trends -> Routes.TrendsPage()
                             DrawerItem.Login -> Routes.Authentication.LoginPage
                             else -> {}
                         })
@@ -144,14 +149,14 @@ fun PrimaryDrawerItems(
                 }
             )
 
-            if (drawerItem == DrawerItem.Survey && isSurveyExpanded) {
+            if (drawerItem == DrawerItem.Evaluations && isEvaluationsExpanded) {
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     NavigationItemView(
                         drawerItem = DrawerItem.MorningCheckIn,
                         selected = selectedItem == DrawerItem.MorningCheckIn,
                         onClick = {
                             onClickItem(DrawerItem.MorningCheckIn)
-                            navController.navigate(Routes.SurveyPage())
+                            navController.navigate(Routes.SurveyPage()) // Navigates to Morning survey
                         }
                     )
                     NavigationItemView(
@@ -160,6 +165,22 @@ fun PrimaryDrawerItems(
                         onClick = {
                             onClickItem(DrawerItem.EveningReflection)
                             navController.navigate(Routes.EveningSurveyPage())
+                        }
+                    )
+                    NavigationItemView(
+                        drawerItem = DrawerItem.WeeklyReview,
+                        selected = selectedItem == DrawerItem.WeeklyReview,
+                        onClick = {
+                            onClickItem(DrawerItem.WeeklyReview)
+                            navController.navigate(Routes.WeeklySurveyPage())
+                        }
+                    )
+                    NavigationItemView(
+                        drawerItem = DrawerItem.MonthlyEvaluation,
+                        selected = selectedItem == DrawerItem.MonthlyEvaluation,
+                        onClick = {
+                            onClickItem(DrawerItem.MonthlyEvaluation)
+                            navController.navigate(Routes.MonthlySurveyPage())
                         }
                     )
                 }
