@@ -3,15 +3,23 @@ package com.example.tryggakampus.presentation.profilePage
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tryggakampus.domain.repository.UserInformationRepository
+import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
 
-    // Hardcoded placeholders until db functionality is implemented.
-    var username by mutableStateOf("UserName") // todo: load from database.
-    var email by mutableStateOf("email@example.com") // todo: load from database.
+    private val userRepo = UserInformationRepositoryImpl
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val currentUser = firebaseAuth.currentUser
+    private val currentUserId = currentUser?.uid ?: ""
+
+    // Account info
+    var username by mutableStateOf("No username")
+    var email by mutableStateOf(currentUser?.email ?: "No email")
 
     // Change username
     var newUsername by mutableStateOf("")
@@ -41,9 +49,18 @@ class ProfileViewModel : ViewModel() {
 
     // Error
     var error by mutableStateOf<AuthError?>(null)
+    fun clearError() { error = null }
 
-    fun clearError() {
-        error = null
+    init {
+        // Load username from Firestore if available
+        if (currentUserId.isNotEmpty()) {
+            viewModelScope.launch {
+                val (result, userInfo) = userRepo.getUserInformation(currentUserId, com.google.firebase.firestore.Source.SERVER)
+                if (result == UserInformationRepository.RepositoryResult.SUCCESS && userInfo != null) {
+                    username = userInfo.username ?: username
+                }
+            }
+        }
     }
 
     // Change username
