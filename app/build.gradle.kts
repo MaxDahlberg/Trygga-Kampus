@@ -80,6 +80,8 @@ dependencies {
     implementation(libs.firebase.database)
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.facebook.android:facebook-login:16.3.0")
+    // FIX: Replaced the old charting library with a more stable one
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(libs.androidx.compose.animation.graphics)
     implementation(libs.androidx.espresso.web)
     testImplementation(libs.junit)

@@ -30,9 +30,11 @@ enum class DrawerItem(
         icon = R.drawable.baseline_forum_24,
         title = "Form"
     ),
-    Survey(
+
+
+    Evaluations(
         icon = R.drawable.baseline_diamond_24,
-        title = "Survey",
+        title = "Evaluations",
         accessLevel = AccessLevel.AUTH_ONLY
     ),
     MorningCheckIn(
@@ -45,6 +47,24 @@ enum class DrawerItem(
         title = "Evening Reflection",
         accessLevel = AccessLevel.AUTH_ONLY
     ),
+    WeeklyReview(
+        icon = R.drawable.baseline_calendar_view_week_24,
+        title = "Weekly Review",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
+    MonthlyEvaluation(
+        icon = R.drawable.baseline_calendar_month_24,
+        title = "Monthly Evaluation",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
+
+    Trends(
+        icon = R.drawable.baseline_trending_up_24,
+        title = "My Trends",
+        accessLevel = AccessLevel.AUTH_ONLY
+    ),
+
+
     Stories(
         icon = R.drawable.baseline_articles_24,
         title = "Stories"

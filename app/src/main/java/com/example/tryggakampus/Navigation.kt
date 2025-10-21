@@ -34,6 +34,7 @@ import com.example.tryggakampus.presentation.surveyPage.EveningSurveyPage
 import com.example.tryggakampus.presentation.surveyPage.MonthlySurveyPage
 import com.example.tryggakampus.presentation.surveyPage.MorningSurveyPage
 import com.example.tryggakampus.presentation.surveyPage.WeeklySurveyPage
+import com.example.tryggakampus.presentation.trends.TrendsPage
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -91,6 +92,10 @@ sealed interface Routes {
     }
     @Serializable data class MonthlySurveyPage(val title: String = "Monthly Evaluation") : Routes {
         override fun routeName() = "MonthlySurveyPage"
+    }
+    @Serializable
+    data class TrendsPage(val title: String = "My Trends") : Routes {
+        override fun routeName() = "TrendsPage"
     }
 
     @Serializable data object Authentication {
@@ -153,6 +158,10 @@ fun Navigation(
                 composable<Routes.MonthlySurveyPage> {
                     val args = it.toRoute<Routes.MonthlySurveyPage>()
                     MonthlySurveyPage(args.title)
+                }
+                composable<Routes.TrendsPage> {
+                    val args = it.toRoute<Routes.TrendsPage>()
+                    TrendsPage(args.title)
                 }
 
                 navigation<Routes.StoriesNavGraph> (startDestination = Routes.StoriesNavGraph.StoriesPage) {

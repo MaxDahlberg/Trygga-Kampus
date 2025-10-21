@@ -9,6 +9,8 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        // Add JitPack for the charting library
+        maven { url = uri("https://jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -16,9 +18,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Add JitPack for the charting library
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "Trygga Kampus"
 include(":app")
- 
