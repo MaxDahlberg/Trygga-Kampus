@@ -44,6 +44,12 @@ class ProfileViewModel : ViewModel() {
                 newPassword == repeatNewPassword &&
                 newPassword.length >= 8
 
+    // Password visibility toggles
+    var isUsernameChangePasswordVisible by mutableStateOf(false)
+    var isCurrentPasswordVisible by mutableStateOf(false)
+    var isNewPasswordVisible by mutableStateOf(false)
+    var isRepeatPasswordVisible by mutableStateOf(false)
+
     // Account deletion and user data
     var deletePassword by mutableStateOf("")
     var showDeleteAccountDialog by mutableStateOf(false)
@@ -113,6 +119,42 @@ class ProfileViewModel : ViewModel() {
 
             updatingPassword = false
         }
+    }
+
+    // Password validation regex
+    private val passwordPattern =
+        "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\\\-_{}.*]).{8,20}$".toRegex()
+
+    fun onUsernameChangePasswordChange(password: String) {
+        usernameChangePassword = password
+        usernameChangePasswordIsValid = password.matches(passwordPattern)
+    }
+
+    fun onCurrentPasswordChange(password: String) {
+        currentPassword = password
+        currentPasswordIsValid = password.matches(passwordPattern)
+    }
+
+    fun onNewPasswordChange(password: String) {
+        newPassword = password
+        newPasswordIsValid = password.matches(passwordPattern)
+    }
+
+    // Toggle functions
+    fun toggleUsernameChangePasswordVisibility() {
+        isUsernameChangePasswordVisible = !isUsernameChangePasswordVisible
+    }
+
+    fun toggleCurrentPasswordVisibility() {
+        isCurrentPasswordVisible = !isCurrentPasswordVisible
+    }
+
+    fun toggleNewPasswordVisibility() {
+        isNewPasswordVisible = !isNewPasswordVisible
+    }
+
+    fun toggleRepeatPasswordVisibility() {
+        isRepeatPasswordVisible = !isRepeatPasswordVisible
     }
 
     // Delete account

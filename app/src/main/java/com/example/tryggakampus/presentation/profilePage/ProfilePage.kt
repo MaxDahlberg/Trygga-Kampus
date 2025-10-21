@@ -55,10 +55,13 @@ fun ProfilePage() {
             OutlinedInput(
                 label = "Password (required)",
                 value = vm.usernameChangePassword,
-                onValueChange = { vm.usernameChangePassword = it },
-                isError = !vm.usernameChangePasswordIsValid
+                onValueChange = { vm.onUsernameChangePasswordChange(it) },
+                isError = !vm.usernameChangePasswordIsValid,
+                isPassword = true,
+                isPasswordVisible = vm.isUsernameChangePasswordVisible,
+                onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
             )
-
+0
             OutlinedInput(
                 label = "New Username",
                 value = vm.newUsername,
@@ -94,22 +97,32 @@ fun ProfilePage() {
             OutlinedInput(
                 label = "Current Password",
                 value = vm.currentPassword,
-                onValueChange = { vm.currentPassword = it },
-                isError = !vm.currentPasswordIsValid
+                onValueChange = { vm.onCurrentPasswordChange(it) },
+                isError = !vm.currentPasswordIsValid,
+                isPassword = true,
+                isPasswordVisible = vm.isCurrentPasswordVisible,
+                onVisibilityChange = { vm.toggleCurrentPasswordVisibility() }
             )
 
             OutlinedInput(
                 label = "New Password",
                 value = vm.newPassword,
-                onValueChange = { vm.newPassword = it },
-                isError = !vm.newPasswordIsValid
+                onValueChange = { vm.onNewPasswordChange(it) },
+                isError = !vm.newPasswordIsValid,
+                isPassword = true,
+                isPasswordVisible = vm.isNewPasswordVisible,
+                onVisibilityChange = { vm.toggleNewPasswordVisibility() }
             )
 
             OutlinedInput(
                 label = "Repeat New Password",
                 value = vm.repeatNewPassword,
                 onValueChange = { vm.repeatNewPassword = it },
-                isError = vm.newPassword != vm.repeatNewPassword
+                isError = vm.newPassword != vm.repeatNewPassword,
+                isPassword = true,
+                isPasswordVisible = vm.isRepeatPasswordVisible,
+                showPasswordRules = true,
+                onVisibilityChange = { vm.toggleRepeatPasswordVisibility() }
             )
 
             Spacer(modifier = Modifier.height(12.dp))
