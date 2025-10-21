@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class ProfileViewModel : ViewModel() {
 
@@ -91,12 +93,24 @@ class ProfileViewModel : ViewModel() {
 
         viewModelScope.launch {
             updatingPassword = true
-            delay(1000)
-            // todo: replace with real backend call.
-            // val response = AuthRepositoryImpl.changePassword(email, currentPassword, newPassword)
-            currentPassword = ""
-            newPassword = ""
-            repeatNewPassword = ""
+            error = null
+
+            try {
+                val email = currentUser?.email
+                if (email.isNullOrBlank()) throw Exception("User email not available")
+
+                val credential = EmailAuthProvider.getCredential(email, currentPassword)
+                currentUser?.reauthenticate(credential)?.await()
+
+                currentUser?.updatePassword(newPassword)?.await()
+
+                currentPassword = ""
+                newPassword = ""
+                repeatNewPassword = ""
+            } catch (e: Exception) {
+                error = AuthError("Password change failed: ${e.message}")
+            }
+
             updatingPassword = false
         }
     }
