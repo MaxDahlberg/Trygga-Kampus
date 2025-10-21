@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
+import com.example.tryggakampus.util.GdprUserDataHelper
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
@@ -165,11 +166,17 @@ class ProfileViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            delay(1000)
-            // todo: replace with real backend call.
-            // val response = AuthRepositoryImpl.deleteAccount(email, deletePassword)
-            showDeleteAccountDialog = false
-            error = AuthError("Account deletion not yet implemented.")
+            try {
+                val email = currentUser?.email ?: throw Exception("User email not available")
+                val credential = EmailAuthProvider.getCredential(email, deletePassword)
+                currentUser?.reauthenticate(credential)?.await()
+
+                currentUser?.uid?.let { GdprUserDataHelper().deleteUserData(it) }
+                currentUser?.delete()?.await()
+                showDeleteAccountDialog = false
+            } catch (e: Exception) {
+                error = AuthError("Account deletion failed: ${e.message}")
+            }
         }
     }
 
