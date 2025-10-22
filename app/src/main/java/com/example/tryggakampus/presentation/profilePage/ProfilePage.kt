@@ -50,26 +50,37 @@ fun ProfilePage() {
         FormContainer {
             Text("My Hobbies", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(10.dp))
-            Column {
-                vm.allHobbies.forEach { hobby ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp)
-                    ) {
-                        Checkbox(
-                            checked = vm.hobbies.contains(hobby),
-                            onCheckedChange = { vm.onHobbyToggle(hobby) }
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = hobby)
+
+            val scrollState = rememberScrollState()
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(480.dp)
+                    .verticalScroll(scrollState)
+            ) {
+                Column {
+                    vm.allHobbies.forEach { hobby ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                        ) {
+                            Checkbox(
+                                checked = vm.hobbies.contains(hobby),
+                                onCheckedChange = { vm.onHobbyToggle(hobby) },
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(text = hobby)
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.height(12.dp))
-                BlockButton(onClick = { vm.onSaveHobbies() }, enabled = true) {
-                    Text("Save Hobbies")
-                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+            BlockButton(onClick = { vm.onSaveHobbies() }, enabled = true) {
+                Text("Save Hobbies")
             }
         }
 
