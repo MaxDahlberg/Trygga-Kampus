@@ -128,6 +128,7 @@ fun LoginPage() {
                 isError = !vm.passwordIsValid,
                 isPassword = true,
                 isPasswordVisible = vm.isPasswordVisible,
+                showPasswordRules = true,
                 onVisibilityChange = { vm.togglePasswordVisibility() },
             )
 

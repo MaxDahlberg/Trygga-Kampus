@@ -31,6 +31,7 @@ fun OutlinedInput(
     singleLine: Boolean = false,
     isPassword: Boolean = false,
     isPasswordVisible: Boolean = false,
+    showPasswordRules: Boolean? = null,
     onVisibilityChange: () -> Unit = {}
 
 ) {
@@ -73,7 +74,7 @@ fun OutlinedInput(
             }
         }
     )
-    if (isPassword && !isError) {
+    if (isPassword && (showPasswordRules == true)) {
         Text(
             text = "Password must be 8+ characters with uppercase, number, and special character.",
             style = MaterialTheme.typography.bodySmall,
