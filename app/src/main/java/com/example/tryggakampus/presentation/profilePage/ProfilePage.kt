@@ -91,8 +91,8 @@ fun ProfilePage() {
                                     onCheckedChange = { vm.onHobbyToggle(hobby) },
                                     colors = CheckboxDefaults.colors(
                                         checkedColor = MaterialTheme.colorScheme.secondary,
-                                        uncheckedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                        checkmarkColor = MaterialTheme.colorScheme.onPrimary
+                                        uncheckedColor = MaterialTheme.colorScheme.onPrimary,
+                                        checkmarkColor = MaterialTheme.colorScheme.onSecondary
                                     )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
