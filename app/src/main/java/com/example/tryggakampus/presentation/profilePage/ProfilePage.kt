@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
 import com.example.tryggakampus.util.saveJsonToDownloads
@@ -20,198 +21,233 @@ fun ProfilePage() {
     val vm: ProfileViewModel = viewModel()
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(scrollState)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        ProfileHeader()
-        Spacer(modifier = Modifier.height(20.dp))
+    // Snackbar state for hobbies
+    val snackbarHostState = remember { SnackbarHostState() }
+    var savingHobbies by remember { mutableStateOf(false) }
 
-        // Account information
-        FormContainer {
-            Text(
-                text = "Account Information",
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Username: ${vm.username}")
-            Text(text = "Email: ${vm.email}")
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(16.dp)
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            ProfileHeader()
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Spacer(modifier = Modifier.height(30.dp))
+            // Account information
+            FormContainer {
+                Text(
+                    text = "Account Information",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "Username: ${vm.username}")
+                Text(text = "Email: ${vm.email}")
+            }
 
-        // Hobbies
-        FormContainer {
-            Text("My Hobbies", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-            val scrollState = rememberScrollState()
+            // Hobbies
+            FormContainer {
+                Text("My Hobbies", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(10.dp))
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(480.dp)
-                    .verticalScroll(scrollState)
-            ) {
-                Column {
-                    vm.allHobbies.forEach { hobby ->
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp)
-                        ) {
-                            Checkbox(
-                                checked = vm.hobbies.contains(hobby),
-                                onCheckedChange = { vm.onHobbyToggle(hobby) },
-                                colors = CheckboxDefaults.colors(
-                                    checkedColor = MaterialTheme.colorScheme.secondary,
-                                    uncheckedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                                    checkmarkColor = MaterialTheme.colorScheme.onPrimary
+                val hobbiesScrollState = rememberScrollState()
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(480.dp)
+                        .verticalScroll(hobbiesScrollState)
+                ) {
+                    Column {
+                        vm.allHobbies.forEach { hobby ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                            ) {
+                                Checkbox(
+                                    checked = vm.hobbies.contains(hobby),
+                                    onCheckedChange = { vm.onHobbyToggle(hobby) },
+                                    colors = CheckboxDefaults.colors(
+                                        checkedColor = MaterialTheme.colorScheme.secondary,
+                                        uncheckedColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                        checkmarkColor = MaterialTheme.colorScheme.onPrimary
+                                    )
                                 )
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = hobby)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = hobby)
+                            }
                         }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+                BlockButton(
+                    onClick = { savingHobbies = true }, // trigger snackbar
+                    enabled = true
+                ) {
+                    Text("Save Hobbies")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Change username
+            FormContainer {
+                Text("Change Username", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(10.dp))
+
+                OutlinedInput(
+                    label = "Password (required)",
+                    value = vm.usernameChangePassword,
+                    onValueChange = { vm.onUsernameChangePasswordChange(it) },
+                    isError = !vm.usernameChangePasswordIsValid,
+                    isPassword = true,
+                    isPasswordVisible = vm.isUsernameChangePasswordVisible,
+                    onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
+                )
+
+                OutlinedInput(
+                    label = "New Username",
+                    value = vm.newUsername,
+                    onValueChange = { vm.newUsername = it },
+                    isError = !vm.newUsernameIsValid
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+                BlockButton(
+                    onClick = { if (!vm.updatingUsername) vm.onChangeUsername() },
+                    enabled = vm.usernameChangePasswordIsValid && vm.newUsernameIsValid
+                ) {
+                    if (vm.updatingUsername) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                        )
+                    } else {
+                        Text("Update Username")
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-            BlockButton(onClick = { vm.onSaveHobbies() }, enabled = true) {
-                Text("Save Hobbies")
-            }
-        }
+            Spacer(modifier = Modifier.height(30.dp))
 
-        Spacer(modifier = Modifier.height(30.dp))
+            // Change password
+            FormContainer {
+                Text("Change Password", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(10.dp))
 
-        // Change username
-        FormContainer {
-            Text("Change Username", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(10.dp))
+                OutlinedInput(
+                    label = "Current Password",
+                    value = vm.currentPassword,
+                    onValueChange = { vm.onCurrentPasswordChange(it) },
+                    isError = !vm.currentPasswordIsValid,
+                    isPassword = true,
+                    isPasswordVisible = vm.isCurrentPasswordVisible,
+                    onVisibilityChange = { vm.toggleCurrentPasswordVisibility() }
+                )
 
-            OutlinedInput(
-                label = "Password (required)",
-                value = vm.usernameChangePassword,
-                onValueChange = { vm.onUsernameChangePasswordChange(it) },
-                isError = !vm.usernameChangePasswordIsValid,
-                isPassword = true,
-                isPasswordVisible = vm.isUsernameChangePasswordVisible,
-                onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
-            )
+                OutlinedInput(
+                    label = "New Password",
+                    value = vm.newPassword,
+                    onValueChange = { vm.onNewPasswordChange(it) },
+                    isError = !vm.newPasswordIsValid,
+                    isPassword = true,
+                    isPasswordVisible = vm.isNewPasswordVisible,
+                    onVisibilityChange = { vm.toggleNewPasswordVisibility() }
+                )
 
-            OutlinedInput(
-                label = "New Username",
-                value = vm.newUsername,
-                onValueChange = { vm.newUsername = it },
-                isError = !vm.newUsernameIsValid
-            )
+                OutlinedInput(
+                    label = "Repeat New Password",
+                    value = vm.repeatNewPassword,
+                    onValueChange = { vm.repeatNewPassword = it },
+                    isError = vm.newPassword != vm.repeatNewPassword,
+                    isPassword = true,
+                    isPasswordVisible = vm.isRepeatPasswordVisible,
+                    showPasswordRules = true,
+                    onVisibilityChange = { vm.toggleRepeatPasswordVisibility() }
+                )
 
-            Spacer(modifier = Modifier.height(12.dp))
-            BlockButton(
-                onClick = { if (!vm.updatingUsername) vm.onChangeUsername() },
-                enabled = vm.usernameChangePasswordIsValid && vm.newUsernameIsValid
-            ) {
-                if (vm.updatingUsername) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
-                    )
-                } else {
-                    Text("Update Username")
+                Spacer(modifier = Modifier.height(12.dp))
+                BlockButton(
+                    onClick = { if (!vm.updatingPassword) vm.onChangePassword() },
+                    enabled = vm.passwordChangeFormValid
+                ) {
+                    if (vm.updatingPassword) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            color = MaterialTheme.colorScheme.onSecondary,
+                            trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                        )
+                    } else {
+                        Text("Update Password")
+                    }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-        // Change password
-        FormContainer {
-            Text("Change Password", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(10.dp))
+            // Account and data
+            FormContainer {
+                Text("Account & Data", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Spacer(modifier = Modifier.height(10.dp))
 
-            OutlinedInput(
-                label = "Current Password",
-                value = vm.currentPassword,
-                onValueChange = { vm.onCurrentPasswordChange(it) },
-                isError = !vm.currentPasswordIsValid,
-                isPassword = true,
-                isPasswordVisible = vm.isCurrentPasswordVisible,
-                onVisibilityChange = { vm.toggleCurrentPasswordVisibility() }
-            )
+                BlockButton(
+                    onClick = { vm.showRequestDataDialog = true },
+                    enabled = true
+                ) {
+                    Text("Request My Data")
+                }
+                Spacer(modifier = Modifier.height(10.dp))
 
-            OutlinedInput(
-                label = "New Password",
-                value = vm.newPassword,
-                onValueChange = { vm.onNewPasswordChange(it) },
-                isError = !vm.newPasswordIsValid,
-                isPassword = true,
-                isPasswordVisible = vm.isNewPasswordVisible,
-                onVisibilityChange = { vm.toggleNewPasswordVisibility() }
-            )
-
-            OutlinedInput(
-                label = "Repeat New Password",
-                value = vm.repeatNewPassword,
-                onValueChange = { vm.repeatNewPassword = it },
-                isError = vm.newPassword != vm.repeatNewPassword,
-                isPassword = true,
-                isPasswordVisible = vm.isRepeatPasswordVisible,
-                showPasswordRules = true,
-                onVisibilityChange = { vm.toggleRepeatPasswordVisibility() }
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-            BlockButton(
-                onClick = { if (!vm.updatingPassword) vm.onChangePassword() },
-                enabled = vm.passwordChangeFormValid
-            ) {
-                if (vm.updatingPassword) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onSecondary,
-                        trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
-                    )
-                } else {
-                    Text("Update Password")
+                BlockButton(
+                    onClick = { vm.showDeleteAccountDialog = true },
+                    enabled = true
+                ) {
+                    Text("Delete My Data and Account")
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(30.dp))
-
-
-        // Account and data
-        FormContainer {
-            Text("Account & Data", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Spacer(modifier = Modifier.height(10.dp))
-
-            BlockButton(
-                onClick = { vm.showRequestDataDialog = true },
-                enabled = true
-            ) {
-                Text("Request My Data")
-            }
-            Spacer(modifier = Modifier.height(10.dp))
-
-            BlockButton(
-                onClick = { vm.showDeleteAccountDialog = true },
-                enabled = true
-            ) {
-                Text("Delete My Data and Account")
+            Spacer(modifier = Modifier.height(20.dp))
+            vm.error?.let {
+                ErrorBox(it.message, onClick = { vm.clearError() })
             }
         }
+    }
 
-        Spacer(modifier = Modifier.height(20.dp))
-        vm.error?.let {
-            ErrorBox(it.message, onClick = { vm.clearError() })
+    // Hobbies
+    LaunchedEffect(savingHobbies) {
+        if (savingHobbies) {
+            try {
+                vm.onSaveHobbies()
+                snackbarHostState.showSnackbar("Hobbies saved successfully!")
+            } catch (e: Exception) {
+                snackbarHostState.showSnackbar("Failed to save hobbies: ${e.message}")
+            } finally {
+                savingHobbies = false
+            }
         }
     }
 
