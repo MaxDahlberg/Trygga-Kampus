@@ -8,6 +8,7 @@ import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 import com.example.tryggakampus.util.GdprUserDataHelper
+import com.example.tryggakampus.util.HobbyList
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -61,14 +62,40 @@ class ProfileViewModel : ViewModel() {
     var error by mutableStateOf<AuthError?>(null)
     fun clearError() { error = null }
 
+    // Hobbies
+    var hobbies by mutableStateOf<List<String>>(emptyList())
+    var allHobbies by mutableStateOf(HobbyList.allHobbies)
+
     init {
-        // Load username from Firestore if available
+        // Load username and hobbies from Firestore
         if (currentUserId.isNotEmpty()) {
             viewModelScope.launch {
                 val (result, userInfo) = userRepo.getUserInformation(currentUserId, com.google.firebase.firestore.Source.SERVER)
                 if (result == UserInformationRepository.RepositoryResult.SUCCESS && userInfo != null) {
                     username = userInfo.username ?: username
+                    hobbies = userInfo.hobbies
                 }
+            }
+        }
+    }
+
+    // Hobbies
+    fun onHobbyToggle(hobby: String) {
+        hobbies = if (hobbies.contains(hobby)) {
+            hobbies - hobby
+        } else {
+            hobbies + hobby
+        }
+    }
+
+    fun onSaveHobbies() {
+        viewModelScope.launch {
+            val result = userRepo.addOrUpdateUserInformation(
+                userInfo = UserInfoModel(userId = currentUserId),
+                updateFields = mapOf("hobbies" to hobbies)
+            )
+            if (result != UserInformationRepository.RepositoryResult.SUCCESS) {
+                error = AuthError("Failed to update hobbies")
             }
         }
     }
@@ -91,11 +118,9 @@ class ProfileViewModel : ViewModel() {
             error = null
 
             try {
-                // Reauthenticate user
                 val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
                 currentUser?.reauthenticate(credential)?.await()
 
-                // Check username availability
                 val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
                 if (!available) {
                     error = AuthError("This username is already taken.")
@@ -103,7 +128,6 @@ class ProfileViewModel : ViewModel() {
                     return@launch
                 }
 
-                // Update username
                 val result = UserInformationRepositoryImpl.addOrUpdateUserInformation(
                     userInfo = UserInfoModel(userId = currentUserId),
                     updateFields = mapOf("username" to newUsername)
@@ -219,7 +243,6 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             if (jsonData == null) {
                 try {
-                    // Fetch JSON from helper
                     jsonData = GdprUserDataHelper().fetchUserData(currentUserId)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -228,7 +251,6 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    // Reset JSON.
     fun resetJsonData() {
         jsonData = null
     }

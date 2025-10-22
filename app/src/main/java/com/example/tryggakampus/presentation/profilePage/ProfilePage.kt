@@ -17,7 +17,7 @@ import com.example.tryggakampus.util.saveJsonToDownloads
 
 @Composable
 fun ProfilePage() {
-    val vm: ProfileViewModel = viewModel<ProfileViewModel>()
+    val vm: ProfileViewModel = viewModel()
     val scrollState = rememberScrollState()
 
     Column(
@@ -29,7 +29,6 @@ fun ProfilePage() {
         verticalArrangement = Arrangement.Top
     ) {
         ProfileHeader()
-
         Spacer(modifier = Modifier.height(20.dp))
 
         // Account information
@@ -41,13 +40,40 @@ fun ProfilePage() {
                 color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(10.dp))
-
             Text(text = "Username: ${vm.username}")
             Text(text = "Email: ${vm.email}")
         }
 
         Spacer(modifier = Modifier.height(30.dp))
 
+        // Hobbies
+        FormContainer {
+            Text("My Hobbies", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Spacer(modifier = Modifier.height(10.dp))
+            Column {
+                vm.allHobbies.forEach { hobby ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                    ) {
+                        Checkbox(
+                            checked = vm.hobbies.contains(hobby),
+                            onCheckedChange = { vm.onHobbyToggle(hobby) }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = hobby)
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                BlockButton(onClick = { vm.onSaveHobbies() }, enabled = true) {
+                    Text("Save Hobbies")
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
 
         // Change username
         FormContainer {
@@ -63,7 +89,7 @@ fun ProfilePage() {
                 isPasswordVisible = vm.isUsernameChangePasswordVisible,
                 onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
             )
-0
+
             OutlinedInput(
                 label = "New Username",
                 value = vm.newUsername,
@@ -89,7 +115,6 @@ fun ProfilePage() {
         }
 
         Spacer(modifier = Modifier.height(30.dp))
-
 
         // Change password
         FormContainer {
@@ -158,7 +183,6 @@ fun ProfilePage() {
             ) {
                 Text("Request My Data")
             }
-
             Spacer(modifier = Modifier.height(10.dp))
 
             BlockButton(
