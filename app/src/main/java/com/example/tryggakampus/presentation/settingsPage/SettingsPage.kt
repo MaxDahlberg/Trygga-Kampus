@@ -1,5 +1,6 @@
 package com.example.tryggakampus.presentation.settingsPage
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,9 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.PageContainer
-import com.example.tryggakampus.util.AppThemeOption
 import com.example.tryggakampus.util.LanguageManager
-import com.example.tryggakampus.util.ThemeManager
 
 @Composable
 fun SettingsPage(
@@ -22,8 +21,7 @@ fun SettingsPage(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
 
-    val currentTheme by ThemeManager.currentTheme.collectAsState() // Observe theme
-
+    // Initialize the language from the current app configuration
     LaunchedEffect(configuration) {
         val currentLanguage = configuration.locales[0].language
         viewModel.setLanguage(currentLanguage)
@@ -41,22 +39,14 @@ fun SettingsPage(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            // Language switch
+            // Simple Language Switch
             SimpleLanguageSwitch(
                 currentLanguage = viewModel.currentLanguage,
                 onLanguageSelected = { languageCode ->
+                    // This is for immediate UI feedback before restart
                     viewModel.setLanguage(languageCode)
+                    // This saves the preference and restarts the app
                     LanguageManager.setAppLanguage(context, languageCode)
-                }
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Theme switch
-            SimpleThemeSwitch(
-                currentTheme = currentTheme,
-                onThemeSelected = { themeOption ->
-                    ThemeManager.setTheme(themeOption, context)
                 }
             )
         }
@@ -161,69 +151,6 @@ fun SimpleLanguageSwitch(
             )
             Text(
                 text = "Note: Translations was provided by AI",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-    }
-}
-
-
-@Composable
-fun SimpleThemeSwitch(
-    currentTheme: AppThemeOption,
-    onThemeSelected: (AppThemeOption) -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = "App Theme",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            Text(
-                text = "Change the theme of the app",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    AppThemeOption.entries.forEach { option ->
-                        Button(
-                            onClick = { onThemeSelected(option) },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (currentTheme == option)
-                                    MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.surfaceVariant
-                            )
-                        ) {
-                            Text(
-                                text = when (option) {
-                                    AppThemeOption.LIGHT -> "Light"
-                                    AppThemeOption.DARK -> "Dark"
-                                    AppThemeOption.SYSTEM -> "System"
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-
-            Text(
-                text = "The app may restart to apply changes",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp)
