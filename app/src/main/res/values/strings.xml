@@ -43,4 +43,13 @@
     <string name="self_esteem">Self-esteem</string>
     <string name="self_reliance">Self-reliance</string>
     <!-- Self-assessment End -->
+
+    <!-- Voice Note feature strings -->
+    <string name="voice_note_title">Voice Note</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="analyze_emotion">Analyze Emotion</string>
+    <string name="analyzing">Analyzing...</string>
 </resources>

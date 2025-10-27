@@ -47,6 +47,10 @@ enum class DrawerItem(
         icon = R.drawable.baseline_advice_24,
         title = "Advice"
     ),
+    Voice(
+        icon = R.drawable.baseline_articles_24,
+        title = "Voice Note"
+    ),
     Game(
         icon = R.drawable.baseline_diamond_24,
         title = "Game"
