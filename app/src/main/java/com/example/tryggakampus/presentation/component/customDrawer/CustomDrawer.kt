@@ -166,6 +166,7 @@ fun PrimaryDrawerItems(
                         DrawerItem.Form -> Routes.FormPage()
                         DrawerItem.Survey -> Routes.SurveyPage()
                         DrawerItem.Advice -> Routes.AdvicePage()
+                        DrawerItem.Voice -> Routes.VoiceNotePage()
                         DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
                         DrawerItem.Videos -> Routes.VideosNavGraph.VideosPage
                         DrawerItem.Game -> Routes.ScratchGamePage()

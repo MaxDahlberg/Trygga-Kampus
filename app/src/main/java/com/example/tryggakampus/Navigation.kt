@@ -113,6 +113,10 @@ sealed interface Routes {
     @kotlinx.serialization.Serializable data class SelfAssessmentPage(val title: String = "Self-assessment"): Routes {
         override fun routeName() = "SelfAssessmentPage"
     }
+    @kotlinx.serialization.Serializable
+    data class VoiceNotePage(val title: String = "Voice Note"): Routes {
+        override fun routeName() = "VoiceNotePage"
+    }
 }
 
 @Composable
@@ -199,6 +203,10 @@ fun Navigation(
                     AdvicePage()
                 }
 
+                composable<Routes.VoiceNotePage> {
+                    // Navigate to the Compose-based VoiceNote screen (Compose-native)
+                    com.example.tryggakampus.presentation.voice.VoiceNoteScreen()
+                }
                 composable<Routes.SettingsPage> {
                     val args = it.toRoute<Routes.SettingsPage>()
                     val vm = viewModel<SettingsPageViewModel>()
