@@ -2,30 +2,42 @@ package com.example.tryggakampus.presentation.voice
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import kotlinx.coroutines.launch
-import java.io.File
 import com.example.tryggakampus.VoiceAnalyzer
 import com.example.tryggakampus.BuildConfig
+import com.example.tryggakampus.data.VoiceNoteRtdb
+import com.example.tryggakampus.data.VoiceNoteRtdb.VoiceNoteMeta
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import kotlin.math.ln
+import kotlin.math.min
 
 @Suppress("DEPRECATION")
 @Composable
@@ -47,8 +59,28 @@ fun VoiceNoteScreen() {
     var mediaRecorder by remember { mutableStateOf<MediaRecorder?>(null) }
     var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
 
-    // Derived recording availability
+    // Keep last RTDB key/uid for playback
+    var lastSavedKey by remember { mutableStateOf<String?>(null) }
+    var lastSavedUid by remember { mutableStateOf<String?>(null) }
+    var notes by remember { mutableStateOf<List<VoiceNoteMeta>>(emptyList()) }
+
+    // Derived recording availability (re-add)
     var hasRecording by remember { mutableStateOf(outputFile.exists() && outputFile.length() > 0) }
+
+    // colorful brush for waveform
+    val brush = remember {
+        Brush.horizontalGradient(
+            listOf(
+                Color(0xFF87CEEB), // sky blue
+                Color(0xFFFFFFE0), // light yellow
+                Color(0xFF4CAF50)  // grass green
+            )
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        try { notes = withContext(Dispatchers.IO) { VoiceNoteRtdb.fetchAllForCurrentUser() } } catch (_: Exception) {}
+    }
 
     var permissionGranted by remember {
         mutableStateOf(
@@ -70,6 +102,59 @@ fun VoiceNoteScreen() {
         if (!permissionGranted) permissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
     }
 
+    // Waveform state: rolling window of normalized amplitudes [0..1]
+    val windowSize = 64
+    val amplitudes = remember { mutableStateListOf<Float>().apply { repeat(windowSize) { add(0f) } } }
+
+    // Poll getMaxAmplitude while recording and update waveform
+    LaunchedEffect(recording) {
+        if (recording) {
+            delay(60)
+        }
+        while (recording) {
+            val amp = mediaRecorder?.maxAmplitude ?: 0
+            val normalized = if (amp <= 0) 0f else (ln(amp.toFloat() + 1f) / ln(32768f)).coerceIn(0f, 1f)
+            val last = amplitudes.lastOrNull() ?: 0f
+            val smoothed = if (normalized > last) min(last + 0.08f, normalized) else last * 0.92f
+            amplitudes.add(smoothed)
+            if (amplitudes.size > windowSize) amplitudes.removeAt(0)
+            delay(50)
+        }
+        // gentle decay when stopped
+        repeat(12) {
+            val last = amplitudes.lastOrNull() ?: 0f
+            amplitudes.add(last * 0.85f)
+            if (amplitudes.size > windowSize) amplitudes.removeAt(0)
+            delay(30)
+        }
+    }
+
+    // Define playFile helper before it is used
+    val playFile: (String) -> Unit = { path ->
+        try {
+            mediaPlayer?.release()
+            mediaPlayer = MediaPlayer().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .build()
+                )
+                setDataSource(path)
+                setOnPreparedListener { it.start() }
+                setOnCompletionListener { mp -> mp.reset(); mp.release(); mediaPlayer = null; playing = false }
+                setOnErrorListener { mp, what, extra ->
+                    Toast.makeText(ctx, "Playback error ($what/$extra)", Toast.LENGTH_LONG).show()
+                    mp.reset(); mp.release(); mediaPlayer = null; playing = false
+                    true
+                }
+                prepareAsync()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(ctx, "Failed to play: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,6 +167,16 @@ fun VoiceNoteScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(text = if (recording) "Recording... ${elapsed}s" else "Voice Note")
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Waveform visualizer
+        AudioWaveform(
+            amplitudes = amplitudes,
+            modifier = Modifier.fillMaxWidth().height(120.dp),
+            barColor = Color.Unspecified,
+            barBrush = brush
+        )
+
         Spacer(modifier = Modifier.height(12.dp))
 
         Button(onClick = {
@@ -129,76 +224,55 @@ fun VoiceNoteScreen() {
                     Toast.makeText(ctx, "Failed to start recording: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             } else {
-                // Stop recording
+                // Stop and auto-save
                 try {
-                    mediaRecorder?.apply {
-                        stop()
-                        reset()
-                        release()
-                    }
-                    mediaRecorder = null
-                    recording = false
-                    timerJob?.cancel()
-                    timerJob = null
-                    // Recompute availability only after stop so the file is finalized
+                    mediaRecorder?.apply { stop(); reset(); release() }; mediaRecorder = null
+                    recording = false; timerJob?.cancel(); timerJob = null
                     hasRecording = outputFile.exists() && outputFile.length() > 0
-                    Log.d("VoiceNote", "Recording stopped. exists=${outputFile.exists()} len=${outputFile.length()}")
+                    scope.launch {
+                        try {
+                            val res = withContext(Dispatchers.IO) { VoiceNoteRtdb.saveFileAsBase64(outputFile) }
+                            lastSavedKey = res.key; lastSavedUid = res.uid
+                            notes = withContext(Dispatchers.IO) { VoiceNoteRtdb.fetchAllForCurrentUser() }
+                            Toast.makeText(ctx, "Saved to RTDB", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(ctx, "Save failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 } catch (e: Exception) {
-                    Log.e("VoiceNote", "Failed to stop recording", e)
                     Toast.makeText(ctx, "Failed to stop recording: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
-        }) {
-            Text(if (!recording) "Start Recording" else "Stop Recording")
-        }
+        }) { Text(if (!recording) "Start Recording" else "Stop Recording") }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
 
-        Button(onClick = {
-            if (!playing) {
-                try {
-                    if (!outputFile.exists() || outputFile.length() == 0L) {
-                        Toast.makeText(ctx, "No recording found", Toast.LENGTH_SHORT).show()
-                        return@Button
-                    }
-                    mediaPlayer = MediaPlayer().apply {
-                        setDataSource(outputFile.absolutePath)
-                        prepare()
-                        start()
-                        setOnCompletionListener {
-                            it.reset()
-                            it.release()
-                            mediaPlayer = null
-                            playing = false
+        Text("Saved notes:")
+        Spacer(Modifier.height(6.dp))
+        LazyColumn(modifier = Modifier.fillMaxWidth().height(180.dp)) {
+            items(notes) { item ->
+                Button(onClick = {
+                    scope.launch {
+                        try {
+                            val base64 = withContext(Dispatchers.IO) { VoiceNoteRtdb.fetchBase64ByKey(item.uid, item.key) }
+                            val bytes = Base64.decode(base64, Base64.DEFAULT)
+                            val tmp = File.createTempFile("rtdb_play_", ".3gp", ctx.cacheDir)
+                            tmp.writeBytes(bytes)
+                            playFile(tmp.absolutePath)
+                            playing = true
+                        } catch (e: Exception) {
+                            Toast.makeText(ctx, "Playback failed: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     }
-                    Log.d("VoiceNote", "Playback started: ${outputFile.length()} bytes")
-                    playing = true
-                } catch (e: Exception) {
-                    Log.e("VoiceNote", "Failed to play", e)
-                    Toast.makeText(ctx, "Failed to play: ${e.message}", Toast.LENGTH_LONG).show()
+                }, modifier = Modifier.fillMaxWidth()) {
+                    Text(text = item.timestamp)
                 }
-            } else {
-                try {
-                    mediaPlayer?.apply {
-                        stop()
-                        reset()
-                        release()
-                    }
-                    mediaPlayer = null
-                    playing = false
-                    Log.d("VoiceNote", "Playback stopped")
-                } catch (e: Exception) {
-                    Log.e("VoiceNote", "Failed to stop playback", e)
-                    Toast.makeText(ctx, "Failed to stop playback: ${e.message}", Toast.LENGTH_LONG).show()
-                }
+                Spacer(Modifier.height(6.dp))
             }
-        }, enabled = hasRecording && !recording) {
-            Text(if (!playing) "Play" else "Stop")
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
+        // Analyze Emotion (restored)
+        Spacer(Modifier.height(12.dp))
         Button(onClick = {
             if (!outputFile.exists() || outputFile.length() == 0L) {
                 Toast.makeText(ctx, "No recording to analyze", Toast.LENGTH_SHORT).show()
@@ -208,24 +282,17 @@ fun VoiceNoteScreen() {
                 busy = true
                 analysisResult = "Analyzing tone & words..."
                 try {
-                    val result = withContext(Dispatchers.IO) {
-                        VoiceAnalyzer.analyzeVoice(outputFile)
-                    }
+                    val result = withContext(Dispatchers.IO) { VoiceAnalyzer.analyzeVoice(outputFile) }
                     analysisResult = result
-                    Log.d("VoiceNote", "Analyze OK: $result")
                 } catch (e: Exception) {
-                    Log.e("VoiceNote", "Analyze failed", e)
                     analysisResult = "Error: ${e.message}"
                 }
                 busy = false
             }
-        }, enabled = hasRecording && !busy && !recording) {
-            Text("Analyze Emotion")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
+        }, enabled = !busy && !recording) { Text("Analyze Emotion") }
 
         if (busy) {
+            Spacer(Modifier.height(8.dp))
             CircularProgressIndicator()
         }
 
@@ -240,6 +307,42 @@ fun VoiceNoteScreen() {
             try { mediaRecorder?.release() } catch (_: Exception) {}
             try { mediaPlayer?.release() } catch (_: Exception) {}
             timerJob?.cancel()
+        }
+    }
+}
+
+@Composable
+private fun AudioWaveform(
+    amplitudes: List<Float>,
+    modifier: Modifier = Modifier,
+    barColor: Color = Color(0xFF4CAF50),
+    barBrush: Brush? = null
+) {
+    Canvas(modifier = modifier) {
+        val n = amplitudes.size.coerceAtLeast(1)
+        val barWidth = size.width / n
+        val centerY = size.height / 2f
+        val minBarHeight = size.height * 0.06f
+        val maxBarHeight = size.height * 0.95f
+        amplitudes.forEachIndexed { index, amp ->
+            val h = (minBarHeight + (maxBarHeight - minBarHeight) * amp.coerceIn(0f, 1f))
+            val left = index * barWidth
+            val top = centerY - h / 2f
+            val right = left + barWidth * 0.7f
+            val bottom = centerY + h / 2f
+            if (barBrush != null) {
+                drawRect(
+                    brush = barBrush,
+                    topLeft = androidx.compose.ui.geometry.Offset(left, top),
+                    size = androidx.compose.ui.geometry.Size(right - left, bottom - top)
+                )
+            } else {
+                drawRect(
+                    color = barColor,
+                    topLeft = androidx.compose.ui.geometry.Offset(left, top),
+                    size = androidx.compose.ui.geometry.Size(right - left, bottom - top)
+                )
+            }
         }
     }
 }
