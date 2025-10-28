@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.domain.model.UserInfoModel
 import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
-import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 import com.example.tryggakampus.util.GdprUserDataHelper
 import com.example.tryggakampus.util.HobbyList
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 
 class ProfileViewModel : ViewModel() {
 
@@ -58,9 +58,11 @@ class ProfileViewModel : ViewModel() {
     var showRequestDataDialog by mutableStateOf(false)
     var jsonData by mutableStateOf<String?>(null)
 
-    // Error
-    var error by mutableStateOf<AuthError?>(null)
-    fun clearError() { error = null }
+    // Errors
+    var usernameError by mutableStateOf<AuthError?>(null)
+    var passwordError by mutableStateOf<AuthError?>(null)
+    var hobbiesError by mutableStateOf<AuthError?>(null)
+    var deleteAccountError by mutableStateOf<AuthError?>(null)
 
     // Hobbies
     var hobbies by mutableStateOf<List<String>>(emptyList())
@@ -95,7 +97,9 @@ class ProfileViewModel : ViewModel() {
                 updateFields = mapOf("hobbies" to hobbies)
             )
             if (result != UserInformationRepository.RepositoryResult.SUCCESS) {
-                error = AuthError("Failed to update hobbies")
+                hobbiesError = AuthError("Failed to update hobbies")
+            } else {
+                hobbiesError = null
             }
         }
     }
@@ -103,19 +107,19 @@ class ProfileViewModel : ViewModel() {
     // Change username
     fun onChangeUsername() {
         if (newUsername.isBlank() || usernameChangePassword.isBlank()) {
-            error = AuthError("Please fill in all fields.")
+            usernameError = AuthError("Please fill in all fields.")
             return
         }
 
         val email = currentUser?.email
         if (email.isNullOrBlank()) {
-            error = AuthError("User email not available.")
+            usernameError = AuthError("User email not available.")
             return
         }
 
         viewModelScope.launch {
             updatingUsername = true
-            error = null
+            usernameError = null
 
             try {
                 val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
@@ -123,7 +127,7 @@ class ProfileViewModel : ViewModel() {
 
                 val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
                 if (!available) {
-                    error = AuthError("This username is already taken.")
+                    usernameError = AuthError("This username is already taken.")
                     updatingUsername = false
                     return@launch
                 }
@@ -137,12 +141,13 @@ class ProfileViewModel : ViewModel() {
                     username = newUsername
                     newUsername = ""
                     usernameChangePassword = ""
+                    usernameError = null
                 } else {
-                    error = AuthError("Failed to update username: $result")
+                    usernameError = AuthError("Failed to update username: $result")
                 }
 
             } catch (e: Exception) {
-                error = AuthError("Failed to update username: ${e.message}")
+                usernameError = AuthError("Failed to update username: ${e.message}")
             } finally {
                 updatingUsername = false
             }
@@ -152,13 +157,13 @@ class ProfileViewModel : ViewModel() {
     // Change password
     fun onChangePassword() {
         if (!passwordChangeFormValid) {
-            error = AuthError("Passwords do not match or are invalid.")
+            passwordError = AuthError("Passwords do not match or are invalid.")
             return
         }
 
         viewModelScope.launch {
             updatingPassword = true
-            error = null
+            passwordError = null
 
             try {
                 val email = currentUser?.email
@@ -172,8 +177,9 @@ class ProfileViewModel : ViewModel() {
                 currentPassword = ""
                 newPassword = ""
                 repeatNewPassword = ""
+                passwordError = null
             } catch (e: Exception) {
-                error = AuthError("Password change failed: ${e.message}")
+                passwordError = AuthError("Password change failed: ${e.message}")
             }
 
             updatingPassword = false
@@ -219,7 +225,7 @@ class ProfileViewModel : ViewModel() {
     // Delete account
     fun onDeleteAccount() {
         if (deletePassword.isEmpty()) {
-            error = AuthError("Password required to delete account.")
+            deleteAccountError = AuthError("Password required to delete account.")
             return
         }
 
@@ -232,8 +238,9 @@ class ProfileViewModel : ViewModel() {
                 currentUser?.uid?.let { GdprUserDataHelper().deleteUserData(it) }
                 currentUser?.delete()?.await()
                 showDeleteAccountDialog = false
+                deleteAccountError = null
             } catch (e: Exception) {
-                error = AuthError("Account deletion failed: ${e.message}")
+                deleteAccountError = AuthError("Account deletion failed: ${e.message}")
             }
         }
     }

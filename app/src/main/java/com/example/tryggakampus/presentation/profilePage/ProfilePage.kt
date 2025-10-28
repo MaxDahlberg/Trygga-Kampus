@@ -20,8 +20,6 @@ import com.example.tryggakampus.util.saveJsonToDownloads
 fun ProfilePage() {
     val vm: ProfileViewModel = viewModel()
     val scrollState = rememberScrollState()
-
-    // Snackbar state for hobbies
     val snackbarHostState = remember { SnackbarHostState() }
     var savingHobbies by remember { mutableStateOf(false) }
 
@@ -111,6 +109,10 @@ fun ProfilePage() {
                 }
             }
 
+            // Hobbies error
+            Spacer(modifier = Modifier.height(16.dp))
+            vm.hobbiesError?.let { ErrorBox(it.message) { vm.hobbiesError = null } }
+
             Spacer(modifier = Modifier.height(30.dp))
 
             // Change username
@@ -151,6 +153,10 @@ fun ProfilePage() {
                     }
                 }
             }
+
+            // Username error
+            Spacer(modifier = Modifier.height(16.dp))
+            vm.usernameError?.let { ErrorBox(it.message) { vm.usernameError = null } }
 
             Spacer(modifier = Modifier.height(30.dp))
 
@@ -207,6 +213,10 @@ fun ProfilePage() {
                 }
             }
 
+            // Password error
+            Spacer(modifier = Modifier.height(16.dp))
+            vm.passwordError?.let { ErrorBox(it.message) { vm.passwordError = null } }
+
             Spacer(modifier = Modifier.height(30.dp))
 
             // Account and data
@@ -230,10 +240,11 @@ fun ProfilePage() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
-            vm.error?.let {
-                ErrorBox(it.message, onClick = { vm.clearError() })
-            }
+            // Delete account error
+            Spacer(modifier = Modifier.height(16.dp))
+            vm.deleteAccountError?.let { ErrorBox(it.message) { vm.deleteAccountError = null } }
+
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 
