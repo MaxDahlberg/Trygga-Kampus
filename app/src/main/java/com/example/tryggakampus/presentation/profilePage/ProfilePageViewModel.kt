@@ -90,101 +90,100 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    fun onSaveHobbies() {
-        viewModelScope.launch {
+    suspend fun onSaveHobbies(): Boolean {
+        return try {
             val result = userRepo.addOrUpdateUserInformation(
                 userInfo = UserInfoModel(userId = currentUserId),
                 updateFields = mapOf("hobbies" to hobbies)
             )
-            if (result != UserInformationRepository.RepositoryResult.SUCCESS) {
-                hobbiesError = AuthError("Failed to update hobbies")
-            } else {
+            if (result == UserInformationRepository.RepositoryResult.SUCCESS) {
                 hobbiesError = null
+                true
+            } else {
+                hobbiesError = AuthError("Failed to update hobbies")
+                false
             }
+        } catch (e: Exception) {
+            hobbiesError = AuthError("Failed to update hobbies: ${e.message}")
+            false
         }
     }
 
     // Change username
-    fun onChangeUsername() {
+    suspend fun onChangeUsername(): Boolean {
         if (newUsername.isBlank() || usernameChangePassword.isBlank()) {
             usernameError = AuthError("Please fill in all fields.")
-            return
+            return false
         }
 
-        val email = currentUser?.email
-        if (email.isNullOrBlank()) {
+        val email = currentUser?.email ?: run {
             usernameError = AuthError("User email not available.")
-            return
+            return false
         }
 
-        viewModelScope.launch {
-            updatingUsername = true
-            usernameError = null
+        return try {
+            val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
+            currentUser?.reauthenticate(credential)?.await()
 
-            try {
-                val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
-                currentUser?.reauthenticate(credential)?.await()
-
-                val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
-                if (!available) {
-                    usernameError = AuthError("This username is already taken.")
-                    updatingUsername = false
-                    return@launch
-                }
-
-                val result = UserInformationRepositoryImpl.addOrUpdateUserInformation(
-                    userInfo = UserInfoModel(userId = currentUserId),
-                    updateFields = mapOf("username" to newUsername)
-                )
-
-                if (result == UserInformationRepository.RepositoryResult.SUCCESS) {
-                    username = newUsername
-                    newUsername = ""
-                    usernameChangePassword = ""
-                    usernameError = null
-                } else {
-                    usernameError = AuthError("Failed to update username: $result")
-                }
-
-            } catch (e: Exception) {
-                usernameError = AuthError("Failed to update username: ${e.message}")
-            } finally {
-                updatingUsername = false
+            val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
+            if (!available) {
+                usernameError = AuthError("This username is already taken.")
+                return false
             }
+
+            val result = UserInformationRepositoryImpl.addOrUpdateUserInformation(
+                userInfo = UserInfoModel(userId = currentUserId),
+                updateFields = mapOf("username" to newUsername)
+            )
+
+            if (result == UserInformationRepository.RepositoryResult.SUCCESS) {
+                username = newUsername
+                newUsername = ""
+                usernameChangePassword = ""
+                usernameError = null
+                true
+            } else {
+                usernameError = AuthError("Failed to update username: $result")
+                false
+            }
+
+        } catch (e: Exception) {
+            usernameError = AuthError("Failed to update username: ${e.message}")
+            false
+        } finally {
+            updatingUsername = false
         }
     }
 
+
     // Change password
-    fun onChangePassword() {
+    suspend fun onChangePassword(): Boolean {
         if (!passwordChangeFormValid) {
             passwordError = AuthError("Passwords do not match or are invalid.")
-            return
+            return false
         }
 
-        viewModelScope.launch {
-            updatingPassword = true
+        return try {
+            val email = currentUser?.email ?: throw Exception("User email not available")
+            val credential = EmailAuthProvider.getCredential(email, currentPassword)
+            currentUser?.reauthenticate(credential)?.await()
+
+            currentUser?.updatePassword(newPassword)?.await()
+
+            currentPassword = ""
+            newPassword = ""
+            repeatNewPassword = ""
             passwordError = null
+            true
 
-            try {
-                val email = currentUser?.email
-                if (email.isNullOrBlank()) throw Exception("User email not available")
-
-                val credential = EmailAuthProvider.getCredential(email, currentPassword)
-                currentUser?.reauthenticate(credential)?.await()
-
-                currentUser?.updatePassword(newPassword)?.await()
-
-                currentPassword = ""
-                newPassword = ""
-                repeatNewPassword = ""
-                passwordError = null
-            } catch (e: Exception) {
-                passwordError = AuthError("Password change failed: ${e.message}")
-            }
-
+        } catch (e: Exception) {
+            passwordError = AuthError("Password change failed: ${e.message}")
+            false
+        } finally {
             updatingPassword = false
         }
     }
+
 
     // Password validation regex
     private val passwordPattern =

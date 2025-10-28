@@ -22,6 +22,8 @@ fun ProfilePage() {
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
     var savingHobbies by remember { mutableStateOf(false) }
+    var updatingUsername by remember { mutableStateOf(false) }
+    var updatingPassword by remember { mutableStateOf(false) }
 
     Scaffold(
         snackbarHost = {
@@ -139,7 +141,7 @@ fun ProfilePage() {
 
                 Spacer(modifier = Modifier.height(12.dp))
                 BlockButton(
-                    onClick = { if (!vm.updatingUsername) vm.onChangeUsername() },
+                    onClick = { updatingUsername = true },
                     enabled = vm.usernameChangePasswordIsValid && vm.newUsernameIsValid
                 ) {
                     if (vm.updatingUsername) {
@@ -198,7 +200,7 @@ fun ProfilePage() {
 
                 Spacer(modifier = Modifier.height(12.dp))
                 BlockButton(
-                    onClick = { if (!vm.updatingPassword) vm.onChangePassword() },
+                    onClick = { updatingPassword = true },
                     enabled = vm.passwordChangeFormValid
                 ) {
                     if (vm.updatingPassword) {
@@ -251,14 +253,27 @@ fun ProfilePage() {
     // Hobbies
     LaunchedEffect(savingHobbies) {
         if (savingHobbies) {
-            try {
-                vm.onSaveHobbies()
-                snackbarHostState.showSnackbar("Hobbies saved successfully!")
-            } catch (e: Exception) {
-                snackbarHostState.showSnackbar("Failed to save hobbies: ${e.message}")
-            } finally {
-                savingHobbies = false
-            }
+            val success = vm.onSaveHobbies()
+            if (success) snackbarHostState.showSnackbar("Hobbies saved successfully!")
+            savingHobbies = false
+        }
+    }
+
+    // Username
+    LaunchedEffect(updatingUsername) {
+        if (updatingUsername) {
+            val success = vm.onChangeUsername()
+            if (success) snackbarHostState.showSnackbar("Username changed successfully!")
+            updatingUsername = false
+        }
+    }
+
+    // Password
+    LaunchedEffect(updatingPassword) {
+        if (updatingPassword) {
+            val success = vm.onChangePassword()
+            if (success) snackbarHostState.showSnackbar("Password changed successfully!")
+            updatingPassword = false
         }
     }
 
