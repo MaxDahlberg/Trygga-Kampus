@@ -1,6 +1,5 @@
 package com.example.tryggakampus
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.tryggakampus.presentation.MainScreen
 import com.example.tryggakampus.ui.theme.TryggaKampusTheme
 import com.example.tryggakampus.util.LanguageManager
@@ -18,8 +15,6 @@ import com.example.tryggakampus.util.ThemePreferences
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.flow.first
 import java.util.*
-
-val Context.dataStore: androidx.datastore.core.DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
