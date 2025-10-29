@@ -41,7 +41,7 @@
     <string name="enable_delete_mode">Aktivera raderingsläge</string>
     <string name="confirm_deletion">Bekräfta radering</string>
     <string name="delete_confirmation">Är du säker på att du vill ta bort den här artikeln?</string>
-    <string name="delete">Ta bort</string>
+    <string name="delete">Radera</string>
     <string name="error">Fel</string>
     <string name="unknown_error">Ett okänt fel inträffade.</string>
     <string name="ok">OK</string>
@@ -88,5 +88,82 @@
     <string name="faq">FAQ</string>
     <string name="report">Rapportera</string>
     <string name="weekly_progress_title">Veckovis framsteg</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profil</string>
+    <string name="account_information">Kontoinformation</string>
+    <string name="username_label">Användarnamn</string>
+    <string name="email_label">E-post</string>
+    <string name="my_hobbies">Mina intressen</string>
+    <string name="save_hobbies">Spara intressen</string>
+    <string name="change_username">Ändra användarnamn</string>
+    <string name="password_required">Lösenord (obligatoriskt)</string>
+    <string name="new_username">Nytt användarnamn</string>
+    <string name="update_username">Uppdatera användarnamn</string>
+    <string name="change_password">Ändra lösenord</string>
+    <string name="current_password">Nuvarande lösenord</string>
+    <string name="new_password">Nytt lösenord</string>
+    <string name="repeat_new_password">Upprepa nytt lösenord</string>
+    <string name="update_password">Uppdatera lösenord</string>
+    <string name="account_data">Konto och data</string>
+    <string name="request_my_data">Begär min data</string>
+    <string name="delete_account">Radera min data och konto</string>
+    <string name="hobbies_saved_success">Intressen sparades!</string>
+    <string name="username_changed_success">Användarnamn ändrat!</string>
+    <string name="password_changed_success">Lösenord ändrat!</string>
+
+    <!-- Dialoger -->
+    <string name="confirm_account_deletion">Bekräfta kontoradering</string>
+    <string name="delete_account_warning">Din personliga data och ditt konto kommer att tas bort enligt GDPR. Denna åtgärd är permanent och kan inte ångras.</string>
+    <string name="enter_password">Ange lösenord</string>
+    <string name="personal_data_request">Begär personlig data</string>
+    <string name="personal_data_request_message">Tryck på Begär för att hämta din personliga data från servern. När den är klar kan du ladda ner den.</string>
+    <string name="personal_data_ready_message">Din personliga data är klar. Tryck på Ladda ner för att spara den på din enhet.</string>
+    <string name="request">Begär</string>
+    <string name="download">Ladda ner</string>
+
+    <!-- Felmeddelanden -->
+    <string name="error_fill_all_fields">Fyll i alla fält.</string>
+    <string name="error_user_email_unavailable">Användarens e-postadress är inte tillgänglig.</string>
+    <string name="error_username_taken">Detta användarnamn är redan upptaget.</string>
+    <string name="error_update_username_failed">Det gick inte att uppdatera användarnamnet: %1$s</string>
+    <string name="error_update_hobbies">Det gick inte att uppdatera intressen</string>
+    <string name="error_update_hobbies_detail">Det gick inte att uppdatera intressen: %1$s</string>
+    <string name="error_invalid_passwords">Lösenorden matchar inte eller är ogiltiga.</string>
+    <string name="error_password_change_failed">Det gick inte att ändra lösenord: %1$s</string>
+    <string name="error_password_required">Lösenord krävs för att ta bort konto.</string>
+    <string name="error_account_deletion_failed">Det gick inte att ta bort kontot: %1$s</string>
+
+    <!-- Intressen -->
+    <string name="hobby_reading">Läsa</string>
+    <string name="hobby_gaming">Spela</string>
+    <string name="hobby_traveling">Resa</string>
+    <string name="hobby_cooking">Matlagning</string>
+    <string name="hobby_sports">Sport</string>
+    <string name="hobby_music">Musik</string>
+    <string name="hobby_art">Konst</string>
+    <string name="hobby_photography">Fotografering</string>
+    <string name="hobby_dancing">Dans</string>
+    <string name="hobby_hiking">Vandring</string>
+    <string name="hobby_fishing">Fiske</string>
+    <string name="hobby_swimming">Simning</string>
+    <string name="hobby_coding">Programmering</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Meditation</string>
+    <string name="hobby_writing">Skriva</string>
+    <string name="hobby_cycling">Cykling</string>
+    <string name="hobby_board_games">Brädspel</string>
+    <string name="hobby_movies">Filmer</string>
+    <string name="hobby_gardening">Trädgårdsskötsel</string>
+    <string name="hobby_knitting">Stickning</string>
+    <string name="hobby_crafts">Hantverk</string>
+    <string name="hobby_volunteering">Volontärarbete</string>
+    <string name="hobby_languages">Språk</string>
+    <string name="hobby_running">Löpning</string>
+    <string name="hobby_singing">Sång</string>
+    <string name="hobby_collecting">Samlande</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Teater</string>
+    <string name="hobby_baking">Bakning</string>
 
 </resources>
