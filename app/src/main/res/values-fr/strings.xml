@@ -89,4 +89,49 @@
     <string name="report">Signaler</string>
     <string name="weekly_progress_title">Progrès hebdomadaires</string>
 
+    <!-- Profile Page -->
+    <string name="profile_title">Profil</string>
+    <string name="account_information">Informations du compte</string>
+    <string name="username_label">Nom d\'utilisateur</string>
+    <string name="email_label">E-mail</string>
+    <string name="my_hobbies">Mes passe-temps</string>
+    <string name="save_hobbies">Enregistrer les passe-temps</string>
+    <string name="change_username">Changer le nom d\'utilisateur</string>
+    <string name="password_required">Mot de passe (obligatoire)</string>
+    <string name="new_username">Nouveau nom d\'utilisateur</string>
+    <string name="update_username">Mettre à jour le nom d\'utilisateur</string>
+    <string name="change_password">Changer le mot de passe</string>
+    <string name="current_password">Mot de passe actuel</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="repeat_new_password">Répéter le nouveau mot de passe</string>
+    <string name="update_password">Mettre à jour le mot de passe</string>
+    <string name="account_data">Compte et données</string>
+    <string name="request_my_data">Demander mes données</string>
+    <string name="delete_account">Supprimer mes données et mon compte</string>
+    <string name="hobbies_saved_success">Passe-temps enregistrés avec succès !</string>
+    <string name="username_changed_success">Nom d\'utilisateur modifié avec succès !</string>
+    <string name="password_changed_success">Mot de passe modifié avec succès !</string>
+
+    <!-- Dialogues -->
+    <string name="confirm_account_deletion">Confirmer la suppression du compte</string>
+    <string name="delete_account_warning">Vos données personnelles et votre compte seront supprimés conformément au RGPD. Cette action est permanente et ne peut pas être annulée.</string>
+    <string name="enter_password">Entrez le mot de passe</string>
+    <string name="personal_data_request">Demande de données personnelles</string>
+    <string name="personal_data_request_message">Appuyez sur Demander pour récupérer vos données personnelles depuis le serveur. Lorsqu\'elles seront prêtes, vous pourrez les télécharger.</string>
+    <string name="personal_data_ready_message">Vos données personnelles sont prêtes. Appuyez sur Télécharger pour les enregistrer sur votre appareil.</string>
+    <string name="request">Demander</string>
+    <string name="download">Télécharger</string>
+
+    <!-- Messages d'erreur -->
+    <string name="error_fill_all_fields">Veuillez remplir tous les champs.</string>
+    <string name="error_user_email_unavailable">E-mail utilisateur non disponible.</string>
+    <string name="error_username_taken">Ce nom d\'utilisateur est déjà pris.</string>
+    <string name="error_update_username_failed">Échec de la mise à jour du nom d\'utilisateur : %1$s</string>
+    <string name="error_update_hobbies">Échec de la mise à jour des passe-temps</string>
+    <string name="error_update_hobbies_detail">Échec de la mise à jour des passe-temps : %1$s</string>
+    <string name="error_invalid_passwords">Les mots de passe ne correspondent pas ou sont invalides.</string>
+    <string name="error_password_change_failed">Échec du changement de mot de passe : %1$s</string>
+    <string name="error_password_required">Mot de passe requis pour supprimer le compte.</string>
+    <string name="error_account_deletion_failed">Échec de la suppression du compte : %1$s</string>
+
 </resources>

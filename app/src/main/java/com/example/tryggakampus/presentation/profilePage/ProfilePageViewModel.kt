@@ -1,18 +1,20 @@
 package com.example.tryggakampus.presentation.profilePage
 
+import android.content.Context
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tryggakampus.R
 import com.example.tryggakampus.domain.model.UserInfoModel
 import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
+import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 import com.example.tryggakampus.util.GdprUserDataHelper
 import com.example.tryggakampus.util.HobbyList
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 
 class ProfileViewModel : ViewModel() {
 
@@ -69,10 +71,12 @@ class ProfileViewModel : ViewModel() {
     var allHobbies by mutableStateOf(HobbyList.allHobbies)
 
     init {
-        // Load username and hobbies from Firestore
         if (currentUserId.isNotEmpty()) {
             viewModelScope.launch {
-                val (result, userInfo) = userRepo.getUserInformation(currentUserId, com.google.firebase.firestore.Source.SERVER)
+                val (result, userInfo) = userRepo.getUserInformation(
+                    currentUserId,
+                    com.google.firebase.firestore.Source.SERVER
+                )
                 if (result == UserInformationRepository.RepositoryResult.SUCCESS && userInfo != null) {
                     username = userInfo.username ?: username
                     hobbies = userInfo.hobbies
@@ -90,7 +94,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    suspend fun onSaveHobbies(): Boolean {
+    suspend fun onSaveHobbies(context: Context): Boolean {
         return try {
             val result = userRepo.addOrUpdateUserInformation(
                 userInfo = UserInfoModel(userId = currentUserId),
@@ -100,24 +104,26 @@ class ProfileViewModel : ViewModel() {
                 hobbiesError = null
                 true
             } else {
-                hobbiesError = AuthError("Failed to update hobbies")
+                hobbiesError = AuthError(context.getString(R.string.error_update_hobbies))
                 false
             }
         } catch (e: Exception) {
-            hobbiesError = AuthError("Failed to update hobbies: ${e.message}")
+            hobbiesError = AuthError(
+                context.getString(R.string.error_update_hobbies_detail, e.message ?: "")
+            )
             false
         }
     }
 
     // Change username
-    suspend fun onChangeUsername(): Boolean {
+    suspend fun onChangeUsername(context: Context): Boolean {
         if (newUsername.isBlank() || usernameChangePassword.isBlank()) {
-            usernameError = AuthError("Please fill in all fields.")
+            usernameError = AuthError(context.getString(R.string.error_fill_all_fields))
             return false
         }
 
         val email = currentUser?.email ?: run {
-            usernameError = AuthError("User email not available.")
+            usernameError = AuthError(context.getString(R.string.error_user_email_unavailable))
             return false
         }
 
@@ -127,7 +133,7 @@ class ProfileViewModel : ViewModel() {
 
             val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
             if (!available) {
-                usernameError = AuthError("This username is already taken.")
+                usernameError = AuthError(context.getString(R.string.error_username_taken))
                 return false
             }
 
@@ -143,23 +149,26 @@ class ProfileViewModel : ViewModel() {
                 usernameError = null
                 true
             } else {
-                usernameError = AuthError("Failed to update username: $result")
+                usernameError = AuthError(
+                    context.getString(R.string.error_update_username_failed, result.toString())
+                )
                 false
             }
 
         } catch (e: Exception) {
-            usernameError = AuthError("Failed to update username: ${e.message}")
+            usernameError = AuthError(
+                context.getString(R.string.error_update_username_failed, e.message ?: "")
+            )
             false
         } finally {
             updatingUsername = false
         }
     }
 
-
     // Change password
-    suspend fun onChangePassword(): Boolean {
+    suspend fun onChangePassword(context: Context): Boolean {
         if (!passwordChangeFormValid) {
-            passwordError = AuthError("Passwords do not match or are invalid.")
+            passwordError = AuthError(context.getString(R.string.error_invalid_passwords))
             return false
         }
 
@@ -175,17 +184,16 @@ class ProfileViewModel : ViewModel() {
             repeatNewPassword = ""
             passwordError = null
             true
-
         } catch (e: Exception) {
-            passwordError = AuthError("Password change failed: ${e.message}")
+            passwordError = AuthError(
+                context.getString(R.string.error_password_change_failed, e.message ?: "")
+            )
             false
         } finally {
             updatingPassword = false
         }
     }
 
-
-    // Password validation regex
     private val passwordPattern =
         "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\\\-_{}.*]).{8,20}$".toRegex()
 
@@ -204,7 +212,6 @@ class ProfileViewModel : ViewModel() {
         newPasswordIsValid = password.matches(passwordPattern)
     }
 
-    // Toggle functions
     fun toggleUsernameChangePasswordVisibility() {
         isUsernameChangePasswordVisible = !isUsernameChangePasswordVisible
     }
@@ -222,9 +229,9 @@ class ProfileViewModel : ViewModel() {
     }
 
     // Delete account
-    fun onDeleteAccount() {
+    fun onDeleteAccount(context: Context) {
         if (deletePassword.isEmpty()) {
-            deleteAccountError = AuthError("Password required to delete account.")
+            deleteAccountError = AuthError(context.getString(R.string.error_password_required))
             return
         }
 
@@ -239,7 +246,9 @@ class ProfileViewModel : ViewModel() {
                 showDeleteAccountDialog = false
                 deleteAccountError = null
             } catch (e: Exception) {
-                deleteAccountError = AuthError("Account deletion failed: ${e.message}")
+                deleteAccountError = AuthError(
+                    context.getString(R.string.error_account_deletion_failed, e.message ?: "")
+                )
             }
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -15,12 +16,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
 import com.example.tryggakampus.util.saveJsonToDownloads
+import com.example.tryggakampus.R
 
 @Composable
 fun ProfilePage() {
     val vm: ProfileViewModel = viewModel()
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+
     var savingHobbies by remember { mutableStateOf(false) }
     var updatingUsername by remember { mutableStateOf(false) }
     var updatingPassword by remember { mutableStateOf(false) }
@@ -53,21 +57,25 @@ fun ProfilePage() {
             // Account information
             FormContainer {
                 Text(
-                    text = "Account Information",
+                    text = stringResource(R.string.account_information),
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "Username: ${vm.username}")
-                Text(text = "Email: ${vm.email}")
+                Text(text = "${stringResource(R.string.username_label)}: ${vm.username}")
+                Text(text = "${stringResource(R.string.email_label)}: ${vm.email}")
             }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             // Hobbies
             FormContainer {
-                Text("My Hobbies", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    stringResource(R.string.my_hobbies),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
                 Spacer(modifier = Modifier.height(10.dp))
 
                 val hobbiesScrollState = rememberScrollState()
@@ -104,10 +112,10 @@ fun ProfilePage() {
 
                 Spacer(modifier = Modifier.height(12.dp))
                 BlockButton(
-                    onClick = { savingHobbies = true }, // trigger snackbar
+                    onClick = { savingHobbies = true },
                     enabled = true
                 ) {
-                    Text("Save Hobbies")
+                    Text(stringResource(R.string.save_hobbies))
                 }
             }
 
@@ -119,11 +127,15 @@ fun ProfilePage() {
 
             // Change username
             FormContainer {
-                Text("Change Username", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    stringResource(R.string.change_username),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
                 Spacer(modifier = Modifier.height(10.dp))
 
                 OutlinedInput(
-                    label = "Password (required)",
+                    label = stringResource(R.string.password_required),
                     value = vm.usernameChangePassword,
                     onValueChange = { vm.onUsernameChangePasswordChange(it) },
                     isError = !vm.usernameChangePasswordIsValid,
@@ -133,7 +145,7 @@ fun ProfilePage() {
                 )
 
                 OutlinedInput(
-                    label = "New Username",
+                    label = stringResource(R.string.new_username),
                     value = vm.newUsername,
                     onValueChange = { vm.newUsername = it },
                     isError = !vm.newUsernameIsValid
@@ -151,7 +163,7 @@ fun ProfilePage() {
                             trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
                         )
                     } else {
-                        Text("Update Username")
+                        Text(stringResource(R.string.update_username))
                     }
                 }
             }
@@ -164,11 +176,15 @@ fun ProfilePage() {
 
             // Change password
             FormContainer {
-                Text("Change Password", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    stringResource(R.string.change_password),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
                 Spacer(modifier = Modifier.height(10.dp))
 
                 OutlinedInput(
-                    label = "Current Password",
+                    label = stringResource(R.string.current_password),
                     value = vm.currentPassword,
                     onValueChange = { vm.onCurrentPasswordChange(it) },
                     isError = !vm.currentPasswordIsValid,
@@ -178,7 +194,7 @@ fun ProfilePage() {
                 )
 
                 OutlinedInput(
-                    label = "New Password",
+                    label = stringResource(R.string.new_password),
                     value = vm.newPassword,
                     onValueChange = { vm.onNewPasswordChange(it) },
                     isError = !vm.newPasswordIsValid,
@@ -188,7 +204,7 @@ fun ProfilePage() {
                 )
 
                 OutlinedInput(
-                    label = "Repeat New Password",
+                    label = stringResource(R.string.repeat_new_password),
                     value = vm.repeatNewPassword,
                     onValueChange = { vm.repeatNewPassword = it },
                     isError = vm.newPassword != vm.repeatNewPassword,
@@ -210,7 +226,7 @@ fun ProfilePage() {
                             trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
                         )
                     } else {
-                        Text("Update Password")
+                        Text(stringResource(R.string.update_password))
                     }
                 }
             }
@@ -223,14 +239,18 @@ fun ProfilePage() {
 
             // Account and data
             FormContainer {
-                Text("Account & Data", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    stringResource(R.string.account_data),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
                 Spacer(modifier = Modifier.height(10.dp))
 
                 BlockButton(
                     onClick = { vm.showRequestDataDialog = true },
                     enabled = true
                 ) {
-                    Text("Request My Data")
+                    Text(stringResource(R.string.request_my_data))
                 }
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -238,7 +258,7 @@ fun ProfilePage() {
                     onClick = { vm.showDeleteAccountDialog = true },
                     enabled = true
                 ) {
-                    Text("Delete My Data and Account")
+                    Text(stringResource(R.string.delete_account))
                 }
             }
 
@@ -253,8 +273,8 @@ fun ProfilePage() {
     // Hobbies
     LaunchedEffect(savingHobbies) {
         if (savingHobbies) {
-            val success = vm.onSaveHobbies()
-            if (success) snackbarHostState.showSnackbar("Hobbies saved successfully!")
+            val success = vm.onSaveHobbies(context)
+            if (success) snackbarHostState.showSnackbar(context.getString(R.string.hobbies_saved_success))
             savingHobbies = false
         }
     }
@@ -262,8 +282,8 @@ fun ProfilePage() {
     // Username
     LaunchedEffect(updatingUsername) {
         if (updatingUsername) {
-            val success = vm.onChangeUsername()
-            if (success) snackbarHostState.showSnackbar("Username changed successfully!")
+            val success = vm.onChangeUsername(context)
+            if (success) snackbarHostState.showSnackbar(context.getString(R.string.username_changed_success))
             updatingUsername = false
         }
     }
@@ -271,8 +291,8 @@ fun ProfilePage() {
     // Password
     LaunchedEffect(updatingPassword) {
         if (updatingPassword) {
-            val success = vm.onChangePassword()
-            if (success) snackbarHostState.showSnackbar("Password changed successfully!")
+            val success = vm.onChangePassword(context)
+            if (success) snackbarHostState.showSnackbar(context.getString(R.string.password_changed_success))
             updatingPassword = false
         }
     }
@@ -285,7 +305,7 @@ fun ProfilePage() {
 @Composable
 fun ProfileHeader() {
     Text(
-        text = "Profile",
+        text = stringResource(R.string.profile_title),
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.onBackground
@@ -294,18 +314,20 @@ fun ProfileHeader() {
 
 @Composable
 fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
+    val context = LocalContext.current
+
     AlertDialog(
         onDismissRequest = { vm.showDeleteAccountDialog = false },
-        title = { Text("Confirm Account Deletion") },
+        title = { Text(stringResource(R.string.confirm_account_deletion)) },
         text = {
             Column {
                 Text(
-                    "Your personal data and account will be deleted in compliance with GDPR.\n\n This action is permanent and cannot be undone.",
+                    stringResource(R.string.delete_account_warning),
                     color = MaterialTheme.colorScheme.error
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 OutlinedInput(
-                    label = "Enter Password",
+                    label = stringResource(R.string.enter_password),
                     value = vm.deletePassword,
                     onValueChange = { vm.deletePassword = it },
                     isError = vm.deletePassword.isEmpty()
@@ -313,13 +335,13 @@ fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
             }
         },
         confirmButton = {
-            TextButton(onClick = { vm.onDeleteAccount() }) {
-                Text("Delete", color = MaterialTheme.colorScheme.onPrimary)
+            TextButton(onClick = { vm.onDeleteAccount(context) }) {
+                Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.onPrimary)
             }
         },
         dismissButton = {
             TextButton(onClick = { vm.showDeleteAccountDialog = false }) {
-                Text("Cancel", color = MaterialTheme.colorScheme.onPrimary)
+                Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     )
@@ -331,13 +353,13 @@ fun RequestDataDialog(vm: ProfileViewModel) {
 
     AlertDialog(
         onDismissRequest = { vm.showRequestDataDialog = false },
-        title = { Text("Personal Data Request") },
+        title = { Text(stringResource(R.string.personal_data_request)) },
         text = {
             Text(
                 if (vm.jsonData == null)
-                    "Press Request to fetch your personal data from the server. When it's ready, you'll be able to download it."
+                    stringResource(R.string.personal_data_request_message)
                 else
-                    "Your personal data is ready. Press Download to save it to your device."
+                    stringResource(R.string.personal_data_ready_message)
             )
         },
         confirmButton = {
@@ -352,12 +374,18 @@ fun RequestDataDialog(vm: ProfileViewModel) {
                     }
                 }
             }) {
-                Text(if (vm.jsonData == null) "Request" else "Download", color = MaterialTheme.colorScheme.onPrimary)
+                Text(
+                    if (vm.jsonData == null)
+                        stringResource(R.string.request)
+                    else
+                        stringResource(R.string.download),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         },
         dismissButton = {
             TextButton(onClick = { vm.showRequestDataDialog = false }) {
-                Text("Cancel", color = MaterialTheme.colorScheme.onPrimary)
+                Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     )
