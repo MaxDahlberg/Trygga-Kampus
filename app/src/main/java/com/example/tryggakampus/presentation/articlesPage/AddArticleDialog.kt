@@ -36,7 +36,7 @@ fun AddArticleDialog(onDismiss: () -> Unit, viewModel: ArticlesPageViewModel) {
         text = {
             Column {
                 OutlinedInput(
-                    label = stringResource(R.string.title),
+                    label = stringResource(R.string.article_title),
                     value = title,
                     onValueChange = { title = it; showError = false },
                     isError = showError && title.isBlank()

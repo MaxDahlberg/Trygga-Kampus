@@ -29,6 +29,7 @@
     <!-- Page des articles -->
     <string name="new_article">Nouvel article</string>
     <string name="delete_article">Supprimer l\'article</string>
+    <string name="article_title">Titre</string>
     <string name="summary">Résumé</string>
     <string name="webpage_url">URL de la page Web</string>
     <string name="all_fields_required">Tous les champs sont obligatoires.</string>
