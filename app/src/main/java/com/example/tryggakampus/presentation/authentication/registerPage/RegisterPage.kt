@@ -53,7 +53,12 @@ fun RegisterPage() {
                 label = "password",
                 value = vm.password,
                 onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid
+                isError = !vm.passwordIsValid,
+                showPasswordRules = true,
+                onVisibilityChange = { vm.togglePasswordVisibility() },
+                isPassword = true,
+                isPasswordVisible = vm.isPasswordVisible
+
             )
 
             BlockButton (

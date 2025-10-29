@@ -15,17 +15,14 @@ import kotlinx.coroutines.launch
 class RegisterViewModel : ViewModel() {
     var email by mutableStateOf(""); private set
     var emailIsValid by mutableStateOf(true); private set
-
     var password by mutableStateOf(""); private set
     var passwordIsValid by mutableStateOf(true); private set
-
+    var isPasswordVisible by mutableStateOf(false); private set
     var signingUp by mutableStateOf(false); private set
     var error by mutableStateOf<AuthError?>(null); private set
-
     fun clearError() {
         error = null
     }
-
     fun onEmailChange(newEmail: String) {
         email = newEmail
         emailIsValid = android.util.Patterns
@@ -33,18 +30,28 @@ class RegisterViewModel : ViewModel() {
             .matcher(email)
             .matches()
     }
-
     fun onPasswordChange(newPassword: String) {
         password = newPassword
-        passwordIsValid = password.length >= 8
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\-_{}.*]).{8,20}$".toRegex()
+        passwordIsValid = password.matches(passwordPattern)
     }
-
+    fun togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible
+    }
     fun onRequestSignUp() {
+
         if (email.isEmpty() || password.isEmpty()) {
-            error = AuthError("Email & Username cannot be empty")
+            error = AuthError("Email and password cannot be empty")
             return
         }
-
+        if (!emailIsValid) {
+            error = AuthError("Please enter a valid email address")
+            return
+        }
+        if (!passwordIsValid) {
+            error = AuthError("Password does not meet the requirements. It must be 8-20 characters and include an uppercase letter, a number, and a special character.")
+            return
+        }
         viewModelScope.launch {
             signingUp = true
             delay(2000)
@@ -52,20 +59,18 @@ class RegisterViewModel : ViewModel() {
 
             when (authResponse) {
                 AuthResponse.SignUp.FAILURE -> {
-                    error = AuthError("Wrong username or password")
+                    error = AuthError("Sign up failed. Please check your details.")
                 }
-
                 AuthResponse.SignUp.EMAIL_TAKEN -> {
                     error = AuthError("This email is already taken")
                 }
-
                 AuthResponse.SignUp.ERROR -> {
                     error = AuthError("Something went wrong, please try again later.")
                 }
-
-                else -> error = null
+                else -> {
+                    error = null
+                }
             }
-
             signingUp = false
         }
     }
