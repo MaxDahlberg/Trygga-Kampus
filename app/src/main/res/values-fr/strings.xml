@@ -134,4 +134,36 @@
     <string name="error_password_required">Mot de passe requis pour supprimer le compte.</string>
     <string name="error_account_deletion_failed">Échec de la suppression du compte : %1$s</string>
 
+    <!-- Passe-temps -->
+    <string name="hobby_reading">Lecture</string>
+    <string name="hobby_gaming">Jeux vidéo</string>
+    <string name="hobby_traveling">Voyager</string>
+    <string name="hobby_cooking">Cuisine</string>
+    <string name="hobby_sports">Sports</string>
+    <string name="hobby_music">Musique</string>
+    <string name="hobby_art">Art</string>
+    <string name="hobby_photography">Photographie</string>
+    <string name="hobby_dancing">Danse</string>
+    <string name="hobby_hiking">Randonnée</string>
+    <string name="hobby_fishing">Pêche</string>
+    <string name="hobby_swimming">Natation</string>
+    <string name="hobby_coding">Programmation</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Méditation</string>
+    <string name="hobby_writing">Écriture</string>
+    <string name="hobby_cycling">Cyclisme</string>
+    <string name="hobby_board_games">Jeux de société</string>
+    <string name="hobby_movies">Films</string>
+    <string name="hobby_gardening">Jardinage</string>
+    <string name="hobby_knitting">Tricot</string>
+    <string name="hobby_crafts">Bricolage</string>
+    <string name="hobby_volunteering">Bénévolat</string>
+    <string name="hobby_languages">Langues</string>
+    <string name="hobby_running">Course</string>
+    <string name="hobby_singing">Chant</string>
+    <string name="hobby_collecting">Collection</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Théâtre</string>
+    <string name="hobby_baking">Pâtisserie</string>
+
 </resources>

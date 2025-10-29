@@ -17,6 +17,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
 import com.example.tryggakampus.util.saveJsonToDownloads
 import com.example.tryggakampus.R
+import com.example.tryggakampus.util.HobbyList
 
 @Composable
 fun ProfilePage() {
@@ -87,16 +88,15 @@ fun ProfilePage() {
                         .verticalScroll(hobbiesScrollState)
                 ) {
                     Column {
-                        vm.allHobbies.forEach { hobby ->
+                        vm.allHobbies.forEachIndexed { index, hobbyDisplayName ->
+                            val hobbyKey = HobbyList.allHobbies[index].first
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 4.dp)
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                             ) {
                                 Checkbox(
-                                    checked = vm.hobbies.contains(hobby),
-                                    onCheckedChange = { vm.onHobbyToggle(hobby) },
+                                    checked = vm.hobbies.contains(hobbyKey),
+                                    onCheckedChange = { vm.onHobbyToggle(hobbyKey) },
                                     colors = CheckboxDefaults.colors(
                                         checkedColor = MaterialTheme.colorScheme.secondary,
                                         uncheckedColor = MaterialTheme.colorScheme.onPrimary,
@@ -104,7 +104,7 @@ fun ProfilePage() {
                                     )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(text = hobby)
+                                Text(text = hobbyDisplayName)
                             }
                         }
                     }
@@ -271,6 +271,10 @@ fun ProfilePage() {
     }
 
     // Hobbies
+    LaunchedEffect(Unit) {
+        vm.loadAllHobbies(context)
+    }
+
     LaunchedEffect(savingHobbies) {
         if (savingHobbies) {
             val success = vm.onSaveHobbies(context)

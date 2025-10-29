@@ -68,7 +68,10 @@ class ProfileViewModel : ViewModel() {
 
     // Hobbies
     var hobbies by mutableStateOf<List<String>>(emptyList())
-    var allHobbies by mutableStateOf(HobbyList.allHobbies)
+    var allHobbies by mutableStateOf<List<String>>(emptyList())
+    fun loadAllHobbies(context: Context) {
+        allHobbies = HobbyList.allHobbies.map { HobbyList.getDisplayName(context, it.first) }
+    }
 
     init {
         if (currentUserId.isNotEmpty()) {

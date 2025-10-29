@@ -152,4 +152,36 @@
     <string name="error_password_required">Password required to delete account.</string>
     <string name="error_account_deletion_failed">Account deletion failed: %1$s</string>
 
+    <!-- Hobbies -->
+    <string name="hobby_reading">Reading</string>
+    <string name="hobby_gaming">Gaming</string>
+    <string name="hobby_traveling">Traveling</string>
+    <string name="hobby_cooking">Cooking</string>
+    <string name="hobby_sports">Sports</string>
+    <string name="hobby_music">Music</string>
+    <string name="hobby_art">Art</string>
+    <string name="hobby_photography">Photography</string>
+    <string name="hobby_dancing">Dancing</string>
+    <string name="hobby_hiking">Hiking</string>
+    <string name="hobby_fishing">Fishing</string>
+    <string name="hobby_swimming">Swimming</string>
+    <string name="hobby_coding">Coding</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Meditation</string>
+    <string name="hobby_writing">Writing</string>
+    <string name="hobby_cycling">Cycling</string>
+    <string name="hobby_board_games">Board Games</string>
+    <string name="hobby_movies">Movies</string>
+    <string name="hobby_gardening">Gardening</string>
+    <string name="hobby_knitting">Knitting</string>
+    <string name="hobby_crafts">Crafts</string>
+    <string name="hobby_volunteering">Volunteering</string>
+    <string name="hobby_languages">Languages</string>
+    <string name="hobby_running">Running</string>
+    <string name="hobby_singing">Singing</string>
+    <string name="hobby_collecting">Collecting</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Theater</string>
+    <string name="hobby_baking">Baking</string>
+
 </resources>

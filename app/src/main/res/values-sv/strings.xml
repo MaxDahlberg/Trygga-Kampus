@@ -134,4 +134,36 @@
     <string name="error_password_required">Lösenord krävs för att ta bort konto.</string>
     <string name="error_account_deletion_failed">Det gick inte att ta bort kontot: %1$s</string>
 
+    <!-- Intressen -->
+    <string name="hobby_reading">Läsa</string>
+    <string name="hobby_gaming">Spela</string>
+    <string name="hobby_traveling">Resa</string>
+    <string name="hobby_cooking">Matlagning</string>
+    <string name="hobby_sports">Sport</string>
+    <string name="hobby_music">Musik</string>
+    <string name="hobby_art">Konst</string>
+    <string name="hobby_photography">Fotografering</string>
+    <string name="hobby_dancing">Dans</string>
+    <string name="hobby_hiking">Vandring</string>
+    <string name="hobby_fishing">Fiske</string>
+    <string name="hobby_swimming">Simning</string>
+    <string name="hobby_coding">Programmering</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Meditation</string>
+    <string name="hobby_writing">Skriva</string>
+    <string name="hobby_cycling">Cykling</string>
+    <string name="hobby_board_games">Brädspel</string>
+    <string name="hobby_movies">Filmer</string>
+    <string name="hobby_gardening">Trädgårdsskötsel</string>
+    <string name="hobby_knitting">Stickning</string>
+    <string name="hobby_crafts">Hantverk</string>
+    <string name="hobby_volunteering">Volontärarbete</string>
+    <string name="hobby_languages">Språk</string>
+    <string name="hobby_running">Löpning</string>
+    <string name="hobby_singing">Sång</string>
+    <string name="hobby_collecting">Samlande</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Teater</string>
+    <string name="hobby_baking">Bakning</string>
+
 </resources>
