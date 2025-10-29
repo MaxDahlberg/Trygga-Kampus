@@ -184,4 +184,12 @@
     <string name="hobby_theater">Theater</string>
     <string name="hobby_baking">Baking</string>
 
+    <!-- Theme settings -->
+    <string name="app_theme_title">App Theme</string>
+    <string name="app_theme_description">Change the theme of the app</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="app_theme_restart_notice">The app may restart to apply changes</string>
+
 </resources>

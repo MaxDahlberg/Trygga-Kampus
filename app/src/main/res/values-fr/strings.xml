@@ -166,4 +166,12 @@
     <string name="hobby_theater">Théâtre</string>
     <string name="hobby_baking">Pâtisserie</string>
 
+    <!-- Paramètres du thème -->
+    <string name="app_theme_title">Thème de l\'application</string>
+    <string name="app_theme_description">Changez le thème de l\'application</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="theme_system">Système</string>
+    <string name="app_theme_restart_notice">L\'application peut redémarrer pour appliquer les modifications</string>
+
 </resources>

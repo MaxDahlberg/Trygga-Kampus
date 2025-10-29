@@ -166,4 +166,12 @@
     <string name="hobby_theater">Teater</string>
     <string name="hobby_baking">Bakning</string>
 
+    <!-- Temainställningar -->
+    <string name="app_theme_title">App-tema</string>
+    <string name="app_theme_description">Byt appens tema</string>
+    <string name="theme_light">Ljus</string>
+    <string name="theme_dark">Mörk</string>
+    <string name="theme_system">System</string>
+    <string name="app_theme_restart_notice">Appen kan starta om för att tillämpa ändringar</string>
+
 </resources>
