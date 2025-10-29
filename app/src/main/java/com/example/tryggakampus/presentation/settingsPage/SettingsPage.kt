@@ -7,8 +7,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tryggakampus.R
 import com.example.tryggakampus.presentation.component.PageContainer
 import com.example.tryggakampus.util.AppThemeOption
 import com.example.tryggakampus.util.LanguageManager
@@ -184,13 +186,13 @@ fun SimpleThemeSwitch(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "App Theme",
+                text = stringResource(R.string.app_theme_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
             Text(
-                text = "Change the theme of the app",
+                text = stringResource(R.string.app_theme_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -212,9 +214,9 @@ fun SimpleThemeSwitch(
                         ) {
                             Text(
                                 text = when (option) {
-                                    AppThemeOption.LIGHT -> "Light"
-                                    AppThemeOption.DARK -> "Dark"
-                                    AppThemeOption.SYSTEM -> "System"
+                                    AppThemeOption.LIGHT -> stringResource(R.string.theme_light)
+                                    AppThemeOption.DARK -> stringResource(R.string.theme_dark)
+                                    AppThemeOption.SYSTEM -> stringResource(R.string.theme_system)
                                 }
                             )
                         }
@@ -223,7 +225,7 @@ fun SimpleThemeSwitch(
             }
 
             Text(
-                text = "The app may restart to apply changes",
+                text = stringResource(R.string.app_theme_restart_notice),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp)
