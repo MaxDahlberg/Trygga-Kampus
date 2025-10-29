@@ -29,6 +29,7 @@
     <!-- Artikelsida -->
     <string name="new_article">Ny artikel</string>
     <string name="delete_article">Ta bort artikel</string>
+    <string name="article_title">Titel</string>
     <string name="summary">Sammanfattning</string>
     <string name="webpage_url">Webbadress</string>
     <string name="all_fields_required">Alla fält är obligatoriska.</string>

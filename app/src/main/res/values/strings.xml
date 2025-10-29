@@ -44,6 +44,7 @@
     <!-- Article page-->
     <string name="new_article">New Article</string>
     <string name="delete_article">Delete Article</string>
+    <string name="article_title">Title</string>
     <string name="summary">Summary</string>
     <string name="webpage_url">Webpage URL</string>
     <string name="all_fields_required">All fields are required.</string>
