@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/tryggakampus/presentation/surveyPage/SurveyPage.kt
 package com.example.tryggakampus.presentation.surveyPage
 
 import androidx.compose.foundation.layout.*
@@ -11,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,10 +21,10 @@ import com.example.tryggakampus.data.SurveyQuestions
 import com.example.tryggakampus.data.repository.SurveyViewModelFactory
 
 @Composable
-fun SurveyPage(title: String) {
+fun SurveyPage(title: String, viewModel: SurveyViewModel = viewModel(factory = SurveyViewModelFactory())) {
     val context = LocalContext.current
-    val questions = remember { SurveyQuestions.getQuestions(context) } // Pass context here
-    var answers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
+    val questions = remember { SurveyQuestions.getQuestions(context) }
+    val answers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
     var showCompletionDialog by remember { mutableStateOf(false) }
 
     val viewModel: SurveyViewModel = viewModel(factory = SurveyViewModelFactory())
@@ -85,7 +85,9 @@ fun SurveyPage(title: String) {
                             value = answers[index],
                             onValueChange = { answers[index] = it },
                             label = { Text(stringResource(R.string.your_answer), color = MaterialTheme.colorScheme.onBackground) },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .testTag("answer_$index"),
                             colors = TextFieldDefaults.colors(
                                 focusedContainerColor = MaterialTheme.colorScheme.background,
                                 focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
@@ -96,7 +98,8 @@ fun SurveyPage(title: String) {
                                     handleColor = MaterialTheme.colorScheme.secondary,
                                     backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
                                 )
-                            )
+                            ),
+
                         )
                     }
                 }
@@ -113,7 +116,8 @@ fun SurveyPage(title: String) {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .testTag("submit_button"),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary,
                         contentColor = MaterialTheme.colorScheme.onSecondary
