@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
+import com.example.tryggakampus.domain.repository.StoryCommentRepositoryImpl
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.google.firebase.firestore.Source
 import kotlinx.coroutines.launch
@@ -144,14 +145,46 @@ class StoriesPageViewModel : ViewModel() {
     }
 
     fun loadComments(storyId: String) {
-        // todo
+        viewModelScope.launch {
+            try {
+                val rawComments = StoryCommentRepositoryImpl.getCommentsForStory(storyId, Source.DEFAULT)
+
+                // Convert raw data to StoryCommentModel
+                val loadedComments = rawComments.map { data ->
+                    StoryCommentModel(
+                        id = data["id"] as? String ?: "",
+                        storyId = data["storyId"] as? String ?: "",
+                        userId = data["userId"] as? String ?: "",
+                        author = data["author"] as? String,
+                        content = data["content"] as? String ?: "",
+                        anonymous = data["anonymous"] as? Boolean ?: false,
+                        createdAt = (data["createdAt"] as? Number)?.toLong() ?: System.currentTimeMillis()
+                    )
+                }
+
+                val enrichedComments = loadedComments.map { comment ->
+                    enrichCommentWithUsername(comment)
+                }
+
+                comments.clear()
+                comments.addAll(enrichedComments)
+            } catch (e: Exception) {
+                Log.e("StoriesVM", "Error loading comments: ${e.stackTraceToString()}")
+            }
+        }
     }
 
-    fun postComment(storyId: String) {
-        // todo
-    }
+    private suspend fun enrichCommentWithUsername(comment: StoryCommentModel): StoryCommentModel {
+        if (comment.anonymous) return comment.copy(author = "Anonymous")
 
-    fun deleteComment(comment: StoryCommentModel) {
-        // todo
+        var (_, userInfo) = UserInformationRepositoryImpl.getUserInformation(comment.userId, Source.SERVER)
+
+        if (userInfo == null) {
+            val (_, cachedUserInfo) = UserInformationRepositoryImpl.getUserInformation(comment.userId, Source.CACHE)
+            userInfo = cachedUserInfo
+        }
+
+        val username = userInfo?.username ?: "Unknown User"
+        return comment.copy(author = username)
     }
 }

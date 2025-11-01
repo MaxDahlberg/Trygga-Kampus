@@ -3,12 +3,11 @@ package com.example.tryggakampus.presentation.storiesPage
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +28,12 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
     }
 
     val navigator = LocalNavController.current
+
+    // Load comments automatically when this page is opened
+    LaunchedEffect(storyModelId) {
+        viewModel.loadComments(storyModelId)
+    }
+
     BackHandler { navigator.navigateUp() }
 
     PageContainer(
@@ -48,7 +53,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                 onDelete = {
                     viewModel.deleteStory(story.value)
                     navigator.navigateUp()
-                           },
+                },
                 onCommentClick = {},
                 showCommentButton = false
             )
@@ -109,20 +114,26 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
 
             HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
 
-            // Comments list
-            if (viewModel.comments.isEmpty()) {
-                Text(
-                    "No comments yet. Be the first to comment!",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(viewModel.comments) { comment ->
-                        StoryCommentBox(comment)
+            // Scrollable comments section
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(350.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                if (viewModel.comments.isEmpty()) {
+                    Text(
+                        "No comments yet. Be the first to comment!",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        viewModel.comments.forEach { comment ->
+                            StoryCommentBox(comment)
+                        }
                     }
                 }
             }
@@ -135,13 +146,13 @@ fun StoryCommentBox(comment: StoryCommentModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
             .padding(10.dp)
     ) {
         Text(
             text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(4.dp))
         Text(
