@@ -18,6 +18,7 @@ import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.presentation.component.PageContainer
+import kotlinx.coroutines.launch
 
 @Composable
 fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
@@ -28,6 +29,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
     }
 
     val navigator = LocalNavController.current
+    val coroutineScope = rememberCoroutineScope()
 
     // Load comments automatically when this page is opened
     LaunchedEffect(storyModelId) {
@@ -99,12 +101,18 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SwitchWithIcon("Post anonymously") {
-                        viewModel.setCommentAnonymity(it)
-                    }
+                    SwitchWithIcon(
+                        label = "Anonymous",
+                        checked = viewModel.commentAnonymity.value,
+                        onToggle = { viewModel.setCommentAnonymity(it) }
+                    )
 
                     Button(
-                        onClick = { /* viewModel.postComment(storyModelId) */ },
+                        onClick = {
+                            coroutineScope.launch {
+                                viewModel.postComment(storyModelId)
+                            }
+                        },
                         enabled = viewModel.commentText.value.text.isNotBlank()
                     ) {
                         Text("Post")

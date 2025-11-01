@@ -1,14 +1,21 @@
 package com.example.tryggakampus.domain.repository
 
 import android.util.Log
+import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Source
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 interface StoryCommentRepository {
     suspend fun getCommentsForStory(storyId: String, source: Source): List<Map<String, Any>>
-    suspend fun postComment()
+    suspend fun postComment(
+        storyId: String,
+        content: String,
+        isAnonymous: Boolean = true
+    ): StoryCommentModel?
+
     suspend fun deleteComment()
 }
 
@@ -34,7 +41,38 @@ object StoryCommentRepositoryImpl : StoryCommentRepository {
             emptyList()
         }
     }
+    override suspend fun postComment(
+        storyId: String,
+        content: String,
+        isAnonymous: Boolean
+    ): StoryCommentModel? {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) {
+            Log.d("StoryCommentRepo", "No signed-in user")
+            return null
+        }
 
-    override suspend fun postComment() {}
+        return try {
+            val collection = Firebase.firestore.collection(COLLECTION_NAME)
+            val docRef = collection.document()
+
+            val comment = StoryCommentModel(
+                id = docRef.id,
+                storyId = storyId,
+                userId = currentUser.uid,
+                content = content,
+                anonymous = isAnonymous,
+                author = null,
+                createdAt = System.currentTimeMillis()
+            )
+
+            docRef.set(comment).await()
+            comment
+        } catch (e: Exception) {
+            Log.d("StoryCommentRepo", "Error posting comment: ${e.stackTraceToString()}")
+            null
+        }
+    }
+
     override suspend fun deleteComment() {}
 }

@@ -2,6 +2,7 @@ package com.example.tryggakampus.presentation.storiesPage
 
 import android.content.Context
 import android.util.Log
+import android.util.Log.e
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
@@ -133,7 +134,7 @@ class StoriesPageViewModel : ViewModel() {
     var commentText = mutableStateOf(TextFieldValue(""))
         private set
 
-    var commentAnonymity = mutableStateOf(false)
+    var commentAnonymity = mutableStateOf(true)
         private set
 
     fun setCommentText(value: TextFieldValue) {
@@ -170,6 +171,31 @@ class StoriesPageViewModel : ViewModel() {
                 comments.addAll(enrichedComments)
             } catch (e: Exception) {
                 Log.e("StoriesVM", "Error loading comments: ${e.stackTraceToString()}")
+            }
+        }
+    }
+
+    fun postComment(storyId: String) {
+        viewModelScope.launch {
+            val text = commentText.value.text.trim()
+            if (text.isEmpty()) return@launch
+
+            try {
+                val comment = StoryCommentRepositoryImpl.postComment(
+                    storyId = storyId,
+                    content = text,
+                    isAnonymous = commentAnonymity.value
+                )
+
+                comment?.let {
+                    val enriched = enrichCommentWithUsername(it)
+                    comments.add(0, enriched)
+                }
+
+                commentText.value = TextFieldValue("")
+                setCommentAnonymity(true)
+                } catch (e: Exception) {
+                Log.e("StoriesVM", "Error posting comment: ${e.stackTraceToString()}")
             }
         }
     }
