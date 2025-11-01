@@ -15,8 +15,7 @@ interface StoryCommentRepository {
         content: String,
         isAnonymous: Boolean = true
     ): StoryCommentModel?
-
-    suspend fun deleteComment()
+    suspend fun deleteComment(commentId: String): Boolean
 }
 
 object StoryCommentRepositoryImpl : StoryCommentRepository {
@@ -74,5 +73,18 @@ object StoryCommentRepositoryImpl : StoryCommentRepository {
         }
     }
 
-    override suspend fun deleteComment() {}
+    override suspend fun deleteComment(commentId: String): Boolean {
+        return try {
+            Firebase.firestore
+                .collection(COLLECTION_NAME)
+                .document(commentId)
+                .delete()
+                .await()
+            Log.d("StoryCommentRepo", "Deleted comment: $commentId")
+            true
+        } catch (e: Exception) {
+            Log.d("StoryCommentRepo", "Error deleting comment: ${e.stackTraceToString()}")
+            false
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.example.tryggakampus.presentation.storiesPage
 
 import android.content.Context
 import android.util.Log
-import android.util.Log.e
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
@@ -196,6 +195,24 @@ class StoriesPageViewModel : ViewModel() {
                 setCommentAnonymity(true)
                 } catch (e: Exception) {
                 Log.e("StoriesVM", "Error posting comment: ${e.stackTraceToString()}")
+            }
+        }
+    }
+
+    fun deleteComment(comment: StoryCommentModel) {
+        viewModelScope.launch {
+            try {
+                if (comment.id.isEmpty()) return@launch
+
+                val success = StoryCommentRepositoryImpl.deleteComment(comment.id)
+                if (success) {
+                    comments.removeAll { it.id == comment.id }
+                    Log.d("StoriesVM", "Deleted comment locally: ${comment.id}")
+                } else {
+                    Log.d("StoriesVM", "Failed to delete comment: ${comment.id}")
+                }
+            } catch (e: Exception) {
+                Log.e("StoriesVM", "Error deleting comment: ${e.stackTraceToString()}")
             }
         }
     }

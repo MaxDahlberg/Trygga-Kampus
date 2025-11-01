@@ -2,6 +2,7 @@ package com.example.tryggakampus.presentation.storiesPage
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,11 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.presentation.component.PageContainer
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 @Composable
@@ -140,7 +144,10 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         viewModel.comments.forEach { comment ->
-                            StoryCommentBox(comment)
+                            StoryCommentBox(
+                                comment = comment,
+                                onDelete = { viewModel.deleteComment(comment) }
+                            )
                         }
                     }
                 }
@@ -150,23 +157,55 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
 }
 
 @Composable
-fun StoryCommentBox(comment: StoryCommentModel) {
-    Column(
+fun StoryCommentBox(
+    comment: StoryCommentModel,
+    onDelete: () -> Unit
+) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
+            .clip(RoundedCornerShape(10.dp))
+            .background(MaterialTheme.colorScheme.primary)
             .padding(10.dp)
     ) {
-        Text(
-            text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = comment.content,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 2.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                // Top left: Username
+                Text(
+                    text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                // Top right: Delete if current user is author
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                if (currentUser?.uid == comment.userId) {
+                    Text(
+                        text = "Delete",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color.Red,
+                        modifier = Modifier
+                            .clickable { onDelete() }
+                            .padding(top = 0.dp)
+                    )
+                }
+            }
+
+            // Comment body
+            Text(
+                text = comment.content,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
     }
 }
