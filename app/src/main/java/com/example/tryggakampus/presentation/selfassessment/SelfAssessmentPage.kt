@@ -33,6 +33,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,31 +47,40 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
     var selectedNote by remember { mutableStateOf<String?>(null) }
 
     if (showDatePicker) {
-        val userCreationMillis = FirebaseAuth.getInstance().currentUser?.metadata?.creationTimestamp ?: 0L
-        val minDate = Instant.ofEpochMilli(userCreationMillis).atZone(ZoneId.systemDefault()).toLocalDate()
-        val maxDate = LocalDate.now(ZoneId.systemDefault())
+        // Allow selecting any past date up to today (using UTC to match DatePicker's expectations)
+        val todayUtc = LocalDate.now(ZoneOffset.UTC)
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = state.selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+            initialSelectedDateMillis = state.selectedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(),
             selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                    val d = Instant.ofEpochMilli(utcTimeMillis).atZone(ZoneId.systemDefault()).toLocalDate()
-                    return !d.isBefore(minDate) && !d.isAfter(maxDate)
+                    val d = Instant.ofEpochMilli(utcTimeMillis).atZone(ZoneOffset.UTC).toLocalDate()
+                    return !d.isAfter(todayUtc)
                 }
             }
         )
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
-                TextButton(onClick = {
-                    val millis = datePickerState.selectedDateMillis
-                    if (millis != null) {
-                        val date = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
-                        vm.setSelectedDate(date)
-                    }
-                    showDatePicker = false
-                }) { Text(text = stringResource(id = android.R.string.ok)) }
+                Button(
+                    onClick = {
+                        val millis = datePickerState.selectedDateMillis
+                        if (millis != null) {
+                            val date = Instant.ofEpochMilli(millis).atZone(ZoneOffset.UTC).toLocalDate()
+                            vm.setSelectedDate(date)
+                        }
+                        showDatePicker = false
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) { Text(text = stringResource(id = android.R.string.ok)) }
             },
-            dismissButton = { TextButton({ showDatePicker = false }) { Text(stringResource(id = android.R.string.cancel)) } }
+            dismissButton = {
+                OutlinedButton(onClick = { showDatePicker = false }) {
+                    Text(stringResource(id = android.R.string.cancel), color = MaterialTheme.colorScheme.primary)
+                }
+            }
         ) {
             DatePicker(state = datePickerState)
         }
@@ -80,11 +90,21 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirm = false },
             confirmButton = {
-                TextButton(onClick = { showDeleteConfirm = false; vm.deleteCurrent() }) {
+                Button(
+                    onClick = { showDeleteConfirm = false; vm.deleteCurrent() },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
                     Text(stringResource(id = android.R.string.ok))
                 }
             },
-            dismissButton = { TextButton(onClick = { showDeleteConfirm = false }) { Text(stringResource(id = android.R.string.cancel)) } },
+            dismissButton = {
+                OutlinedButton(onClick = { showDeleteConfirm = false }) {
+                    Text(stringResource(id = android.R.string.cancel), color = MaterialTheme.colorScheme.primary)
+                }
+            },
             title = { Text(stringResource(R.string.self_assessment_delete)) },
             text = { Text("This will delete the entry for ${state.selectedDate}.") }
         )
@@ -93,7 +113,15 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
     if (selectedNote != null) {
         AlertDialog(
             onDismissRequest = { selectedNote = null },
-            confirmButton = { TextButton(onClick = { selectedNote = null }) { Text(stringResource(id = android.R.string.ok)) } },
+            confirmButton = {
+                Button(
+                    onClick = { selectedNote = null },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                ) { Text(stringResource(id = android.R.string.ok)) }
+            },
             title = { Text("Note") },
             text = { Text(selectedNote!!) }
         )
@@ -103,6 +131,7 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
         modifier = Modifier
             .padding(12.dp)
     ) {
+        val exportLabel = stringResource(R.string.export_csv)
         Text(text = stringResource(R.string.self_assessment_title), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
         Spacer(Modifier.height(8.dp))
         // Range controls
@@ -113,7 +142,7 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "${state.selectedDate}")
             Spacer(Modifier.width(12.dp))
-            OutlinedButton(onClick = { showDatePicker = true }) { Text(stringResource(id = com.example.tryggakampus.R.string.select)) }
+            OutlinedButton(onClick = { showDatePicker = true }) { Text(stringResource(id = R.string.select)) }
             Spacer(Modifier.weight(1f))
             if (state.hasPendingWrites) {
                 AssistChip(onClick = {}, label = { Text(stringResource(R.string.self_assessment_saved_offline)) })
@@ -124,17 +153,17 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
 
         // Form sliders
         ScoreRow(
-            label = "Self-image",
+            label = stringResource(R.string.self_image),
             value = state.selfImage,
             onChange = { vm.setSelfImage(it) }
         )
         ScoreRow(
-            label = "Self-esteem",
+            label = stringResource(R.string.self_esteem),
             value = state.selfEsteem,
             onChange = { vm.setSelfEsteem(it) }
         )
         ScoreRow(
-            label = "Self-reliance",
+            label = stringResource(R.string.self_reliance),
             value = state.selfReliance,
             onChange = { vm.setSelfReliance(it) }
         )
@@ -166,8 +195,8 @@ fun SelfAssessmentPage(vm: SelfAssessmentViewModel = viewModel()) {
                     putExtra(Intent.EXTRA_SUBJECT, "self_assessments.csv")
                     putExtra(Intent.EXTRA_TEXT, csv)
                 }
-                context.startActivity(Intent.createChooser(intent, "Export CSV"))
-            }) { Text("Export CSV") }
+                context.startActivity(Intent.createChooser(intent, exportLabel))
+            }) { Text(exportLabel) }
         }
         if (state.savedMessage != null) {
             Text(text = state.savedMessage!!, color = MaterialTheme.colorScheme.primary)
@@ -219,9 +248,9 @@ private fun RangeControls(selected: RangeOption, onChange: (RangeOption) -> Unit
 @Composable
 private fun Legend(visibility: MutableState<Triple<Boolean, Boolean, Boolean>>) {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        LegendToggle("Self-image", Color(0xFF1E88E5), visibility.value.first) { visibility.value = visibility.value.copy(first = it) }
-        LegendToggle("Self-esteem", Color(0xFFD81B60), visibility.value.second) { visibility.value = visibility.value.copy(second = it) }
-        LegendToggle("Self-reliance", Color(0xFF43A047), visibility.value.third) { visibility.value = visibility.value.copy(third = it) }
+        LegendToggle(stringResource(R.string.self_image), Color(0xFF1E88E5), visibility.value.first) { visibility.value = visibility.value.copy(first = it) }
+        LegendToggle(stringResource(R.string.self_esteem), Color(0xFFD81B60), visibility.value.second) { visibility.value = visibility.value.copy(second = it) }
+        LegendToggle(stringResource(R.string.self_reliance), Color(0xFF43A047), visibility.value.third) { visibility.value = visibility.value.copy(third = it) }
     }
 }
 
