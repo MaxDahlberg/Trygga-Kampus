@@ -16,6 +16,7 @@ interface StoryCommentRepository {
         isAnonymous: Boolean = true
     ): StoryCommentModel?
     suspend fun deleteComment(commentId: String): Boolean
+    suspend fun deleteCommentsForStory(storyId: String): Boolean
 }
 
 object StoryCommentRepositoryImpl : StoryCommentRepository {
@@ -84,6 +85,19 @@ object StoryCommentRepositoryImpl : StoryCommentRepository {
             true
         } catch (e: Exception) {
             Log.d("StoryCommentRepo", "Error deleting comment: ${e.stackTraceToString()}")
+            false
+        }
+    }
+
+    override suspend fun deleteCommentsForStory(storyId: String): Boolean {
+        return try {
+            val comments = getCommentsForStory(storyId, Source.SERVER)
+            comments.forEach { comment ->
+                deleteComment(comment["id"] as String)
+            }
+            true
+        } catch (e: Exception) {
+            Log.e("StoryCommentRepo", "Failed to delete comments for story $storyId", e)
             false
         }
     }

@@ -116,12 +116,21 @@ class StoriesPageViewModel : ViewModel() {
         viewModelScope.launch {
             if (story.id.isEmpty()) return@launch
 
-            val success = StoryRepositoryImpl.deleteStory(story.id)
-            if (success) {
-                stories.removeAll { it.id == story.id }
-                Log.d("StoriesVM", "Deleted story locally: ${story.id}")
-            } else {
-                Log.d("StoriesVM", "Failed to delete story: ${story.id}")
+            try {
+                val commentsDeleted = StoryCommentRepositoryImpl.deleteCommentsForStory(story.id)
+                if (!commentsDeleted) {
+                    Log.w("StoriesVM", "Some comments might not have been deleted for story: ${story.id}")
+                }
+
+                val success = StoryRepositoryImpl.deleteStory(story.id)
+                if (success) {
+                    stories.removeAll { it.id == story.id }
+                    Log.d("StoriesVM", "Deleted story and its comments: ${story.id}")
+                } else {
+                    Log.e("StoriesVM", "Failed to delete story: ${story.id}")
+                }
+            } catch (e: Exception) {
+                Log.e("StoriesVM", "Error deleting story ${story.id}: ${e.stackTraceToString()}")
             }
         }
     }
