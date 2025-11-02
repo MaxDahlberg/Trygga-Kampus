@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,8 +44,8 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 
 @Composable
-fun LoginPage() {
-    val vm: LoginViewModel = viewModel<LoginViewModel>()
+fun LoginPage(viewModel: LoginViewModel? = viewModel<LoginViewModel>()) {
+    val vm: LoginViewModel = viewModel ?: viewModel<LoginViewModel>()
     val context = LocalContext.current
 
     val gso = remember {
@@ -104,33 +105,39 @@ fun LoginPage() {
         verticalArrangement = Arrangement.Center
     ) {
         if (vm.passwordResetEmailSent) {
-            SuccessBox(
-                message = "A password reset link has been sent to your email. Please check your inbox.",
-                onClick = { vm.dismissPasswordResetMessage() }
-            )
+            Box(modifier = Modifier.testTag("success_box")) {
+                SuccessBox(
+                    message = "A password reset link has been sent to your email. Please check your inbox.",
+                    onClick = { vm.dismissPasswordResetMessage() }
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
         }
 
         LoginFormHeader()
 
         FormContainer {
-            OutlinedInput(
-                label = "email@company.xyz",
-                value = vm.email,
-                onValueChange = { vm.onEmailChange(it) },
-                isError = !vm.emailIsValid,
-            )
+            Box(modifier = Modifier.testTag("email_input")) {
+                OutlinedInput(
+                    label = "email@company.xyz",
+                    value = vm.email,
+                    onValueChange = { vm.onEmailChange(it) },
+                    isError = !vm.emailIsValid
+                )
+            }
 
-            OutlinedInput(
-                label = "Password",
-                value = vm.password,
-                onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid,
-                isPassword = true,
-                isPasswordVisible = vm.isPasswordVisible,
-                showPasswordRules = true,
-                onVisibilityChange = { vm.togglePasswordVisibility() },
-            )
+            Box(modifier = Modifier.testTag("password_input")) {
+                OutlinedInput(
+                    label = "Password",
+                    value = vm.password,
+                    onValueChange = { vm.onPasswordChange(it) },
+                    isError = !vm.passwordIsValid,
+                    isPassword = true,
+                    isPasswordVisible = vm.isPasswordVisible,
+                    showPasswordRules = true,
+                    onVisibilityChange = { vm.togglePasswordVisibility() }
+                )
+            }
 
             ForgotPasswordButton(
                 onClick = { vm.onForgotPassword() },
@@ -141,7 +148,8 @@ fun LoginPage() {
 
             BlockButton(
                 onClick = { vm.onRequestLogin() },
-                enabled = (vm.emailIsValid && vm.passwordIsValid && !vm.signingIn)
+                enabled = (vm.emailIsValid && vm.passwordIsValid && !vm.signingIn),
+                modifier = Modifier.testTag("sign_in_button")
             ) {
                 if (vm.signingIn) {
                     CircularProgressIndicator(
@@ -183,7 +191,8 @@ fun LoginPage() {
                 iconId = R.drawable.ic_google_logo,
                 contentDescription = "Sign in with Google",
                 enabled = !vm.signingIn,
-                onClick = { googleAuthLauncher.launch(googleSignInClient.signInIntent) }
+                onClick = { googleAuthLauncher.launch(googleSignInClient.signInIntent) },
+                modifier = Modifier.testTag("google_icon")
             )
             Spacer(modifier = Modifier.width(24.dp))
 
@@ -193,14 +202,17 @@ fun LoginPage() {
                 enabled = !vm.signingIn,
                 onClick = {
                     facebookAuthLauncher.launch(listOf("email", "public_profile"))
-                }
+                },
+                modifier = Modifier.testTag("facebook_icon")
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         vm.error?.let {
-            ErrorBox(it.message, onClick = { vm.clearError() })
+            Box(modifier = Modifier.testTag("error_box")) {
+                ErrorBox(it.message, onClick = { vm.clearError() })
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -215,10 +227,11 @@ fun SocialLoginIcon(
     iconId: Int,
     contentDescription: String,
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(40.dp)
             .clip(CircleShape)
             .border(
@@ -249,7 +262,8 @@ fun ForgotPasswordButton(
         TextButton(onClick = onClick, enabled = enabled) {
             Text(
                 text = "Forgot Password?",
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.testTag("forgot_password_button")
             )
         }
     }
@@ -279,7 +293,10 @@ fun LoginFormFooter() {
         Text("Need an account?")
         Spacer(modifier = Modifier.width(8.dp))
         Button(onClick = { navController.navigate(Routes.Authentication.RegisterPage) }) {
-            Text(text = "Sign Up")
+            Text(
+                text = "Sign Up",
+                modifier = Modifier.testTag("sign_up_button")
+            )
         }
     }
 }

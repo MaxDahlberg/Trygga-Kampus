@@ -11,33 +11,33 @@ import kotlinx.coroutines.launch
 
 data class AuthError(val message: String)
 
-class LoginViewModel : ViewModel() {
-    var email by mutableStateOf("")
+open class LoginViewModel : ViewModel() {
+    open var email by mutableStateOf("")
         private set
 
-    var emailIsValid by mutableStateOf(true)
+    open var emailIsValid by mutableStateOf(true)
         private set
 
-    var passwordIsValid by mutableStateOf(true)
+    open var passwordIsValid by mutableStateOf(true)
         private set
 
-    var password by mutableStateOf("")
+    open var password by mutableStateOf("")
         private set
 
-    var isPasswordVisible by mutableStateOf(false)
+    open var isPasswordVisible by mutableStateOf(false)
         private set
 
-    var passwordResetEmailSent by mutableStateOf(false)
+    open var passwordResetEmailSent by mutableStateOf(false)
         private set
 
-    var signingIn by mutableStateOf(false)
-    var error by mutableStateOf<AuthError?>(null)
+    open var signingIn by mutableStateOf(false)
+    open var error by mutableStateOf<AuthError?>(null)
 
-    fun clearError() {
+    open fun clearError() {
         error = null
     }
 
-    fun onEmailChange(newEmail: String) {
+    open fun onEmailChange(newEmail: String) {
         email = newEmail
         emailIsValid = android.util.Patterns
             .EMAIL_ADDRESS
@@ -45,16 +45,16 @@ class LoginViewModel : ViewModel() {
             .matches()
     }
 
-    fun onPasswordChange(newPassword: String) {
+    open fun onPasswordChange(newPassword: String) {
         password = newPassword
         val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\\\-_{}.*]).{8,20}$".toRegex()
         passwordIsValid = password.matches(passwordPattern)
     }
-    fun togglePasswordVisibility() {
+    open fun togglePasswordVisibility() {
         isPasswordVisible = !isPasswordVisible
     }
 
-    fun onRequestLogin() {
+    open fun onRequestLogin() {
         if (email.isEmpty() || password.isEmpty()) {
             error = AuthError("Wrong username or password")
             return
@@ -80,7 +80,7 @@ class LoginViewModel : ViewModel() {
             signingIn = false
         }
     }
-    fun onForgotPassword() {
+    open fun onForgotPassword() {
         if (!emailIsValid) {
             error = AuthError("Please enter a valid email address.")
             return
@@ -104,10 +104,10 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun dismissPasswordResetMessage() {
+    open fun dismissPasswordResetMessage() {
         passwordResetEmailSent = false
     }
-    fun onSignInWithGoogle(idToken: String) {
+    open fun onSignInWithGoogle(idToken: String) {
         viewModelScope.launch {
             signingIn = true
             val authResponse = AuthRepositoryImpl.signInWithGoogle(idToken)
@@ -119,10 +119,10 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun showSignInError(message: String) {
+    open fun showSignInError(message: String) {
         error = AuthError(message)
     }
-    fun onSignInWithFacebook(token: String) {
+    open fun onSignInWithFacebook(token: String) {
         viewModelScope.launch {
             signingIn = true
             val authResponse = AuthRepositoryImpl.signInWithFacebook(token)
