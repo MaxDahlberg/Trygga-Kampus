@@ -174,5 +174,9 @@
     <string name="theme_dark">Mörk</string>
     <string name="theme_system">System</string>
     <string name="app_theme_restart_notice">Appen kan starta om för att tillämpa ändringar</string>
+    <string name="settings_language_title">Appspråk</string>
 
+    <string name="settings_language_description">Ändra appens språk</string>
+    <string name="settings_language_restart_notice">Appen kommer att starta om för att tillämpa ändringarna</string>
+    <string name="settings_language_ai_note">Obs: Översättningar tillhandahölls av AI</string>
 </resources>

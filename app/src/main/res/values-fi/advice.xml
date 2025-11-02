@@ -1,3 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
+    <!-- Category Titles -->
+    <string name="preventive_advice_category_title">Ennaltaehkäisevät neuvot</string>
+    <string name="support_advice_category_title">Auta ystävää</string>
+    <string name="family_advice_category_title">Puhuminen perheelle</string>
+
+    <!-- Preventive Advice Cards -->
+    <string name="preventive_advice_title_1">
+        Aseta selkeät rajat
+    </string>
+    <string name="preventive_advice_text_1">
+        Selkeiden henkilökohtaisten rajojen asettaminen auttaa sinua pysymään keskittyneenä ja priorisoimaan hyvinvointiasi tukevat asiat.
+        Tämä tarkoittaa myös omien rajojesi tunnistamista ja tietoisia valintoja välttää ympäristöjä tai tilanteita,
+        joissa on päihteitä tai addiktiivista käyttäytymistä. Kerro rajoistasi ystäville ja perheelle, jotta saat tukea ja vältät väärinkäsityksiä.
+    </string>
+
+    <string name="preventive_advice_title_2">
+        Rakenna tukiverkosto
+    </string>
+    <string name="preventive_advice_text_2">
+        Ympäröi itsesi ystävillä, perheellä ja mentoreilla, jotka tukevat terveellisiä tapoja ja ovat tukenasi vaikeina hetkinä.
+        Vahva tukiverkosto voi muistuttaa sinua tavoitteistasi ja auttaa vastustamaan kiusauksia vaikeina aikoina.
+        Älä epäröi pyytää neuvoja niiltä, jotka ovat onnistuneesti välttäneet tai voittaneet riippuvuuksia – he voivat tarjota arvokasta tukea ja kannustusta.
+    </string>
+
+    <string name="preventive_advice_title_3">
+        Kehitä terveellisiä selviytymiskeinoja
+    </string>
+    <string name="preventive_advice_text_3">
+        Stressi ja tunteet voivat johtaa haitalliseen käyttäytymiseen, jos niitä ei käsitellä oikein.
+        Sen sijaan että turvautuisit aineisiin, kokeile tietoista läsnäoloa, liikuntaa tai luovia keinoja kuten taidetta, kirjoittamista tai musiikkia.
+        Terveelliset selviytymiskeinot auttavat purkamaan stressiä rakentavasti ja hallitsemaan tunteita, tukien tasapainoista elämäntapaa.
+    </string>
+
+    <string name="preventive_advice_title_4">
+        Sivistä itseäsi
+    </string>
+    <string name="preventive_advice_text_4">
+        Riippuvuuskäyttäytymiseen liittyvien riskien ymmärtäminen auttaa sinua tekemään tietoisia valintoja ja tunnistamaan varhaiset varoitusmerkit.
+        Opi, miten eri aineet tai tavat vaikuttavat fyysiseen terveyteen, henkiseen hyvinvointiin ja ihmissuhteisiin.
+        Tietoisuus antaa sinulle voimaa tehdä päätöksiä, jotka ovat linjassa arvojesi ja tavoitteidesi kanssa.
+    </string>
+
+    <string name="preventive_advice_title_5">
+        Aseta henkilökohtaisia tavoitteita
+    </string>
+    <string name="preventive_advice_text_5">
+        Selkeiden ja saavutettavien lyhyen ja pitkän aikavälin tavoitteiden asettaminen antaa elämällesi tarkoituksen ja suunnan.
+        Keskittymällä merkityksellisiin asioihin rakennat elämää, joka heijastaa arvojasi ja unelmiasi.
+        Tavoittele asioita, jotka edistävät henkilökohtaista kasvua – olipa se uusien taitojen oppimista, ihmissuhteiden parantamista tai uralla etenemistä.
+    </string>
+
+    <!-- Support Advice Cards -->
+    <string name="support_advice_title_1">
+        Ole hyvä kuuntelija
+    </string>
+    <string name="support_advice_text_1">
+        Joskus paras tapa tukea jotakuta on vain kuunnella.
+        Anna ystävällesi turvallinen tila ilmaista tunteensa ilman arvostelua ja osoita, että olet läsnä.
+        Vältä liian nopeiden ratkaisujen tarjoamista ja kuuntele sen sijaan tarkasti, mitä hän käy läpi, ja muistuta häntä, ettei hän ole yksin.
+    </string>
+
+    <string name="support_advice_title_2">
+        Vältä mahdollistavaa käytöstä
+    </string>
+    <string name="support_advice_text_2">
+        Ystävän tukeminen ei tarkoita haitallisen käyttäytymisen hyväksymistä.
+        Vältä tekoja, jotka voivat tahattomasti tukea riippuvuutta, kuten haitallisen käytöksen selittelyä tai aineiden hankkimisen auttamista.
+        Sen sijaan kannusta terveellisiin tapoihin ja aseta selkeät rajat. Näytä välittäväsi samalla kun tuet myönteistä muutosta.
+    </string>
+
+    <string name="support_advice_title_3">
+        Anna positiivista kannustusta
+    </string>
+    <string name="support_advice_text_3">
+        Auta ystävääsi pysymään motivoituneena tunnistamalla hänen vahvuutensa ja juhlimalla saavutuksia – vaikka ne olisivat pieniä.
+        Positiivinen palaute voi vahvistaa itsetuntoa ja saada hänet tuntemaan olonsa tuetuksi toipumisen aikana.
+        Muistuta häntä aiemmista onnistumisista ja siitä, että edistys on mahdollista.
+    </string>
+
+    <string name="support_advice_title_4">
+        Opi riippuvuudesta
+    </string>
+    <string name="support_advice_text_4">
+        Riippuvuuden ymmärtäminen auttaa sinua tarjoamaan parempaa tukea.
+        Ota selvää merkeistä, laukaisijoista ja saatavilla olevista resursseista, jotta osaat toimia oikein, jos ystäväsi pyytää apua.
+        Tieto voi myös ehkäistä väärinkäsityksiä ja auttaa sinua kommunikoimaan myötätuntoisesti ja rakentavasti.
+    </string>
+
+    <string name="support_advice_title_5">
+        Rohkaise hakemaan ammattilaisapua
+    </string>
+    <string name="support_advice_text_5">
+        Jos ystäväsi kamppailee, ehdota lempeästi ammattilaisen apua – kuten terapiaa, neuvontaa tai tukiryhmiä.
+        Voit tarjoutua lähtemään mukaan ensimmäiselle käynnille, jos se tuntuu hänestä helpottavalta.
+        Avun pyytäminen voi olla pelottavaa, mutta tieto siitä, ettei ole yksin, voi merkitä paljon.
+    </string>
+
+    <!-- Family Advice Cards -->
+    <string name="family_advice_title_1">
+        Valmistele mitä haluat sanoa
+    </string>
+    <string name="family_advice_text_1">
+        Käytä aikaa siihen, mitä haluat perheellesi kertoa.
+        Mieti, mitkä asiat ja tunteet haluat ilmaista. Ole rehellinen vaikeuksistasi ja kerro konkreettisesti,
+        miten heidän tukensa voisi auttaa. Selkeys voi tehdä keskustelusta rakentavamman ja lisätä ymmärrystä.
+    </string>
+
+    <string name="family_advice_title_2">
+        Valitse oikea hetki
+    </string>
+    <string name="family_advice_text_2">
+        Etsi rauhallinen ja yksityinen hetki, jolloin voitte puhua avoimesti ilman häiriöitä.
+        Vältä keskustelun aloittamista silloin kun tunnelma on kireä tai kaikki ovat kiireisiä.
+        Valitse aika, jolloin perheenjäsenet ovat valmiita kuuntelemaan – se helpottaa heidän sitoutumistaan keskusteluun.
+    </string>
+
+    <string name="family_advice_title_3">
+        Kerro tunteistasi
+    </string>
+    <string name="family_advice_text_3">
+        Ole avoin siitä, miten riippuvuus on vaikuttanut sinuun fyysisesti, henkisesti ja sosiaalisesti.
+        Kerro perheelle, miksi tarvitset heidän tukeaan ja mitä se sinulle merkitsee.
+        Rehellisyys voi lisätä empatiaa ja auttaa perhettä ymmärtämään roolinsa matkallasi.
+    </string>
+
+    <string name="family_advice_title_4">
+        Ole avoin heidän reaktioilleen
+    </string>
+    <string name="family_advice_text_4">
+        Perheenjäsenet voivat reagoida monin tuntein – huolella, hämmennyksellä tai turhautumisella.
+        Ole valmis kuuntelemaan heidän vastauksiaan ilman puolustautumista.
+        Anna heille tilaa kysymyksille, jotta he voivat paremmin ymmärtää tilanteesi ja miten voivat tukea sinua.
+    </string>
+
+    <string name="family_advice_title_5">
+        Pyydä heidän tukeaan
+    </string>
+    <string name="family_advice_text_5">
+        Selitä perheellesi, miten he voivat auttaa – esimerkiksi osallistumalla terapiaistuntoihin,
+        etsimällä tietoa yhdessä tai vain olemalla läsnä kun tarvitset juttuseuraa.
+        Tunnusta, että heidän tukensa voi tehdä suuren eron, ja ilmaise kiitollisuutesi siitä avusta, jonka he ovat valmiita antamaan.
+    </string>
+
 </resources>

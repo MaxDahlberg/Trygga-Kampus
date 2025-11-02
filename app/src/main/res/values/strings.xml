@@ -1,4 +1,7 @@
 <resources>
+
+
+
     <string name="app_name">Trygga Campus</string>
     <string name="title">
         Welcome to Trygga Campus!
@@ -193,4 +196,8 @@
     <string name="theme_system">System</string>
     <string name="app_theme_restart_notice">The app may restart to apply changes</string>
 
+    <string name="settings_language_title">App Language</string>
+    <string name="settings_language_description">Change the language of the app</string>
+    <string name="settings_language_restart_notice">The app will restart to apply changes</string>
+    <string name="settings_language_ai_note">Note: Translations was provided by AI</string>
 </resources>

@@ -1,196 +1,182 @@
 <resources>
-    <string name="app_name">Trygga Campus</string>
-    <string name="title">
-        Welcome to Trygga Campus!
-    </string>
-    <string name="about_us">
-        About Us!
-    </string>
-    <string name="info1">
-        Here will be info regarding the app like what we aim to do and how it functions
-    </string>
-    <string name="button">
-        If you need serious help, please Get in touch with either your University counselor or one of our professionals using this button.
-    </string>
-    <string name="buttonInfo">
-        This button will prompt you with a form that you fill in with what you\'re dealing with and send it to someone to provide the help needed.
-    </string>
-    <string
-        name="facebook_app_id" translatable="false">1742868223033407
-    </string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
-    <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
+    <string name="app_name">トリッガキャンパス</string>
+    <string name="title">トリッガキャンパスへようこそ！</string>
+    <string name="about_us">私たちについて</string>
+    <string name="info1">ここでは、アプリの目的や使い方などに関する情報を確認できます。</string>
+    <string name="button">本格的なサポートが必要な場合は、このボタンを使って大学のカウンセラーか専門家にご連絡ください。</string>
+    <string name="buttonInfo">このボタンを押すと、現在の状況を記入するフォームが表示され、必要な支援を提供する人に送信できます。</string>
 
-    <!-- Stories Begin -->
-    <string name="stories_page_title">Share your story with others</string>
-    <string name="stories_title_label">Title (Optional)</string>
-    <string name="stories_content_label">What would you like to share?</string>
-    <string name="stories_anonymous_label">Anonymous</string>
-    <!-- Stories End -->
+    <!-- ストーリー -->
+    <string name="stories_page_title">あなたのストーリーを共有しましょう</string>
+    <string name="stories_title_label">タイトル（任意）</string>
+    <string name="stories_content_label">何を共有したいですか？</string>
+    <string name="stories_anonymous_label">匿名</string>
+    <!-- ストーリー終了 -->
 
-    <!-- side menu-->
-    <string name="drawer_home">Home</string>
-    <string name="drawer_profile">Profile</string>
-    <string name="drawer_articles">Articles</string>
-    <string name="drawer_form">Form</string>
-    <string name="drawer_survey">Survey</string>
-    <string name="drawer_habits">Habit Tracker</string>
-    <string name="drawer_stories">Stories</string>
-    <string name="drawer_advice">Advice</string>
-    <string name="drawer_login">Login</string>
-    <string name="drawer_logout">Logout</string>
-    <string name="drawer_settings">Settings</string>
+    <!-- サイドメニュー -->
+    <string name="drawer_home">ホーム</string>
+    <string name="drawer_profile">プロフィール</string>
+    <string name="drawer_articles">記事</string>
+    <string name="drawer_form">フォーム</string>
+    <string name="drawer_survey">アンケート</string>
+    <string name="drawer_habits">習慣管理</string>
+    <string name="drawer_stories">ストーリー</string>
+    <string name="drawer_advice">アドバイス</string>
+    <string name="drawer_login">ログイン</string>
+    <string name="drawer_logout">ログアウト</string>
+    <string name="drawer_settings">設定</string>
 
-    <!-- Article page-->
-    <string name="new_article">New Article</string>
-    <string name="delete_article">Delete Article</string>
-    <string name="article_title">Title</string>
-    <string name="summary">Summary</string>
-    <string name="webpage_url">Webpage URL</string>
-    <string name="all_fields_required">All fields are required.</string>
-    <string name="add">Add</string>
-    <string name="cancel">Cancel</string>
-    <string name="loading_articles">Loading articles ...</string>
-    <string name="no_articles_available">No articles available. Please check back later or try refreshing.</string>
-    <string name="cancel_delete_mode">Cancel Delete Mode</string>
-    <string name="add_article">Add Article</string>
-    <string name="enable_delete_mode">Enable Delete Mode</string>
-    <string name="confirm_deletion">Confirm Deletion</string>
-    <string name="delete_confirmation">Are you sure you want to delete this article?</string>
-    <string name="delete">Delete</string>
-    <string name="error">Error</string>
-    <string name="unknown_error">An unknown error occurred.</string>
+    <!-- 記事ページ -->
+    <string name="new_article">新しい記事</string>
+    <string name="delete_article">記事を削除</string>
+    <string name="article_title">タイトル</string>
+    <string name="summary">概要</string>
+    <string name="webpage_url">ウェブページのURL</string>
+    <string name="all_fields_required">すべての項目を入力してください。</string>
+    <string name="add">追加</string>
+    <string name="cancel">キャンセル</string>
+    <string name="loading_articles">記事を読み込み中...</string>
+    <string name="no_articles_available">利用可能な記事はありません。後で再度確認するか、更新してください。</string>
+    <string name="cancel_delete_mode">削除モードをキャンセル</string>
+    <string name="add_article">記事を追加</string>
+    <string name="enable_delete_mode">削除モードを有効にする</string>
+    <string name="confirm_deletion">削除を確認</string>
+    <string name="delete_confirmation">この記事を削除してもよろしいですか？</string>
+    <string name="delete">削除</string>
+    <string name="error">エラー</string>
+    <string name="unknown_error">不明なエラーが発生しました。</string>
     <string name="ok">OK</string>
-    <string name="read_more">Read More</string>
-    <string name="no_link">No Link</string>
+    <string name="read_more">続きを読む</string>
+    <string name="no_link">リンクなし</string>
 
+    <!-- アンケート -->
+    <string name="survey_title">アンケート</string>
+    <string name="question_prefix">質問 %d：</string>
+    <string name="your_answer">あなたの回答</string>
+    <string name="submit_answers">回答を送信</string>
+    <string name="survey_complete_title">アンケート完了</string>
+    <string name="survey_complete_message">アンケートへのご協力ありがとうございます！</string>
 
-    <!-- app/src/main/res/values/strings.xml -->
-    <string name="survey_title">Survey</string>
-    <string name="question_prefix">Question %d:</string>
-    <string name="your_answer">Your Answer</string>
-    <string name="submit_answers">Submit Answers</string>
-    <string name="survey_complete_title">Survey Complete</string>
-    <string name="survey_complete_message">Thank you for completing the survey!</string>
-
-
-    <!-- Survey Questions -->
-    <string name="survey_question_1">How often do you think about the effects of drugs or alcohol on your studies?</string>
-    <string name="survey_question_2">Have you ever felt pressured to use drugs or alcohol to fit in with your peers?</string>
-    <string name="survey_question_3">Do you feel that substance use is normalized in your university environment?</string>
-    <string name="survey_question_4">How confident do you feel about saying \'no\' to drugs or alcohol in a social setting?</string>
-    <string name="survey_question_5">How often do you find yourself using substances (e.g., alcohol, drugs) to cope with stress or pressure from university life?</string>
-    <string name="survey_question_6">Do you believe there\'s a stigma around seeking help for addiction at your university?</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="email_hint">Email *</string>
-    <string name="password_hint">Password *</string>
-    <string name="log_in_button_text">Log In</string>
-    <string name="forgot_password_text">Forgot password?</string>
-    <string name="create_account_text">Create an account</string>
-    <string name="home">Home</string>
-    <string name="news">News</string>
-    <string name="map">Map</string>
-    <string name="faq">FAQ</string>
-    <string name="report">Report</string>
-
-    <string name="weekly_progress_title">Weekly Progress</string>
-
-    <string name="weekly_progress">Weekly Progress - Week %1$d</string>
-    <string name="daily_progress">Daily Progress</string>
+    <!-- アンケート質問 -->
+    <string name="survey_question_1">勉強に対する薬物やアルコールの影響について、どのくらい考えますか？</string>
+    <string name="survey_question_2">仲間に溶け込むために、薬物やアルコールを使うよう圧力を感じたことがありますか？</string>
+    <string name="survey_question_3">大学環境での物質使用は普通だと思いますか？</string>
+    <string name="survey_question_4">社交の場で薬物やアルコールに「ノー」と言う自信はどのくらいありますか？</string>
+    <string name="survey_question_5">ストレスや大学生活のプレッシャーに対処するために、アルコールや薬物を使用することはどのくらいありますか？</string>
+    <string name="survey_question_6">大学で依存症サポートを求めることにはスティグマ（偏見）があると思いますか？</string>
+    <string name="weekly_progress">週間進捗 - 第%1$d週</string>
+    <string name="daily_progress">日次進捗</string>
     <string-array name="weekdays">
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
-        <item>Sun</item>
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+        <item>日</item>
     </string-array>
 
-    <!-- Profile Page -->
-    <string name="profile_title">Profile</string>
-    <string name="account_information">Account Information</string>
-    <string name="username_label">Username</string>
-    <string name="email_label">Email</string>
-    <string name="my_hobbies">My Hobbies</string>
-    <string name="save_hobbies">Save Hobbies</string>
-    <string name="change_username">Change Username</string>
-    <string name="password_required">Password (required)</string>
-    <string name="new_username">New Username</string>
-    <string name="update_username">Update Username</string>
-    <string name="change_password">Change Password</string>
-    <string name="current_password">Current Password</string>
-    <string name="new_password">New Password</string>
-    <string name="repeat_new_password">Repeat New Password</string>
-    <string name="update_password">Update Password</string>
-    <string name="account_data">Account And Data</string>
-    <string name="request_my_data">Request My Data</string>
-    <string name="delete_account">Delete My Data and Account</string>
-    <string name="hobbies_saved_success">Hobbies saved successfully!</string>
-    <string name="username_changed_success">Username changed successfully!</string>
-    <string name="password_changed_success">Password changed successfully!</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">サインアウト</string>
+    <string name="email_hint">メールアドレス *</string>
+    <string name="password_hint">パスワード *</string>
+    <string name="log_in_button_text">ログイン</string>
+    <string name="forgot_password_text">パスワードをお忘れですか？</string>
+    <string name="create_account_text">アカウント作成</string>
+    <string name="home">ホーム</string>
+    <string name="news">ニュース</string>
+    <string name="map">地図</string>
+    <string name="faq">FAQ</string>
+    <string name="report">報告</string>
+    <string name="weekly_progress_title">週間進捗</string>
 
-    <!-- Dialogs -->
-    <string name="confirm_account_deletion">Confirm Account Deletion</string>
-    <string name="delete_account_warning">Your personal data and account will be deleted in compliance with GDPR. This action is permanent and cannot be undone.</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="personal_data_request">Personal Data Request</string>
-    <string name="personal_data_request_message">Press Request to fetch your personal data from the server. When it\'s ready, you\'ll be able to download it.</string>
-    <string name="personal_data_ready_message">Your personal data is ready. Press Download to save it to your device.</string>
-    <string name="request">Request</string>
-    <string name="download">Download</string>
+    <!-- プロフィール -->
+    <string name="profile_title">プロフィール</string>
+    <string name="account_information">アカウント情報</string>
+    <string name="username_label">ユーザー名</string>
+    <string name="email_label">メールアドレス</string>
+    <string name="my_hobbies">趣味</string>
+    <string name="save_hobbies">趣味を保存</string>
+    <string name="change_username">ユーザー名を変更</string>
+    <string name="password_required">パスワード（必須）</string>
+    <string name="new_username">新しいユーザー名</string>
+    <string name="update_username">ユーザー名を更新</string>
+    <string name="change_password">パスワードを変更</string>
+    <string name="current_password">現在のパスワード</string>
+    <string name="new_password">新しいパスワード</string>
+    <string name="repeat_new_password">新しいパスワードを再入力</string>
+    <string name="update_password">パスワードを更新</string>
+    <string name="account_data">アカウントとデータ</string>
+    <string name="request_my_data">データをリクエスト</string>
+    <string name="delete_account">データとアカウントを削除</string>
+    <string name="hobbies_saved_success">趣味が正常に保存されました！</string>
+    <string name="username_changed_success">ユーザー名が正常に変更されました！</string>
+    <string name="password_changed_success">パスワードが正常に変更されました！</string>
 
-    <!-- ViewModel error messages -->
-    <string name="error_fill_all_fields">Please fill in all fields.</string>
-    <string name="error_user_email_unavailable">User email not available.</string>
-    <string name="error_username_taken">This username is already taken.</string>
-    <string name="error_update_username_failed">Failed to update username: %1$s</string>
-    <string name="error_update_hobbies">Failed to update hobbies</string>
-    <string name="error_update_hobbies_detail">Failed to update hobbies: %1$s</string>
-    <string name="error_invalid_passwords">Passwords do not match or are invalid.</string>
-    <string name="error_password_change_failed">Password change failed: %1$s</string>
-    <string name="error_password_required">Password required to delete account.</string>
-    <string name="error_account_deletion_failed">Account deletion failed: %1$s</string>
+    <!-- ダイアログ -->
+    <string name="confirm_account_deletion">アカウント削除の確認</string>
+    <string name="delete_account_warning">個人データとアカウントはGDPRに従って削除されます。この操作は元に戻せません。</string>
+    <string name="enter_password">パスワードを入力してください</string>
+    <string name="personal_data_request">個人データのリクエスト</string>
+    <string name="personal_data_request_message">リクエストを押すと、サーバーから個人データを取得できます。準備ができたらダウンロードできます。</string>
+    <string name="personal_data_ready_message">個人データの準備ができました。ダウンロードを押して保存してください。</string>
+    <string name="request">リクエスト</string>
+    <string name="download">ダウンロード</string>
 
-    <!-- Hobbies -->
-    <string name="hobby_reading">Reading</string>
-    <string name="hobby_gaming">Gaming</string>
-    <string name="hobby_traveling">Traveling</string>
-    <string name="hobby_cooking">Cooking</string>
-    <string name="hobby_sports">Sports</string>
-    <string name="hobby_music">Music</string>
-    <string name="hobby_art">Art</string>
-    <string name="hobby_photography">Photography</string>
-    <string name="hobby_dancing">Dancing</string>
-    <string name="hobby_hiking">Hiking</string>
-    <string name="hobby_fishing">Fishing</string>
-    <string name="hobby_swimming">Swimming</string>
-    <string name="hobby_coding">Coding</string>
-    <string name="hobby_yoga">Yoga</string>
-    <string name="hobby_meditation">Meditation</string>
-    <string name="hobby_writing">Writing</string>
-    <string name="hobby_cycling">Cycling</string>
-    <string name="hobby_board_games">Board Games</string>
-    <string name="hobby_movies">Movies</string>
-    <string name="hobby_gardening">Gardening</string>
-    <string name="hobby_knitting">Knitting</string>
-    <string name="hobby_crafts">Crafts</string>
-    <string name="hobby_volunteering">Volunteering</string>
-    <string name="hobby_languages">Languages</string>
-    <string name="hobby_running">Running</string>
-    <string name="hobby_singing">Singing</string>
-    <string name="hobby_collecting">Collecting</string>
-    <string name="hobby_shopping">Shopping</string>
-    <string name="hobby_theater">Theater</string>
-    <.string name="hobby_baking">Baking</string>
+    <!-- エラーメッセージ -->
+    <string name="error_fill_all_fields">すべての項目を入力してください。</string>
+    <string name="error_user_email_unavailable">このメールアドレスは利用できません。</string>
+    <string name="error_username_taken">このユーザー名は既に使用されています。</string>
+    <string name="error_update_username_failed">ユーザー名の更新に失敗しました：%1$s</string>
+    <string name="error_update_hobbies">趣味の更新に失敗しました</string>
+    <string name="error_update_hobbies_detail">趣味の更新に失敗しました：%1$s</string>
+    <string name="error_invalid_passwords">パスワードが一致しないか無効です。</string>
+    <string name="error_password_change_failed">パスワード変更に失敗しました：%1$s</string>
+    <string name="error_password_required">アカウント削除にはパスワードが必要です。</string>
+    <string name="error_account_deletion_failed">アカウント削除に失敗しました：%1$s</string>
 
-    <!-- Theme settings -->
-    <string name="app_theme_title">App Theme</string>
-    <string name="app_theme_description">Change the theme of the app</string>
-    <string name="theme_light">Light</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_system">System</string>
-    <string name="app_theme_restart_notice">The app may restart to apply changes</string>
+    <!-- 趣味 -->
+    <string name="hobby_reading">読書</string>
+    <string name="hobby_gaming">ゲーム</string>
+    <string name="hobby_traveling">旅行</string>
+    <string name="hobby_cooking">料理</string>
+    <string name="hobby_sports">スポーツ</string>
+    <string name="hobby_music">音楽</string>
+    <string name="hobby_art">アート</string>
+    <string name="hobby_photography">写真</string>
+    <string name="hobby_dancing">ダンス</string>
+    <string name="hobby_hiking">ハイキング</string>
+    <string name="hobby_fishing">釣り</string>
+    <string name="hobby_swimming">水泳</string>
+    <string name="hobby_coding">プログラミング</string>
+    <string name="hobby_yoga">ヨガ</string>
+    <string name="hobby_meditation">瞑想</string>
+    <string name="hobby_writing">執筆</string>
+    <string name="hobby_cycling">サイクリング</string>
+    <string name="hobby_board_games">ボードゲーム</string>
+    <string name="hobby_movies">映画</string>
+    <string name="hobby_gardening">ガーデニング</string>
+    <string name="hobby_knitting">編み物</string>
+    <string name="hobby_crafts">クラフト</string>
+    <string name="hobby_volunteering">ボランティア</string>
+    <string name="hobby_languages">語学</string>
+    <string name="hobby_running">ランニング</string>
+    <string name="hobby_singing">歌</string>
+    <string name="hobby_collecting">収集</string>
+    <string name="hobby_shopping">買い物</string>
+    <string name="hobby_theater">演劇</string>
+    <string name="hobby_baking">お菓子作り</string>
 
+    <!-- アプリテーマ -->
+    <string name="app_theme_title">アプリのテーマ</string>
+    <string name="app_theme_description">アプリのテーマを変更</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_system">システム</string>
+    <string name="app_theme_restart_notice">変更を適用するためにアプリが再起動する場合があります</string>
+
+    <string name="settings_language_title">アプリの言語</string>
+    <string name="settings_language_description">アプリの言語を変更する</string>
+    <string name="settings_language_restart_notice">変更を適用するためにアプリが再起動します</string>
+    <string name="settings_language_ai_note">注：翻訳はAIによって提供されました</string>
 </resources>
