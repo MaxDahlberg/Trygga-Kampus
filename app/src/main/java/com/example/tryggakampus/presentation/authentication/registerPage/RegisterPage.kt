@@ -2,6 +2,7 @@ package com.example.tryggakampus.presentation.authentication.registerPage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,8 +31,8 @@ import com.example.tryggakampus.presentation.component.ErrorBox
 import com.example.tryggakampus.presentation.component.OutlinedInput
 
 @Composable
-fun RegisterPage() {
-    val vm: RegisterViewModel = viewModel<RegisterViewModel>()
+fun RegisterPage(viewModel: RegisterViewModel? = viewModel<RegisterViewModel>()) {  // Added optional param for injection
+    val vm: RegisterViewModel = viewModel ?: viewModel<RegisterViewModel>()  // Use injected or default
 
     Column(
         modifier = Modifier
@@ -42,26 +44,30 @@ fun RegisterPage() {
         RegisterFormHeader()
 
         FormContainer {
-            OutlinedInput(
-                label = "email",
-                value = vm.email,
-                onValueChange = { vm.onEmailChange(it) },
-                isError = !vm.emailIsValid
-            )
+            Box(modifier = Modifier.testTag("email_input")) {  // Wrapper if no modifier
+                OutlinedInput(
+                    label = "email",
+                    value = vm.email,
+                    onValueChange = { vm.onEmailChange(it) },
+                    isError = !vm.emailIsValid
+                )
+            }
 
-            OutlinedInput(
-                label = "password",
-                value = vm.password,
-                onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid,
-                showPasswordRules = true,
-                onVisibilityChange = { vm.togglePasswordVisibility() },
-                isPassword = true,
-                isPasswordVisible = vm.isPasswordVisible
+            Box(modifier = Modifier.testTag("password_input")) {  // Wrapper if no modifier
+                OutlinedInput(
+                    label = "password",
+                    value = vm.password,
+                    onValueChange = { vm.onPasswordChange(it) },
+                    isError = !vm.passwordIsValid,
+                    showPasswordRules = true,
+                    onVisibilityChange = { vm.togglePasswordVisibility() },
+                    isPassword = true,
+                    isPasswordVisible = vm.isPasswordVisible
+                )
+            }
 
-            )
-
-            BlockButton (
+            BlockButton(
+                modifier = Modifier.testTag("sign_up_button"),  // Test tag for sign up button
                 onClick = { if (!vm.signingUp) vm.onRequestSignUp() },
                 enabled = (vm.emailIsValid && vm.passwordIsValid)
             ) {
@@ -79,7 +85,9 @@ fun RegisterPage() {
 
         Spacer(modifier = Modifier.height(16.dp))
         vm.error?.let {
-            ErrorBox(it.message, onClick = { vm.clearError() })
+            Box(modifier = Modifier.testTag("error_box")) {  // Wrapper for error box
+                ErrorBox(it.message, onClick = { vm.clearError() })
+            }
         }
 
         Spacer(modifier = Modifier.size(30.dp))
@@ -103,13 +111,13 @@ fun RegisterFormHeader() {
 fun RegisterFormFooter() {
     val navController = LocalNavController.current
 
-    Row (
+    Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text("Already registered?")
-        Button(onClick = { navController.navigate(Routes.Authentication.LoginPage) }) {
+        Button(onClick = { navController.navigate(Routes.Authentication.LoginPage) }, modifier = Modifier.testTag("sign_in_button")) {  // Test tag for sign in button
             Text(text = "Sign In", color = MaterialTheme.colorScheme.onPrimary)
         }
     }

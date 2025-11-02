@@ -12,25 +12,25 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class RegisterViewModel : ViewModel() {
-    var email by mutableStateOf(""); private set
-    var emailIsValid by mutableStateOf(true); private set
-    var password by mutableStateOf(""); private set
-    var passwordIsValid by mutableStateOf(true); private set
+open class RegisterViewModel : ViewModel() {
+    open var email by mutableStateOf(""); private set
+    open var emailIsValid by mutableStateOf(true); private set
+    open var password by mutableStateOf(""); private set
+    open var passwordIsValid by mutableStateOf(true); private set
     var isPasswordVisible by mutableStateOf(false); private set
-    var signingUp by mutableStateOf(false); private set
-    var error by mutableStateOf<AuthError?>(null); private set
-    fun clearError() {
+    open var signingUp by mutableStateOf(false); private set
+    open var error by mutableStateOf<AuthError?>(null); private set
+    open fun clearError() {
         error = null
     }
-    fun onEmailChange(newEmail: String) {
+    open fun onEmailChange(newEmail: String) {
         email = newEmail
         emailIsValid = android.util.Patterns
             .EMAIL_ADDRESS
             .matcher(email)
             .matches()
     }
-    fun onPasswordChange(newPassword: String) {
+    open fun onPasswordChange(newPassword: String) {
         password = newPassword
         val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\-_{}.*]).{8,20}$".toRegex()
         passwordIsValid = password.matches(passwordPattern)
@@ -38,7 +38,7 @@ class RegisterViewModel : ViewModel() {
     fun togglePasswordVisibility() {
         isPasswordVisible = !isPasswordVisible
     }
-    fun onRequestSignUp() {
+    open fun onRequestSignUp() {
 
         if (email.isEmpty() || password.isEmpty()) {
             error = AuthError("Email and password cannot be empty")
