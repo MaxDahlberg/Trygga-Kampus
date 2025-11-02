@@ -136,7 +136,6 @@ fun SurveyPage(title: String, viewModel: SurveyViewModel = viewModel(factory = S
             try {
                 viewModel.submitSurvey(questions, answers)
 
-                // Clear the form
                 answers.clear()
                 answers.addAll(Array(questions.size) { "" })
 

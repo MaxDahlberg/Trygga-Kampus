@@ -27,7 +27,7 @@ class ArticlesPageTest {
         }
 
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.loading_articles)).assertExists()
-        composeTestRule.onNodeWithContentDescription("Loading").assertExists()  // For CircularProgressIndicator
+        composeTestRule.onNodeWithContentDescription("Loading").assertExists()
     }
 
     @Test
@@ -123,7 +123,7 @@ class ArticlesPageTest {
 
         composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(R.string.add_article)).performClick()
 
-        composeTestRule.onNodeWithText("Add Article").assertExists()  // Replace with real dialog title
+        composeTestRule.onNodeWithText("Add Article").assertExists()
     }
 
     @Test

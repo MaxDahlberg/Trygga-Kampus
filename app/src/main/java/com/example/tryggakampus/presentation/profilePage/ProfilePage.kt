@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.presentation.component.*
 import com.example.tryggakampus.util.saveJsonToDownloads
@@ -20,8 +21,8 @@ import com.example.tryggakampus.R
 import com.example.tryggakampus.util.HobbyList
 
 @Composable
-fun ProfilePage() {
-    val vm: ProfileViewModel = viewModel()
+fun ProfilePage(viewModel: ProfileViewModel? = viewModel<ProfileViewModel>()) {
+    val vm: ProfileViewModel = viewModel ?: viewModel<ProfileViewModel>()
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -57,42 +58,55 @@ fun ProfilePage() {
 
             // Account information
             FormContainer {
-                Text(
-                    text = stringResource(R.string.account_information),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "${stringResource(R.string.username_label)}: ${vm.username}")
-                Text(text = "${stringResource(R.string.email_label)}: ${vm.email}")
+                Box(modifier = Modifier.testTag("account_info_section")) {
+                    Box(modifier = Modifier.testTag("account_information_text")) {
+                        Text(
+                            text = stringResource(R.string.account_information),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Box(modifier = Modifier.testTag("username_text")) {
+                        Text(text = "${stringResource(R.string.username_label)}: ${vm.username}")
+                    }
+                    Box(modifier = Modifier.testTag("email_text")) {
+                        Text(text = "${stringResource(R.string.email_label)}: ${vm.email}")
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             // Hobbies
             FormContainer {
-                Text(
-                    stringResource(R.string.my_hobbies),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
+                Box(modifier = Modifier.testTag("hobbies_section")) {
+                    Box(modifier = Modifier.testTag("my_hobbies_text")) {
+                        Text(
+                            stringResource(R.string.my_hobbies),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                val hobbiesScrollState = rememberScrollState()
+                    val hobbiesScrollState = rememberScrollState()
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(480.dp)
-                        .verticalScroll(hobbiesScrollState)
-                ) {
-                    Column {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(480.dp)
+                            .verticalScroll(hobbiesScrollState)
+                    ) {
                         vm.allHobbies.forEachIndexed { index, hobbyDisplayName ->
                             val hobbyKey = HobbyList.allHobbies[index].first
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                                    .testTag("hobby_row_$hobbyKey")
                             ) {
                                 Checkbox(
                                     checked = vm.hobbies.contains(hobbyKey),
@@ -101,170 +115,216 @@ fun ProfilePage() {
                                         checkedColor = MaterialTheme.colorScheme.secondary,
                                         uncheckedColor = MaterialTheme.colorScheme.onPrimary,
                                         checkmarkColor = MaterialTheme.colorScheme.onSecondary
-                                    )
+                                    ),
+                                    modifier = Modifier.testTag("hobby_checkbox_$hobbyKey")
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text(text = hobbyDisplayName)
+                                Box(modifier = Modifier.testTag("hobby_text_$hobbyKey")) {
+                                    Text(text = hobbyDisplayName)
+                                }
                             }
                         }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(12.dp))
-                BlockButton(
-                    onClick = { savingHobbies = true },
-                    enabled = true
-                ) {
-                    Text(stringResource(R.string.save_hobbies))
+                    Spacer(modifier = Modifier.height(12.dp))
+                    BlockButton(
+                        onClick = { savingHobbies = true },
+                        enabled = true,
+                        modifier = Modifier.testTag("save_hobbies_button")
+                    ) {
+                        Text(stringResource(R.string.save_hobbies))
+                    }
                 }
             }
 
             // Hobbies error
             Spacer(modifier = Modifier.height(16.dp))
-            vm.hobbiesError?.let { ErrorBox(it.message) { vm.hobbiesError = null } }
+            vm.hobbiesError?.let {
+                Box(modifier = Modifier.testTag("hobbies_error_box")) {
+                    ErrorBox(it.message) { vm.hobbiesError = null }
+                }
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             // Change username
             FormContainer {
-                Text(
-                    stringResource(R.string.change_username),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-
-                OutlinedInput(
-                    label = stringResource(R.string.password_required),
-                    value = vm.usernameChangePassword,
-                    onValueChange = { vm.onUsernameChangePasswordChange(it) },
-                    isError = !vm.usernameChangePasswordIsValid,
-                    isPassword = true,
-                    isPasswordVisible = vm.isUsernameChangePasswordVisible,
-                    onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
-                )
-
-                OutlinedInput(
-                    label = stringResource(R.string.new_username),
-                    value = vm.newUsername,
-                    onValueChange = { vm.newUsername = it },
-                    isError = !vm.newUsernameIsValid
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-                BlockButton(
-                    onClick = { updatingUsername = true },
-                    enabled = vm.usernameChangePasswordIsValid && vm.newUsernameIsValid
-                ) {
-                    if (vm.updatingUsername) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(20.dp),
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                Box(modifier = Modifier.testTag("username_change_section")) {
+                    Box(modifier = Modifier.testTag("change_username_text")) {
+                        Text(
+                            stringResource(R.string.change_username),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
                         )
-                    } else {
-                        Text(stringResource(R.string.update_username))
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Box(modifier = Modifier.testTag("username_change_password_input")) {
+                        OutlinedInput(
+                            label = stringResource(R.string.password_required),
+                            value = vm.usernameChangePassword,
+                            onValueChange = { vm.onUsernameChangePasswordChange(it) },
+                            isError = !vm.usernameChangePasswordIsValid,
+                            isPassword = true,
+                            isPasswordVisible = vm.isUsernameChangePasswordVisible,
+                            onVisibilityChange = { vm.toggleUsernameChangePasswordVisibility() }
+                        )
+                    }
+
+                    Box(modifier = Modifier.testTag("new_username_input")) {
+                        OutlinedInput(
+                            label = stringResource(R.string.new_username),
+                            value = vm.newUsername,
+                            onValueChange = { vm.newUsername = it },
+                            isError = !vm.newUsernameIsValid
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    BlockButton(
+                        onClick = { updatingUsername = true },
+                        enabled = vm.usernameChangePasswordIsValid && vm.newUsernameIsValid,
+                        modifier = Modifier.testTag("update_username_button")
+                    ) {
+                        if (vm.updatingUsername) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                            )
+                        } else {
+                            Text(stringResource(R.string.update_username))
+                        }
                     }
                 }
             }
 
             // Username error
             Spacer(modifier = Modifier.height(16.dp))
-            vm.usernameError?.let { ErrorBox(it.message) { vm.usernameError = null } }
+            vm.usernameError?.let {
+                Box(modifier = Modifier.testTag("username_error_box")) {
+                    ErrorBox(it.message) { vm.usernameError = null }
+                }
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             // Change password
             FormContainer {
-                Text(
-                    stringResource(R.string.change_password),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-
-                OutlinedInput(
-                    label = stringResource(R.string.current_password),
-                    value = vm.currentPassword,
-                    onValueChange = { vm.onCurrentPasswordChange(it) },
-                    isError = !vm.currentPasswordIsValid,
-                    isPassword = true,
-                    isPasswordVisible = vm.isCurrentPasswordVisible,
-                    onVisibilityChange = { vm.toggleCurrentPasswordVisibility() }
-                )
-
-                OutlinedInput(
-                    label = stringResource(R.string.new_password),
-                    value = vm.newPassword,
-                    onValueChange = { vm.onNewPasswordChange(it) },
-                    isError = !vm.newPasswordIsValid,
-                    isPassword = true,
-                    isPasswordVisible = vm.isNewPasswordVisible,
-                    onVisibilityChange = { vm.toggleNewPasswordVisibility() }
-                )
-
-                OutlinedInput(
-                    label = stringResource(R.string.repeat_new_password),
-                    value = vm.repeatNewPassword,
-                    onValueChange = { vm.repeatNewPassword = it },
-                    isError = vm.newPassword != vm.repeatNewPassword,
-                    isPassword = true,
-                    isPasswordVisible = vm.isRepeatPasswordVisible,
-                    showPasswordRules = true,
-                    onVisibilityChange = { vm.toggleRepeatPasswordVisibility() }
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-                BlockButton(
-                    onClick = { updatingPassword = true },
-                    enabled = vm.passwordChangeFormValid
-                ) {
-                    if (vm.updatingPassword) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(20.dp),
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                Box(modifier = Modifier.testTag("password_change_section")) {
+                    Box(modifier = Modifier.testTag("change_password_text")) {
+                        Text(
+                            stringResource(R.string.change_password),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
                         )
-                    } else {
-                        Text(stringResource(R.string.update_password))
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Box(modifier = Modifier.testTag("current_password_input")) {
+                        OutlinedInput(
+                            label = stringResource(R.string.current_password),
+                            value = vm.currentPassword,
+                            onValueChange = { vm.onCurrentPasswordChange(it) },
+                            isError = !vm.currentPasswordIsValid,
+                            isPassword = true,
+                            isPasswordVisible = vm.isCurrentPasswordVisible,
+                            onVisibilityChange = { vm.toggleCurrentPasswordVisibility() }
+                        )
+                    }
+
+                    Box(modifier = Modifier.testTag("new_password_input")) {
+                        OutlinedInput(
+                            label = stringResource(R.string.new_password),
+                            value = vm.newPassword,
+                            onValueChange = { vm.onNewPasswordChange(it) },
+                            isError = !vm.newPasswordIsValid,
+                            isPassword = true,
+                            isPasswordVisible = vm.isNewPasswordVisible,
+                            onVisibilityChange = { vm.toggleNewPasswordVisibility() }
+                        )
+                    }
+
+                    Box(modifier = Modifier.testTag("repeat_password_input")) {
+                        OutlinedInput(
+                            label = stringResource(R.string.repeat_new_password),
+                            value = vm.repeatNewPassword,
+                            onValueChange = { vm.repeatNewPassword = it },
+                            isError = vm.newPassword != vm.repeatNewPassword,
+                            isPassword = true,
+                            isPasswordVisible = vm.isRepeatPasswordVisible,
+                            showPasswordRules = true,
+                            onVisibilityChange = { vm.toggleRepeatPasswordVisibility() }
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    BlockButton(
+                        onClick = { updatingPassword = true },
+                        enabled = vm.passwordChangeFormValid,
+                        modifier = Modifier.testTag("update_password_button")
+                    ) {
+                        if (vm.updatingPassword) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(20.dp),
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                trackColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                            )
+                        } else {
+                            Text(stringResource(R.string.update_password))
+                        }
                     }
                 }
             }
 
             // Password error
             Spacer(modifier = Modifier.height(16.dp))
-            vm.passwordError?.let { ErrorBox(it.message) { vm.passwordError = null } }
+            vm.passwordError?.let {
+                Box(modifier = Modifier.testTag("password_error_box")) {
+                    ErrorBox(it.message) { vm.passwordError = null }
+                }
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
 
             // Account and data
             FormContainer {
-                Text(
-                    stringResource(R.string.account_data),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
+                Box(modifier = Modifier.testTag("account_data_section")) {
+                    Box(modifier = Modifier.testTag("account_data_text")) {
+                        Text(
+                            stringResource(R.string.account_data),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                BlockButton(
-                    onClick = { vm.showRequestDataDialog = true },
-                    enabled = true
-                ) {
-                    Text(stringResource(R.string.request_my_data))
-                }
-                Spacer(modifier = Modifier.height(10.dp))
+                    BlockButton(
+                        onClick = { vm.showRequestDataDialog = true },
+                        enabled = true,
+                        modifier = Modifier.testTag("request_data_button")
+                    ) {
+                        Text(stringResource(R.string.request_my_data))
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                BlockButton(
-                    onClick = { vm.showDeleteAccountDialog = true },
-                    enabled = true
-                ) {
-                    Text(stringResource(R.string.delete_account))
+                    BlockButton(
+                        onClick = { vm.showDeleteAccountDialog = true },
+                        enabled = true,
+                        modifier = Modifier.testTag("delete_account_button")
+                    ) {
+                        Text(stringResource(R.string.delete_account))
+                    }
                 }
             }
 
             // Delete account error
             Spacer(modifier = Modifier.height(16.dp))
-            vm.deleteAccountError?.let { ErrorBox(it.message) { vm.deleteAccountError = null } }
+            vm.deleteAccountError?.let {
+                Box(modifier = Modifier.testTag("delete_account_error_box")) {
+                    ErrorBox(it.message) { vm.deleteAccountError = null }
+                }
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
         }
@@ -308,12 +368,14 @@ fun ProfilePage() {
 
 @Composable
 fun ProfileHeader() {
-    Text(
-        text = stringResource(R.string.profile_title),
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.onBackground
-    )
+    Box(modifier = Modifier.testTag("profile_header")) {
+        Text(
+            text = stringResource(R.string.profile_title),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+    }
 }
 
 @Composable
@@ -330,24 +392,33 @@ fun ConfirmDeleteAccountDialog(vm: ProfileViewModel) {
                     color = MaterialTheme.colorScheme.error
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                OutlinedInput(
-                    label = stringResource(R.string.enter_password),
-                    value = vm.deletePassword,
-                    onValueChange = { vm.deletePassword = it },
-                    isError = vm.deletePassword.isEmpty()
-                )
+                Box(modifier = Modifier.testTag("delete_password_input")) {
+                    OutlinedInput(
+                        label = stringResource(R.string.enter_password),
+                        value = vm.deletePassword,
+                        onValueChange = { vm.deletePassword = it },
+                        isError = vm.deletePassword.isEmpty()
+                    )
+                }
             }
         },
         confirmButton = {
-            TextButton(onClick = { vm.onDeleteAccount(context) }) {
+            TextButton(
+                onClick = { vm.onDeleteAccount(context) },
+                modifier = Modifier.testTag("confirm_delete_button")
+            ) {
                 Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.onPrimary)
             }
         },
         dismissButton = {
-            TextButton(onClick = { vm.showDeleteAccountDialog = false }) {
+            TextButton(
+                onClick = { vm.showDeleteAccountDialog = false },
+                modifier = Modifier.testTag("cancel_delete_button")
+            ) {
                 Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onPrimary)
             }
-        }
+        },
+        modifier = Modifier.testTag("delete_account_dialog")
     )
 }
 
@@ -367,17 +438,20 @@ fun RequestDataDialog(vm: ProfileViewModel) {
             )
         },
         confirmButton = {
-            TextButton(onClick = {
-                if (vm.jsonData == null) {
-                    vm.onRequestData() // fetch JSON
-                } else {
-                    vm.jsonData?.let { data ->
-                        saveJsonToDownloads(context, data, "personal_data.json")
-                        vm.showRequestDataDialog = false
-                        vm.resetJsonData()
+            TextButton(
+                onClick = {
+                    if (vm.jsonData == null) {
+                        vm.onRequestData() // fetch JSON
+                    } else {
+                        vm.jsonData?.let { data ->
+                            saveJsonToDownloads(context, data, "personal_data.json")
+                            vm.showRequestDataDialog = false
+                            vm.resetJsonData()
+                        }
                     }
-                }
-            }) {
+                },
+                modifier = Modifier.testTag("request_data_button_dialog")
+            ) {
                 Text(
                     if (vm.jsonData == null)
                         stringResource(R.string.request)
@@ -388,9 +462,13 @@ fun RequestDataDialog(vm: ProfileViewModel) {
             }
         },
         dismissButton = {
-            TextButton(onClick = { vm.showRequestDataDialog = false }) {
+            TextButton(
+                onClick = { vm.showRequestDataDialog = false },
+                modifier = Modifier.testTag("cancel_request_data_button")
+            ) {
                 Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onPrimary)
             }
-        }
+        },
+        modifier = Modifier.testTag("request_data_dialog")
     )
 }

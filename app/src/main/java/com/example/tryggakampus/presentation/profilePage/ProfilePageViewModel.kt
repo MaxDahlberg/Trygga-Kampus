@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class ProfileViewModel : ViewModel() {
+open class ProfileViewModel : ViewModel() {
 
     private val userRepo = UserInformationRepositoryImpl
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -24,52 +24,51 @@ class ProfileViewModel : ViewModel() {
     private val currentUserId = currentUser?.uid ?: ""
 
     // Account info
-    var username by mutableStateOf("No username")
-    var email by mutableStateOf(currentUser?.email ?: "No email")
+    open var username by mutableStateOf("No username")
+    open var email by mutableStateOf(currentUser?.email ?: "No email")
 
     // Change username
-    var newUsername by mutableStateOf("")
-    var usernameChangePassword by mutableStateOf("")
-    var updatingUsername by mutableStateOf(false)
-    var newUsernameIsValid by mutableStateOf(true)
-    var usernameChangePasswordIsValid by mutableStateOf(true)
+    open var newUsername by mutableStateOf("")
+    open var usernameChangePassword by mutableStateOf("")
+    open var updatingUsername by mutableStateOf(false)
+    open var newUsernameIsValid by mutableStateOf(true)
+    open var usernameChangePasswordIsValid by mutableStateOf(true)
 
     // Change password
-    var currentPassword by mutableStateOf("")
-    var newPassword by mutableStateOf("")
-    var repeatNewPassword by mutableStateOf("")
-    var updatingPassword by mutableStateOf(false)
-    var currentPasswordIsValid by mutableStateOf(true)
-    var newPasswordIsValid by mutableStateOf(true)
+    open var currentPassword by mutableStateOf("")
+    open var newPassword by mutableStateOf("")
+    open var repeatNewPassword by mutableStateOf("")
+    open var updatingPassword by mutableStateOf(false)
+    open var currentPasswordIsValid by mutableStateOf(true)
+    open var newPasswordIsValid by mutableStateOf(true)
 
-    val passwordChangeFormValid: Boolean
+    open val passwordChangeFormValid: Boolean
         get() = currentPasswordIsValid &&
                 newPasswordIsValid &&
                 newPassword == repeatNewPassword &&
                 newPassword.length >= 8
 
     // Password visibility toggles
-    var isUsernameChangePasswordVisible by mutableStateOf(false)
-    var isCurrentPasswordVisible by mutableStateOf(false)
-    var isNewPasswordVisible by mutableStateOf(false)
-    var isRepeatPasswordVisible by mutableStateOf(false)
+    open var isUsernameChangePasswordVisible by mutableStateOf(false)
+    open var isCurrentPasswordVisible by mutableStateOf(false)
+    open var isNewPasswordVisible by mutableStateOf(false)
+    open var isRepeatPasswordVisible by mutableStateOf(false)
 
     // Account deletion and user data
-    var deletePassword by mutableStateOf("")
-    var showDeleteAccountDialog by mutableStateOf(false)
-    var showRequestDataDialog by mutableStateOf(false)
-    var jsonData by mutableStateOf<String?>(null)
+    open var deletePassword by mutableStateOf("")
+    open var showDeleteAccountDialog by mutableStateOf(false)
+    open var showRequestDataDialog by mutableStateOf(false)
+    open var jsonData by mutableStateOf<String?>(null)
 
     // Errors
-    var usernameError by mutableStateOf<AuthError?>(null)
-    var passwordError by mutableStateOf<AuthError?>(null)
-    var hobbiesError by mutableStateOf<AuthError?>(null)
-    var deleteAccountError by mutableStateOf<AuthError?>(null)
+    open var usernameError by mutableStateOf<AuthError?>(null)
+    open var passwordError by mutableStateOf<AuthError?>(null)
+    open var hobbiesError by mutableStateOf<AuthError?>(null)
+    open var deleteAccountError by mutableStateOf<AuthError?>(null)
 
-    // Hobbies
-    var hobbies by mutableStateOf<List<String>>(emptyList())
-    var allHobbies by mutableStateOf<List<String>>(emptyList())
-    fun loadAllHobbies(context: Context) {
+    open var hobbies: MutableSet<String> by mutableStateOf(mutableSetOf())
+    open var allHobbies by mutableStateOf<List<String>>(emptyList())
+    open fun loadAllHobbies(context: Context) {
         allHobbies = HobbyList.allHobbies.map { HobbyList.getDisplayName(context, it.first) }
     }
 
@@ -82,26 +81,32 @@ class ProfileViewModel : ViewModel() {
                 )
                 if (result == UserInformationRepository.RepositoryResult.SUCCESS && userInfo != null) {
                     username = userInfo.username ?: username
-                    hobbies = userInfo.hobbies
+                    // Convert whatever type userInfo.hobbies is into a MutableSet
+                    hobbies = when (val h = userInfo.hobbies) {
+                        is List<*> -> h.filterIsInstance<String>().toMutableSet()
+                        is Set<*> -> h.filterIsInstance<String>().toMutableSet()
+                        else -> mutableSetOf()
+                    }
                 }
             }
         }
     }
 
-    // Hobbies
-    fun onHobbyToggle(hobby: String) {
-        hobbies = if (hobbies.contains(hobby)) {
-            hobbies - hobby
+    open fun onHobbyToggle(hobby: String) {
+        val newSet = hobbies.toMutableSet()
+        if (newSet.contains(hobby)) {
+            newSet.remove(hobby)
         } else {
-            hobbies + hobby
+            newSet.add(hobby)
         }
+        hobbies = newSet
     }
 
-    suspend fun onSaveHobbies(context: Context): Boolean {
+    open suspend fun onSaveHobbies(context: Context): Boolean {
         return try {
             val result = userRepo.addOrUpdateUserInformation(
                 userInfo = UserInfoModel(userId = currentUserId),
-                updateFields = mapOf("hobbies" to hobbies)
+                updateFields = mapOf("hobbies" to hobbies.toList())
             )
             if (result == UserInformationRepository.RepositoryResult.SUCCESS) {
                 hobbiesError = null
@@ -118,8 +123,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    // Change username
-    suspend fun onChangeUsername(context: Context): Boolean {
+    open suspend fun onChangeUsername(context: Context): Boolean {
         if (newUsername.isBlank() || usernameChangePassword.isBlank()) {
             usernameError = AuthError(context.getString(R.string.error_fill_all_fields))
             return false
@@ -132,7 +136,7 @@ class ProfileViewModel : ViewModel() {
 
         return try {
             val credential = EmailAuthProvider.getCredential(email, usernameChangePassword)
-            currentUser?.reauthenticate(credential)?.await()
+            currentUser.reauthenticate(credential).await()
 
             val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
             if (!available) {
@@ -168,8 +172,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    // Change password
-    suspend fun onChangePassword(context: Context): Boolean {
+    open suspend fun onChangePassword(context: Context): Boolean {
         if (!passwordChangeFormValid) {
             passwordError = AuthError(context.getString(R.string.error_invalid_passwords))
             return false
@@ -178,9 +181,9 @@ class ProfileViewModel : ViewModel() {
         return try {
             val email = currentUser?.email ?: throw Exception("User email not available")
             val credential = EmailAuthProvider.getCredential(email, currentPassword)
-            currentUser?.reauthenticate(credential)?.await()
+            currentUser.reauthenticate(credential).await()
 
-            currentUser?.updatePassword(newPassword)?.await()
+            currentUser.updatePassword(newPassword).await()
 
             currentPassword = ""
             newPassword = ""
@@ -200,39 +203,38 @@ class ProfileViewModel : ViewModel() {
     private val passwordPattern =
         "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!\\\\-_{}.*]).{8,20}$".toRegex()
 
-    fun onUsernameChangePasswordChange(password: String) {
+    open fun onUsernameChangePasswordChange(password: String) {
         usernameChangePassword = password
         usernameChangePasswordIsValid = password.matches(passwordPattern)
     }
 
-    fun onCurrentPasswordChange(password: String) {
+    open fun onCurrentPasswordChange(password: String) {
         currentPassword = password
         currentPasswordIsValid = password.matches(passwordPattern)
     }
 
-    fun onNewPasswordChange(password: String) {
+    open fun onNewPasswordChange(password: String) {
         newPassword = password
         newPasswordIsValid = password.matches(passwordPattern)
     }
 
-    fun toggleUsernameChangePasswordVisibility() {
+    open fun toggleUsernameChangePasswordVisibility() {
         isUsernameChangePasswordVisible = !isUsernameChangePasswordVisible
     }
 
-    fun toggleCurrentPasswordVisibility() {
+    open fun toggleCurrentPasswordVisibility() {
         isCurrentPasswordVisible = !isCurrentPasswordVisible
     }
 
-    fun toggleNewPasswordVisibility() {
+    open fun toggleNewPasswordVisibility() {
         isNewPasswordVisible = !isNewPasswordVisible
     }
 
-    fun toggleRepeatPasswordVisibility() {
+    open fun toggleRepeatPasswordVisibility() {
         isRepeatPasswordVisible = !isRepeatPasswordVisible
     }
 
-    // Delete account
-    fun onDeleteAccount(context: Context) {
+    open fun onDeleteAccount(context: Context) {
         if (deletePassword.isEmpty()) {
             deleteAccountError = AuthError(context.getString(R.string.error_password_required))
             return
@@ -242,10 +244,10 @@ class ProfileViewModel : ViewModel() {
             try {
                 val email = currentUser?.email ?: throw Exception("User email not available")
                 val credential = EmailAuthProvider.getCredential(email, deletePassword)
-                currentUser?.reauthenticate(credential)?.await()
+                currentUser.reauthenticate(credential).await()
 
-                currentUser?.uid?.let { GdprUserDataHelper().deleteUserData(it) }
-                currentUser?.delete()?.await()
+                currentUser.uid.let { GdprUserDataHelper().deleteUserData(it) }
+                currentUser.delete().await()
                 showDeleteAccountDialog = false
                 deleteAccountError = null
             } catch (e: Exception) {
@@ -256,8 +258,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    // Request personal data
-    fun onRequestData() {
+    open fun onRequestData() {
         viewModelScope.launch {
             if (jsonData == null) {
                 try {
@@ -268,8 +269,14 @@ class ProfileViewModel : ViewModel() {
             }
         }
     }
+    open fun clearError() {
+        hobbiesError = null
+        usernameError = null
+        passwordError = null
+        deleteAccountError = null
+    }
 
-    fun resetJsonData() {
+    open fun resetJsonData() {
         jsonData = null
     }
 }

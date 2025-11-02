@@ -1,4 +1,3 @@
-// File: app/src/test/java/com/example/tryggakampus/data/TestSurveyRepositoryFactory.kt
 package com.example.tryggakampus.data
 
 import io.mockk.coEvery

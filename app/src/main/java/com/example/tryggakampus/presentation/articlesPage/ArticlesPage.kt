@@ -65,9 +65,9 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel(),
     val errorMessage by viewModel.errorMessage.collectAsState()
 
     val observer = connectivityObserver ?: NetworkConnectivityObserver(LocalContext.current)
-    val networkStatusState = connectivityObserver
-        ?.observe()
-        ?.collectAsState(
+    val networkStatusState = observer
+        .observe()
+        .collectAsState(
             initial = ConnectivityObserver.Status.Unavailable
         )
 
@@ -125,8 +125,8 @@ fun ArticlesPage(viewModel: ArticlesPageViewModel = viewModel(),
                     }
                 }
 
-                if (networkStatusState?.value == ConnectivityObserver.Status.Unavailable ||
-                    networkStatusState?.value == ConnectivityObserver.Status.Lost
+                if (networkStatusState.value == ConnectivityObserver.Status.Unavailable ||
+                    networkStatusState.value == ConnectivityObserver.Status.Lost
                 ) {
                     return@Scaffold
                 }
