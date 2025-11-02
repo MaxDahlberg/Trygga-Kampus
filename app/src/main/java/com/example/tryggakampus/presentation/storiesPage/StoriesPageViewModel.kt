@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
+import com.example.tryggakampus.domain.repository.StoryCommentRepositoryImpl
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.google.firebase.firestore.Source
 import kotlinx.coroutines.launch
@@ -115,12 +116,20 @@ class StoriesPageViewModel : ViewModel() {
         viewModelScope.launch {
             if (story.id.isEmpty()) return@launch
 
-            val success = StoryRepositoryImpl.deleteStory(story.id)
-            if (success) {
-                stories.removeAll { it.id == story.id }
-                Log.d("StoriesVM", "Deleted story locally: ${story.id}")
-            } else {
-                Log.d("StoriesVM", "Failed to delete story: ${story.id}")
+            try {
+                val commentsDeleted = StoryCommentRepositoryImpl.deleteCommentsForStory(story.id)
+                if (!commentsDeleted) {
+                    Log.w("StoriesVM", "Some comments might not have been deleted for story: ${story.id}")
+                }
+
+                val success = StoryRepositoryImpl.deleteStory(story.id)
+                if (success) {
+                    stories.removeAll { it.id == story.id }
+                } else {
+                    Log.e("StoriesVM", "Failed to delete story: ${story.id}")
+                }
+            } catch (e: Exception) {
+                Log.e("StoriesVM", "Error deleting story ${story.id}: ${e.stackTraceToString()}")
             }
         }
     }
@@ -132,8 +141,15 @@ class StoriesPageViewModel : ViewModel() {
     var commentText = mutableStateOf(TextFieldValue(""))
         private set
 
-    var commentAnonymity = mutableStateOf(false)
+    var commentAnonymity = mutableStateOf(true)
         private set
+
+    var commentError = mutableStateOf<String?>(null)
+        private set
+
+    fun clearCommentError() {
+        commentError.value = null
+    }
 
     fun setCommentText(value: TextFieldValue) {
         commentText.value = value
@@ -144,14 +160,87 @@ class StoriesPageViewModel : ViewModel() {
     }
 
     fun loadComments(storyId: String) {
-        // todo
+        viewModelScope.launch {
+            try {
+                val rawComments = StoryCommentRepositoryImpl.getCommentsForStory(storyId, Source.DEFAULT)
+                val loadedComments = rawComments.map { data ->
+                    StoryCommentModel(
+                        id = data["id"] as? String ?: "",
+                        storyId = data["storyId"] as? String ?: "",
+                        userId = data["userId"] as? String ?: "",
+                        author = data["author"] as? String,
+                        content = data["content"] as? String ?: "",
+                        anonymous = data["anonymous"] as? Boolean ?: false,
+                        createdAt = (data["createdAt"] as? Number)?.toLong() ?: System.currentTimeMillis()
+                    )
+                }
+
+                val enrichedComments = loadedComments.map { comment ->
+                    enrichCommentWithUsername(comment)
+                }
+
+                comments.clear()
+                comments.addAll(enrichedComments)
+                clearCommentError()
+            } catch (e: Exception) {
+                commentError.value = "Failed to load comments. Please try again."
+            }
+        }
     }
 
     fun postComment(storyId: String) {
-        // todo
+        viewModelScope.launch {
+            val text = commentText.value.text.trim()
+            if (text.isEmpty()) return@launch
+
+            try {
+                val comment = StoryCommentRepositoryImpl.postComment(
+                    storyId = storyId,
+                    content = text,
+                    isAnonymous = commentAnonymity.value
+                )
+                comment?.let {
+                    val enriched = enrichCommentWithUsername(it)
+                    comments.add(0, enriched)
+                }
+                commentText.value = TextFieldValue("")
+                setCommentAnonymity(true)
+                clearCommentError()
+            } catch (e: Exception) {
+                commentError.value = "Failed to post comment. Please try again."
+            }
+        }
     }
 
     fun deleteComment(comment: StoryCommentModel) {
-        // todo
+        viewModelScope.launch {
+            try {
+                if (comment.id.isEmpty()) return@launch
+
+                val success = StoryCommentRepositoryImpl.deleteComment(comment.id)
+                if (success) {
+                    comments.removeAll { it.id == comment.id }
+                    clearCommentError()
+                } else {
+                    commentError.value = "Could not delete comment."
+                }
+            } catch (e: Exception) {
+                commentError.value = "Error deleting comment. Please try again."
+            }
+        }
+    }
+
+    private suspend fun enrichCommentWithUsername(comment: StoryCommentModel): StoryCommentModel {
+        if (comment.anonymous) return comment.copy(author = "Anonymous")
+
+        var (_, userInfo) = UserInformationRepositoryImpl.getUserInformation(comment.userId, Source.SERVER)
+
+        if (userInfo == null) {
+            val (_, cachedUserInfo) = UserInformationRepositoryImpl.getUserInformation(comment.userId, Source.CACHE)
+            userInfo = cachedUserInfo
+        }
+
+        val username = userInfo?.username ?: "Unknown User"
+        return comment.copy(author = username)
     }
 }

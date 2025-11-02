@@ -2,23 +2,28 @@ package com.example.tryggakampus.presentation.storiesPage
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
+import com.example.tryggakampus.presentation.component.ErrorBox
 import com.example.tryggakampus.presentation.component.PageContainer
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 @Composable
 fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
@@ -29,6 +34,13 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
     }
 
     val navigator = LocalNavController.current
+    val coroutineScope = rememberCoroutineScope()
+
+    // Load comments automatically when this page is opened
+    LaunchedEffect(storyModelId) {
+        viewModel.loadComments(storyModelId)
+    }
+
     BackHandler { navigator.navigateUp() }
 
     PageContainer(
@@ -48,7 +60,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                 onDelete = {
                     viewModel.deleteStory(story.value)
                     navigator.navigateUp()
-                           },
+                },
                 onCommentClick = {},
                 showCommentButton = false
             )
@@ -94,12 +106,18 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    SwitchWithIcon("Post anonymously") {
-                        viewModel.setCommentAnonymity(it)
-                    }
+                    SwitchWithIcon(
+                        label = "Anonymous",
+                        checked = viewModel.commentAnonymity.value,
+                        onToggle = { viewModel.setCommentAnonymity(it) }
+                    )
 
                     Button(
-                        onClick = { /* viewModel.postComment(storyModelId) */ },
+                        onClick = {
+                            coroutineScope.launch {
+                                viewModel.postComment(storyModelId)
+                            }
+                        },
                         enabled = viewModel.commentText.value.text.isNotBlank()
                     ) {
                         Text("Post")
@@ -109,20 +127,34 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
 
             HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
 
-            // Comments list
-            if (viewModel.comments.isEmpty()) {
-                Text(
-                    "No comments yet. Be the first to comment!",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(viewModel.comments) { comment ->
-                        StoryCommentBox(comment)
+            // Comments error display
+            viewModel.commentError.value?.let { errorMessage ->
+                ErrorBox(message = errorMessage) { viewModel.clearCommentError() }
+            }
+
+            // Scrollable comments section
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(350.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                if (viewModel.comments.isEmpty()) {
+                    Text(
+                        "No comments yet. Be the first to comment!",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        viewModel.comments.forEach { comment ->
+                            StoryCommentBox(
+                                comment = comment,
+                                onDelete = { viewModel.deleteComment(comment) }
+                            )
+                        }
                     }
                 }
             }
@@ -131,23 +163,55 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
 }
 
 @Composable
-fun StoryCommentBox(comment: StoryCommentModel) {
-    Column(
+fun StoryCommentBox(
+    comment: StoryCommentModel,
+    onDelete: () -> Unit
+) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.medium)
+            .clip(RoundedCornerShape(10.dp))
+            .background(MaterialTheme.colorScheme.primary)
             .padding(10.dp)
     ) {
-        Text(
-            text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = comment.content,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 2.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                // Top left: Username
+                Text(
+                    text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                // Top right: Delete if current user is author
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                if (currentUser?.uid == comment.userId) {
+                    Text(
+                        text = "Delete",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = Color.Red,
+                        modifier = Modifier
+                            .clickable { onDelete() }
+                            .padding(top = 0.dp)
+                    )
+                }
+            }
+
+            // Comment body
+            Text(
+                text = comment.content,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
     }
 }
