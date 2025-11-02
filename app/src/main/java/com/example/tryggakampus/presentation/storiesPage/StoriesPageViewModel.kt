@@ -125,7 +125,6 @@ class StoriesPageViewModel : ViewModel() {
                 val success = StoryRepositoryImpl.deleteStory(story.id)
                 if (success) {
                     stories.removeAll { it.id == story.id }
-                    Log.d("StoriesVM", "Deleted story and its comments: ${story.id}")
                 } else {
                     Log.e("StoriesVM", "Failed to delete story: ${story.id}")
                 }
@@ -145,6 +144,13 @@ class StoriesPageViewModel : ViewModel() {
     var commentAnonymity = mutableStateOf(true)
         private set
 
+    var commentError = mutableStateOf<String?>(null)
+        private set
+
+    fun clearCommentError() {
+        commentError.value = null
+    }
+
     fun setCommentText(value: TextFieldValue) {
         commentText.value = value
     }
@@ -157,8 +163,6 @@ class StoriesPageViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val rawComments = StoryCommentRepositoryImpl.getCommentsForStory(storyId, Source.DEFAULT)
-
-                // Convert raw data to StoryCommentModel
                 val loadedComments = rawComments.map { data ->
                     StoryCommentModel(
                         id = data["id"] as? String ?: "",
@@ -177,8 +181,9 @@ class StoriesPageViewModel : ViewModel() {
 
                 comments.clear()
                 comments.addAll(enrichedComments)
+                clearCommentError()
             } catch (e: Exception) {
-                Log.e("StoriesVM", "Error loading comments: ${e.stackTraceToString()}")
+                commentError.value = "Failed to load comments. Please try again."
             }
         }
     }
@@ -194,16 +199,15 @@ class StoriesPageViewModel : ViewModel() {
                     content = text,
                     isAnonymous = commentAnonymity.value
                 )
-
                 comment?.let {
                     val enriched = enrichCommentWithUsername(it)
                     comments.add(0, enriched)
                 }
-
                 commentText.value = TextFieldValue("")
                 setCommentAnonymity(true)
-                } catch (e: Exception) {
-                Log.e("StoriesVM", "Error posting comment: ${e.stackTraceToString()}")
+                clearCommentError()
+            } catch (e: Exception) {
+                commentError.value = "Failed to post comment. Please try again."
             }
         }
     }
@@ -216,12 +220,12 @@ class StoriesPageViewModel : ViewModel() {
                 val success = StoryCommentRepositoryImpl.deleteComment(comment.id)
                 if (success) {
                     comments.removeAll { it.id == comment.id }
-                    Log.d("StoriesVM", "Deleted comment locally: ${comment.id}")
+                    clearCommentError()
                 } else {
-                    Log.d("StoriesVM", "Failed to delete comment: ${comment.id}")
+                    commentError.value = "Could not delete comment."
                 }
             } catch (e: Exception) {
-                Log.e("StoriesVM", "Error deleting comment: ${e.stackTraceToString()}")
+                commentError.value = "Error deleting comment. Please try again."
             }
         }
     }

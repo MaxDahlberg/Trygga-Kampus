@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
+import com.example.tryggakampus.presentation.component.ErrorBox
 import com.example.tryggakampus.presentation.component.PageContainer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -125,6 +126,11 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
             }
 
             HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+
+            // Comments error display
+            viewModel.commentError.value?.let { errorMessage ->
+                ErrorBox(message = errorMessage) { viewModel.clearCommentError() }
+            }
 
             // Scrollable comments section
             Box(
