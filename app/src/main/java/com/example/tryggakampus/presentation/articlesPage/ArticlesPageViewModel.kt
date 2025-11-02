@@ -14,14 +14,14 @@ import com.google.firebase.firestore.Source
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class ArticlesPageViewModel : ViewModel() {
-    var articles = mutableStateListOf<ArticleModel>()
-        private set
-    var deleteMode by mutableStateOf(false)
-        private set
-    var loadingArticles = mutableStateOf(true)
-        private set
-    val errorMessage = MutableStateFlow<String?>(null)
+open class ArticlesPageViewModel : ViewModel() {
+    open var articles = mutableStateListOf<ArticleModel>()
+        protected set
+    open var deleteMode by mutableStateOf(false)
+        protected set
+    open var loadingArticles = mutableStateOf(true)
+        protected set
+    open val errorMessage = MutableStateFlow<String?>(null)
 
     private fun setLoadingArticles(isLoading: Boolean) {
         loadingArticles.value = isLoading
@@ -29,7 +29,7 @@ class ArticlesPageViewModel : ViewModel() {
 
     private var lastFetchTimeMillis: Long = 0L
 
-    fun loadArticles(context: Context) {
+    open fun loadArticles(context: Context) {
         viewModelScope.launch {
             setLoadingArticles(true)
 
@@ -69,7 +69,7 @@ class ArticlesPageViewModel : ViewModel() {
         }
     }
 
-    fun addArticle(title: String, summary: String, webpage: String) {
+    open fun addArticle(title: String, summary: String, webpage: String) {
         if (title.isBlank() || summary.isBlank() || webpage.isBlank()) {
             errorMessage.value = "Title, summary, and webpage cannot be empty."
             return
@@ -91,7 +91,7 @@ class ArticlesPageViewModel : ViewModel() {
         }
     }
 
-    fun deleteArticle(article: ArticleModel) {
+    open fun deleteArticle(article: ArticleModel) {
         viewModelScope.launch {
             val result = ArticleRepositoryImpl.deleteArticle(article.id)
             if (result != ArticleRepository.RepositoryResult.SUCCESS) {
@@ -102,11 +102,11 @@ class ArticlesPageViewModel : ViewModel() {
         }
     }
 
-    fun toggleDeleteMode() {
+    open fun toggleDeleteMode() {
         deleteMode = !deleteMode
     }
 
-    fun clearErrorMessage() {
+    open fun clearErrorMessage() {
         errorMessage.value = null
     }
 }

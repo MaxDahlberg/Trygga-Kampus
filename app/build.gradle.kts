@@ -118,6 +118,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
     // testImplementation("io.mockk:mockk:1.13.12")
     testImplementation("io.mockk:mockk:1.13.5")
+    androidTestImplementation("io.mockk:mockk-android:1.13.8")
     testImplementation("io.mockk:mockk-inline:1.13.5")
     testRuntimeOnly("io.mockk:mockk-agent-jvm:1.13.5")
     testImplementation("app.cash.turbine:turbine:1.1.0")
