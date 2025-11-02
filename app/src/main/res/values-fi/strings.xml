@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Trygga Campus</string>
     <string name="title">Tervetuloa Trygga Campukselle!</string>
@@ -177,4 +178,5 @@
     <string name="settings_language_title">Sovelluksen kieli</string>
     <string name="settings_language_description">Vaihda sovelluksen kieltä</string>
     <string name="settings_language_restart_notice">Sovellus käynnistyy uudelleen muutosten toteuttamiseksi</string>
-    <string name="settings_language_ai_note">Huom: Käännökset tarjosi tekoäly</string></resources>
+    <string name="settings_language_ai_note">Huom: Käännökset tarjosi tekoäly</string>
+</resources>
