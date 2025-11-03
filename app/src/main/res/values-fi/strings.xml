@@ -9,6 +9,11 @@
 
     <string name="network_unavailable">Verkkoyhteys ei ole käytettävissä</string>
 
+    <!-- Kirjaudu ulos -->
+    <string name="logout_prompt">Olet kirjautumassa ulos!</string>
+    <string name="dismiss">Peruuta</string>
+    <string name="confirm">Vahvista</string>
+
     <!-- Tarinat -->
     <string name="stories_page_title">Jaa tarinasi muiden kanssa</string>
     <string name="stories_title_label">Otsikko (valinnainen)</string>

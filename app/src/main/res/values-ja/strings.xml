@@ -9,6 +9,11 @@
 
     <string name="network_unavailable">ネットワーク接続が利用できません</string>
 
+    <!-- ログアウト -->
+    <string name="logout_prompt">ログアウトしようとしています！</string>
+    <string name="dismiss">キャンセル</string>
+    <string name="confirm">確認</string>
+
     <!-- ストーリー -->
     <string name="stories_page_title">あなたのストーリーを共有しましょう</string>
     <string name="stories_title_label">タイトル（任意）</string>

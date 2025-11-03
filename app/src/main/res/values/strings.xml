@@ -24,6 +24,11 @@
 
     <string name="network_unavailable">Network connection unavailable</string>
 
+    <!-- Log out -->
+    <string name="logout_prompt">You are about to logout!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="confirm">Confirm</string>
+
     <!-- Stories -->
     <string name="stories_page_title">Share your story with others</string>
     <string name="stories_title_label">Title (Optional)</string>

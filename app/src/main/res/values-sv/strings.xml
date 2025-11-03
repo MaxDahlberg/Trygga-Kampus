@@ -9,6 +9,11 @@
 
     <string name="network_unavailable">Nätverksanslutning ej tillgänglig</string>
 
+    <!-- Logga ut -->
+    <string name="logout_prompt">Du håller på att logga ut!</string>
+    <string name="dismiss">Avbryt</string>
+    <string name="confirm">Bekräfta</string>
+
     <!-- Berättelser -->
     <string name="stories_page_title">Dela din berättelse med andra</string>
     <string name="stories_title_label">Titel (Valfritt)</string>
