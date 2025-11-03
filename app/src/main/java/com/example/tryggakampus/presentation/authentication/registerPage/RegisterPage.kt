@@ -28,10 +28,6 @@ import com.example.tryggakampus.presentation.component.FormContainer
 import com.example.tryggakampus.presentation.component.ErrorBox
 import com.example.tryggakampus.presentation.component.OutlinedInput
 
-/**
- * A composable function that provides a UI for user registration.
- * It includes input fields for email and password, a sign-up button, and error handling.
- */
 @Composable
 fun RegisterPage() {
     val vm: RegisterViewModel = viewModel<RegisterViewModel>()
@@ -79,12 +75,6 @@ fun RegisterPage() {
                     Text("Sign Up")
                 }
             }
-            Text(
-                text = "Password must be 8+ characters with uppercase, number, and special character.",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                modifier = Modifier.padding(start = 16.dp, top = 4.dp)
-            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -97,10 +87,6 @@ fun RegisterPage() {
     }
 }
 
-/**
- * A composable function that displays the header of the registration form.
- * It contains the application logo.
- */
 @Composable
 fun RegisterFormHeader() {
     Image(
@@ -113,10 +99,6 @@ fun RegisterFormHeader() {
     Spacer(modifier = Modifier.size(10.dp))
 }
 
-/**
- * A composable function that displays the footer of the registration form.
- * It provides a link to the sign-in page for users who are already registered.
- */
 @Composable
 fun RegisterFormFooter() {
     val navController = LocalNavController.current
