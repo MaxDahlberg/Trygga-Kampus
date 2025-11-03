@@ -90,6 +90,8 @@
     <string name="submit_answers">Skicka svar</string>
     <string name="survey_complete_title">Enkät slutförd</string>
     <string name="survey_complete_message">Tack för att du slutförde enkäten!</string>
+    <string name="survey_submit_success">Enkäten skickades in!</string>
+    <string name="survey_submit_failed">Det gick inte att skicka in enkäten</string>
 
     <!-- Enkätfrågor -->
     <string name="survey_question_1">Hur ofta tänker du på effekterna av droger eller alkohol på dina studier?</string>

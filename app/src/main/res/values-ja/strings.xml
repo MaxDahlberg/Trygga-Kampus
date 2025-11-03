@@ -91,6 +91,8 @@
     <string name="submit_answers">回答を送信</string>
     <string name="survey_complete_title">アンケート完了</string>
     <string name="survey_complete_message">アンケートへのご協力ありがとうございます！</string>
+    <string name="survey_submit_success">アンケートが正常に送信されました！</string>
+    <string name="survey_submit_failed">アンケートの送信に失敗しました</string>
 
     <!-- アンケート質問 -->
     <string name="survey_question_1">勉強に対する薬物やアルコールの影響について、どのくらい考えますか？</string>

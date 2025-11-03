@@ -91,6 +91,8 @@
     <string name="submit_answers">Envoyer les réponses</string>
     <string name="survey_complete_title">Sondage terminé</string>
     <string name="survey_complete_message">Merci d\'avoir répondu au sondage !</string>
+    <string name="survey_submit_success">Le sondage a été envoyé avec succès !</string>
+    <string name="survey_submit_failed">Échec de l\'envoi du sondage</string>
 
     <!-- Questions du sondage -->
     <string name="survey_question_1">À quelle fréquence pensez-vous aux effets des drogues ou de l\'alcool sur vos études ?</string>

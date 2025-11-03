@@ -106,6 +106,8 @@
     <string name="submit_answers">Submit Answers</string>
     <string name="survey_complete_title">Survey Complete</string>
     <string name="survey_complete_message">Thank you for completing the survey!</string>
+    <string name="survey_submit_success">Survey submitted successfully!</string>
+    <string name="survey_submit_failed">Survey failed to submit</string>
 
 
     <!-- Survey Questions -->

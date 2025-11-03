@@ -91,6 +91,8 @@
     <string name="submit_answers">Lähetä vastaukset</string>
     <string name="survey_complete_title">Kysely suoritettu</string>
     <string name="survey_complete_message">Kiitos kyselyyn vastaamisesta!</string>
+    <string name="survey_submit_success">Kysely lähetettiin onnistuneesti!</string>
+    <string name="survey_submit_failed">Kyselyn lähettäminen epäonnistui</string>
 
     <!-- Kyselyn kysymykset -->
     <string name="survey_question_1">Kuinka usein mietit päihteiden tai alkoholin vaikutuksia opintoihisi?</string>
