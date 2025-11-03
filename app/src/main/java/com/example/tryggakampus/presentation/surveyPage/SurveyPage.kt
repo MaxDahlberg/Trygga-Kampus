@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/tryggakampus/presentation/surveyPage/SurveyPage.kt
 package com.example.tryggakampus.presentation.surveyPage
 
 import androidx.compose.foundation.layout.*
@@ -23,7 +22,7 @@ import com.example.tryggakampus.data.repository.SurveyViewModelFactory
 @Composable
 fun SurveyPage(title: String) {
     val context = LocalContext.current
-    val questions = remember { SurveyQuestions.getQuestions(context) } // Pass context here
+    val questions = remember { SurveyQuestions.getQuestions(context) }
     var answers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
     var showCompletionDialog by remember { mutableStateOf(false) }
 
@@ -33,13 +32,17 @@ fun SurveyPage(title: String) {
     val snackbarHostState = remember { SnackbarHostState() }
     var submitting by remember { mutableStateOf(false) }
 
+    // Pre-fetch string resources to use in suspend functions
+    val successMessage = stringResource(R.string.survey_submit_success)
+    val failureMessage = stringResource(R.string.survey_submit_failed)
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color.White,
-                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor =  MaterialTheme.colorScheme.onPrimary,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.padding(8.dp)
                 )
@@ -55,7 +58,7 @@ fun SurveyPage(title: String) {
         ) {
             item {
                 Text(
-                    text = title,
+                    text = stringResource(R.string.survey_title),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -121,7 +124,7 @@ fun SurveyPage(title: String) {
                     elevation = ButtonDefaults.buttonElevation(4.dp),
                     enabled = isFormComplete && !submitting
                 ) {
-                    Text("Submit Answers", fontSize = 18.sp)
+                    Text(stringResource(R.string.submit_answers), fontSize = 18.sp)
                 }
             }
         }
@@ -129,20 +132,21 @@ fun SurveyPage(title: String) {
 
     LaunchedEffect(submitting) {
         if (submitting) {
-            try {
+            val result = runCatching {
                 viewModel.submitSurvey(questions, answers)
-
-                // Clear the form
-                answers.clear()
-                answers.addAll(Array(questions.size) { "" })
-
-                snackbarHostState.showSnackbar("Survey submitted successfully!")
-
-            } catch (e: Exception) {
-                snackbarHostState.showSnackbar("Failed to submit: ${e.message}")
-            } finally {
-                submitting = false
             }
+
+            // Clear the form regardless of success or failure
+            answers.clear()
+            answers.addAll(Array(questions.size) { "" })
+
+            if (result.isSuccess) {
+                snackbarHostState.showSnackbar(successMessage)
+            } else {
+                snackbarHostState.showSnackbar(failureMessage)
+            }
+
+            submitting = false
         }
     }
 }

@@ -7,12 +7,36 @@
     <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
     <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
 
-    <!-- Berättelser Börjar -->
+    <string name="network_unavailable">Nätverksanslutning ej tillgänglig</string>
+
+    <!-- Logga ut -->
+    <string name="logout_prompt">Du håller på att logga ut!</string>
+    <string name="dismiss">Avbryt</string>
+    <string name="confirm">Bekräfta</string>
+
+    <!-- Berättelser -->
     <string name="stories_page_title">Dela din berättelse med andra</string>
     <string name="stories_title_label">Titel (Valfritt)</string>
     <string name="stories_content_label">Vad skulle du vilja dela med dig av?</string>
     <string name="stories_anonymous_label">Anonym</string>
-    <!-- Berättelser Slutar -->
+    <string name="submit">Posta</string>
+    <string name="add_story">Lägg till en berättelse</string>
+    <string name="minimum">Minst</string>
+    <string name="maximum">Högst</string>
+    <string name="comments">Kommentarer</string>
+    <string name="submit_a_story">Skicka in en berättelse</string>
+    <string name="no_stories">Det finns inga berättelser att visa.</string>
+    <string name="loading_stories">Laddar berättelser ...</string>
+    <string name="submit_your_story">Posta din berättelse</string>
+
+    <!-- Berättelsekommentarer -->
+    <string name="write_a_comment">Skriv en kommentar...</string>
+    <string name="post">Posta</string>
+    <string name="no_comments">Inga kommentarer ännu. Bli den första att kommentera!</string>
+    <string name="unknown_user">Okänd användare</string>
+    <string name="fetch_comment_error">Det gick inte att ladda kommentarer. Försök igen.</string>
+    <string name="post_comment_error">Det gick inte att skicka kommentaren. Försök igen.</string>
+    <string name="delete_comment_error">Fel vid borttagning av kommentar. Försök igen.</string>
 
     <!-- sidomeny -->
     <string name="drawer_home">Hem</string>
@@ -50,6 +74,15 @@
     <string name="read_more">Läs mer</string>
     <string name="no_link">Ingen länk</string>
 
+    <!-- Formulär -->
+    <string name="get_in_touch">Ta kontakt</string>
+    <string name="receive_help_text">Få den hjälp du behöver</string>
+    <string name="enter_your_name">Ange ditt namn</string>
+    <string name="subject_field">Ämnesfält</string>
+    <string name="enter_your_message">Skriv ditt meddelande här</string>
+    <string name="fill_out_all_fields">Vänligen fyll i alla fält utom Namn.</string>
+    <string name="email_body_template">Hej, mitt namn är %1$s.\n\n%2$s\n\nTack!</string>
+
     <!-- app/src/main/res/values-sv/strings.xml -->
     <string name="survey_title">Enkät</string>
     <string name="question_prefix">Fråga %d:</string>
@@ -57,6 +90,8 @@
     <string name="submit_answers">Skicka svar</string>
     <string name="survey_complete_title">Enkät slutförd</string>
     <string name="survey_complete_message">Tack för att du slutförde enkäten!</string>
+    <string name="survey_submit_success">Enkäten skickades in!</string>
+    <string name="survey_submit_failed">Det gick inte att skicka in enkäten</string>
 
     <!-- Enkätfrågor -->
     <string name="survey_question_1">Hur ofta tänker du på effekterna av droger eller alkohol på dina studier?</string>
@@ -76,6 +111,13 @@
         <item>Lör</item>
         <item>Sön</item>
     </string-array>
+
+    <string name="week">Vecka %1$d</string>
+    <string name="today">Daglig framsteg</string>
+    <string name="no_habits">Inga vanor än. Lägg till din första vana!</string>
+    <string name="description">Beskrivning (valfritt)</string>
+    <string name="habit_title">Vananamn</string>
+    <string name="add_new_habit">Lägg till ny vana</string>
 
     <string name="title_activity_maps">MapsActivity</string>
     <string name="sign_out">Logga ut</string>
@@ -113,6 +155,7 @@
     <string name="hobbies_saved_success">Intressen sparades!</string>
     <string name="username_changed_success">Användarnamn ändrat!</string>
     <string name="password_changed_success">Lösenord ändrat!</string>
+    <string name="password_rules">Lösenordet måste vara minst 8 tecken långt och innehålla stora bokstäver, siffror och specialtecken.</string>
 
     <!-- Dialoger -->
     <string name="confirm_account_deletion">Bekräfta kontoradering</string>

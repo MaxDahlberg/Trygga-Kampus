@@ -7,11 +7,37 @@
     <string name="button">Jos tarvitset vakavaa apua, ota yhteyttä joko yliopistosi neuvonantajaan tai johonkin ammattilaisistamme tämän painikkeen kautta.</string>
     <string name="buttonInfo">Tämä painike avaa lomakkeen, johon voit kirjoittaa tilanteestasi ja lähettää sen, jotta saat tarvitsemaasi apua.</string>
 
+    <string name="network_unavailable">Verkkoyhteys ei ole käytettävissä</string>
+
+    <!-- Kirjaudu ulos -->
+    <string name="logout_prompt">Olet kirjautumassa ulos!</string>
+    <string name="dismiss">Peruuta</string>
+    <string name="confirm">Vahvista</string>
+
     <!-- Tarinat -->
     <string name="stories_page_title">Jaa tarinasi muiden kanssa</string>
     <string name="stories_title_label">Otsikko (valinnainen)</string>
     <string name="stories_content_label">Mitä haluaisit jakaa?</string>
     <string name="stories_anonymous_label">Anonyymi</string>
+    <string name="submit">Lähetä</string>
+    <string name="add_story">Lisää tarina</string>
+    <string name="minimum">Minimi</string>
+    <string name="maximum">Maksimi</string>
+    <string name="comments">Kommentit</string>
+    <string name="submit_a_story">Lähetä tarina</string>
+    <string name="no_stories">Näytettäviä tarinoita ei ole.</string>
+    <string name="loading_stories">Ladataan tarinoita ...</string>
+    <string name="submit_your_story">Lähetä tarinasi</string>
+
+
+    <!-- Tarinan kommentteja -->
+    <string name="write_a_comment">Kirjoita kommentti...</string>
+    <string name="post">Lähetä</string>
+    <string name="no_comments">Ei vielä kommentteja. Ole ensimmäinen joka kommentoi!</string>
+    <string name="unknown_user">Tuntematon käyttäjä</string>
+    <string name="fetch_comment_error">Kommenttien lataaminen epäonnistui. Yritä uudelleen.</string>
+    <string name="post_comment_error">Kommentin lähettäminen epäonnistui. Yritä uudelleen.</string>
+    <string name="delete_comment_error">Virhe kommentin poistamisessa. Yritä uudelleen.</string>
 
     <!-- Sivupalkkivalikko -->
     <string name="drawer_home">Etusivu</string>
@@ -49,6 +75,15 @@
     <string name="read_more">Lue lisää</string>
     <string name="no_link">Ei linkkiä</string>
 
+    <!-- Lomake -->
+    <string name="get_in_touch">Ota yhteyttä</string>
+    <string name="receive_help_text">Saat tarvitsemasi apua</string>
+    <string name="enter_your_name">Kirjoita nimesi</string>
+    <string name="subject_field">Aihekenttä</string>
+    <string name="enter_your_message">Kirjoita viestisi tähän</string>
+    <string name="fill_out_all_fields">Täytä kaikki kentät paitsi nimi.</string>
+    <string name="email_body_template">Hei, nimeni on %1$s.\n\n%2$s\n\nKiitos!</string>
+
     <!-- Kysely -->
     <string name="survey_title">Kysely</string>
     <string name="question_prefix">Kysymys %d:</string>
@@ -56,6 +91,8 @@
     <string name="submit_answers">Lähetä vastaukset</string>
     <string name="survey_complete_title">Kysely suoritettu</string>
     <string name="survey_complete_message">Kiitos kyselyyn vastaamisesta!</string>
+    <string name="survey_submit_success">Kysely lähetettiin onnistuneesti!</string>
+    <string name="survey_submit_failed">Kyselyn lähettäminen epäonnistui</string>
 
     <!-- Kyselyn kysymykset -->
     <string name="survey_question_1">Kuinka usein mietit päihteiden tai alkoholin vaikutuksia opintoihisi?</string>
@@ -75,6 +112,13 @@
         <item>La</item>
         <item>Su</item>
     </string-array>
+
+    <string name="week">Viikko %1$d</string>
+    <string name="today">Päivittäinen edistys</string>
+    <string name="no_habits">Ei tapoja vielä. Lisää ensimmäinen tapasi!</string>
+    <string name="description">Kuvaus (valinnainen)</string>
+    <string name="habit_title">Tapan nimi</string>
+    <string name="add_new_habit">Lisää uusi tapa</string>
 
     <string name="title_activity_maps">Karttanäkymä</string>
     <string name="sign_out">Kirjaudu ulos</string>
@@ -112,6 +156,7 @@
     <string name="hobbies_saved_success">Harrastukset tallennettu onnistuneesti!</string>
     <string name="username_changed_success">Käyttäjänimi vaihdettu onnistuneesti!</string>
     <string name="password_changed_success">Salasana vaihdettu onnistuneesti!</string>
+    <string name="password_rules">Salasanan on oltava vähintään 8 merkkiä pitkä ja sisältää isoja kirjaimia, numeroita ja erikoismerkkejä.</string>
 
     <!-- Dialogit -->
     <string name="confirm_account_deletion">Vahvista tilin poisto</string>

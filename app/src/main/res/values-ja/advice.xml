@@ -2,6 +2,9 @@
 <resources>
 
     <!-- Category Titles -->
+    <string name="select_category">カテゴリを選択</string>
+    <string name="back">戻る</string>
+
     <string name="preventive_advice_category_title">予防のアドバイス</string>
     <string name="support_advice_category_title">友人を助ける</string>
     <string name="family_advice_category_title">家族と話す</string>

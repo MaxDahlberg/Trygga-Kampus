@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tryggakampus.R
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
 import com.example.tryggakampus.domain.repository.StoryRepositoryImpl
@@ -159,7 +160,7 @@ class StoriesPageViewModel : ViewModel() {
         commentAnonymity.value = value
     }
 
-    fun loadComments(storyId: String) {
+    fun loadComments(context: Context, storyId: String) {
         viewModelScope.launch {
             try {
                 val rawComments = StoryCommentRepositoryImpl.getCommentsForStory(storyId, Source.DEFAULT)
@@ -183,12 +184,12 @@ class StoriesPageViewModel : ViewModel() {
                 comments.addAll(enrichedComments)
                 clearCommentError()
             } catch (e: Exception) {
-                commentError.value = "Failed to load comments. Please try again."
+                commentError.value = context.getString(R.string.fetch_comment_error)
             }
         }
     }
 
-    fun postComment(storyId: String) {
+    fun postComment(context: Context, storyId: String) {
         viewModelScope.launch {
             val text = commentText.value.text.trim()
             if (text.isEmpty()) return@launch
@@ -207,12 +208,12 @@ class StoriesPageViewModel : ViewModel() {
                 setCommentAnonymity(true)
                 clearCommentError()
             } catch (e: Exception) {
-                commentError.value = "Failed to post comment. Please try again."
+                commentError.value = context.getString(R.string.post_comment_error)
             }
         }
     }
 
-    fun deleteComment(comment: StoryCommentModel) {
+    fun deleteComment(context: Context, comment: StoryCommentModel) {
         viewModelScope.launch {
             try {
                 if (comment.id.isEmpty()) return@launch
@@ -222,10 +223,10 @@ class StoriesPageViewModel : ViewModel() {
                     comments.removeAll { it.id == comment.id }
                     clearCommentError()
                 } else {
-                    commentError.value = "Could not delete comment."
+                    commentError.value = context.getString(R.string.delete_comment_error)
                 }
             } catch (e: Exception) {
-                commentError.value = "Error deleting comment. Please try again."
+                commentError.value = context.getString(R.string.delete_comment_error)
             }
         }
     }

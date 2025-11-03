@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.R
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +48,7 @@ fun HabitTrackerPage(
             CenterAlignedTopAppBar(
                 title = {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Habit Tracker")
+                        Text(stringResource(R.string.drawer_habits))
                         Text(
                             text = todaysDayOfWeek,
                             style = MaterialTheme.typography.titleSmall
@@ -97,7 +96,7 @@ fun HabitTrackerPage(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            "No habits yet. Add your first habit!",
+                            stringResource(R.string.no_habits),
                             style = MaterialTheme.typography.bodyLarge
                         )
                     }

@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.tryggakampus.R
 
 @Composable
 fun AddHabitDialog(
@@ -23,7 +25,7 @@ fun AddHabitDialog(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    "Add New Habit",
+                    stringResource(R.string.add_new_habit),
                     style = MaterialTheme.typography.titleLarge
                 )
 
@@ -32,7 +34,7 @@ fun AddHabitDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Habit Title") },
+                    label = { Text(stringResource(R.string.habit_title)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -42,7 +44,7 @@ fun AddHabitDialog(
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Description (optional)") },
+                    label = { Text(stringResource(R.string.description)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = false,
                     maxLines = 3
@@ -55,7 +57,7 @@ fun AddHabitDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.cancel))
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
@@ -66,7 +68,7 @@ fun AddHabitDialog(
                         },
                         enabled = title.isNotBlank()
                     ) {
-                        Text("Add")
+                        Text(stringResource(R.string.add))
                     }
                 }
             }

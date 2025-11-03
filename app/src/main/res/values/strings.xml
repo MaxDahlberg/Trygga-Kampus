@@ -22,12 +22,37 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
     <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
 
-    <!-- Stories Begin -->
+    <string name="network_unavailable">Network connection unavailable</string>
+
+    <!-- Log out -->
+    <string name="logout_prompt">You are about to logout!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="confirm">Confirm</string>
+
+    <!-- Stories -->
     <string name="stories_page_title">Share your story with others</string>
     <string name="stories_title_label">Title (Optional)</string>
     <string name="stories_content_label">What would you like to share?</string>
     <string name="stories_anonymous_label">Anonymous</string>
-    <!-- Stories End -->
+    <string name="submit">Submit</string>
+    <string name="add_story">Add a story</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="comments">Comments</string>
+    <string name="submit_a_story">Submit a story</string>
+    <string name="no_stories">There are no stories to show.</string>
+    <string name="loading_stories">Loading stories ...</string>
+    <string name="submit_your_story">Submit your story</string>
+
+    <!-- Story comments -->
+    <string name="write_a_comment">Write a comment...</string>
+    <string name="post">Post</string>
+    <string name="no_comments">No comments yet. Be the first to comment!</string>
+    <string name="unknown_user">Unknown User</string>
+    <string name="fetch_comment_error">Failed to load comments. Please try again.</string>
+    <string name="post_comment_error">Failed to post comment. Please try again.</string>
+    <string name="delete_comment_error">Error deleting comment. Please try again.</string>
+
 
     <!-- side menu-->
     <string name="drawer_home">Home</string>
@@ -65,14 +90,24 @@
     <string name="read_more">Read More</string>
     <string name="no_link">No Link</string>
 
+    <!-- Form -->
+    <string name="get_in_touch">Get in touch</string>
+    <string name="receive_help_text">Receive the help you need</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="subject_field">Subject Field</string>
+    <string name="enter_your_message">Enter your message here</string>
+    <string name="fill_out_all_fields">Please fill out all fields except for Name.</string>
+    <string name="email_body_template">Hello, my name is %1$s.\n\n%2$s\n\nThank you!</string>
 
-    <!-- app/src/main/res/values/strings.xml -->
+    <!-- Survey -->
     <string name="survey_title">Survey</string>
     <string name="question_prefix">Question %d:</string>
     <string name="your_answer">Your Answer</string>
     <string name="submit_answers">Submit Answers</string>
     <string name="survey_complete_title">Survey Complete</string>
     <string name="survey_complete_message">Thank you for completing the survey!</string>
+    <string name="survey_submit_success">Survey submitted successfully!</string>
+    <string name="survey_submit_failed">Survey failed to submit</string>
 
 
     <!-- Survey Questions -->
@@ -109,6 +144,13 @@
         <item>Sun</item>
     </string-array>
 
+    <string name="week">Week %1$d</string>
+    <string name="today">Daily Progress</string>
+    <string name="no_habits">No habits yet. Add your first habit!</string>
+    <string name="description">Description (optional)</string>
+    <string name="habit_title">Habit Title</string>
+    <string name="add_new_habit">Add New Habit</string>
+
     <!-- Profile Page -->
     <string name="profile_title">Profile</string>
     <string name="account_information">Account Information</string>
@@ -131,6 +173,7 @@
     <string name="hobbies_saved_success">Hobbies saved successfully!</string>
     <string name="username_changed_success">Username changed successfully!</string>
     <string name="password_changed_success">Password changed successfully!</string>
+    <string name="password_rules">Password must be 8+ characters with uppercase, number, and special character.</string>
 
     <!-- Dialogs -->
     <string name="confirm_account_deletion">Confirm Account Deletion</string>

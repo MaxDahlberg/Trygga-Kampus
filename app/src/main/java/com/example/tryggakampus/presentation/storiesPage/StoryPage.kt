@@ -14,9 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
 import com.example.tryggakampus.domain.model.StoryModel
@@ -24,9 +24,12 @@ import com.example.tryggakampus.presentation.component.ErrorBox
 import com.example.tryggakampus.presentation.component.PageContainer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import com.example.tryggakampus.R
 
 @Composable
 fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
+    val context = LocalContext.current
+
     val story = remember {
         mutableStateOf(
             viewModel.stories.find { it.id == storyModelId } ?: StoryModel()
@@ -36,9 +39,8 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
     val navigator = LocalNavController.current
     val coroutineScope = rememberCoroutineScope()
 
-    // Load comments automatically when this page is opened
     LaunchedEffect(storyModelId) {
-        viewModel.loadComments(storyModelId)
+        viewModel.loadComments(context, storyModelId)
     }
 
     BackHandler { navigator.navigateUp() }
@@ -54,7 +56,6 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Story content
             StoryBox(
                 story = story.value,
                 onDelete = {
@@ -67,7 +68,6 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
 
             HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
 
-            // Comment input section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -81,7 +81,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                         .fillMaxWidth()
                         .wrapContentHeight(),
                     value = viewModel.commentText.value,
-                    label = { Text("Write a comment...") },
+                    label = { Text(stringResource(R.string.write_a_comment)) },
                     onValueChange = { viewModel.setCommentText(it) },
                     singleLine = false,
                     maxLines = 5,
@@ -107,7 +107,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SwitchWithIcon(
-                        label = "Anonymous",
+                        label = stringResource(R.string.stories_anonymous_label),
                         checked = viewModel.commentAnonymity.value,
                         onToggle = { viewModel.setCommentAnonymity(it) }
                     )
@@ -115,12 +115,12 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                     Button(
                         onClick = {
                             coroutineScope.launch {
-                                viewModel.postComment(storyModelId)
+                                viewModel.postComment(context, storyModelId)
                             }
                         },
                         enabled = viewModel.commentText.value.text.isNotBlank()
                     ) {
-                        Text("Post")
+                        Text(stringResource(R.string.post))
                     }
                 }
             }
@@ -141,7 +141,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
             ) {
                 if (viewModel.comments.isEmpty()) {
                     Text(
-                        "No comments yet. Be the first to comment!",
+                        stringResource(R.string.no_comments),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -152,7 +152,7 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                         viewModel.comments.forEach { comment ->
                             StoryCommentBox(
                                 comment = comment,
-                                onDelete = { viewModel.deleteComment(comment) }
+                                onDelete = { viewModel.deleteComment(context, comment) }
                             )
                         }
                     }
@@ -186,8 +186,14 @@ fun StoryCommentBox(
                 verticalAlignment = Alignment.Top
             ) {
                 // Top left: Username
+                val authorText = when {
+                    comment.anonymous -> stringResource(R.string.stories_anonymous_label)
+                    comment.author.isNullOrBlank() -> stringResource(R.string.unknown_user)
+                    else -> comment.author
+                }
+
                 Text(
-                    text = if (comment.anonymous) "Anonymous" else (comment.author ?: "Unknown User"),
+                    text = authorText,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -196,7 +202,7 @@ fun StoryCommentBox(
                 val currentUser = FirebaseAuth.getInstance().currentUser
                 if (currentUser?.uid == comment.userId) {
                     Text(
-                        text = "Delete",
+                        text = stringResource(R.string.delete),
                         style = MaterialTheme.typography.labelMedium,
                         color = Color.Red,
                         modifier = Modifier
@@ -206,7 +212,6 @@ fun StoryCommentBox(
                 }
             }
 
-            // Comment body
             Text(
                 text = comment.content,
                 style = MaterialTheme.typography.bodyLarge,

@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.R
@@ -200,7 +201,7 @@ fun ConfirmLogout(
         titleContentColor = MaterialTheme.colorScheme.onBackground,
 
         icon = { Icon(Icons.Default.Warning, contentDescription = "Warning Icon") },
-        title = { Text(text = "You are about to logout!") },
+        title = { Text(stringResource(R.string.logout_prompt)) },
 
         onDismissRequest = { onReject() },
 
@@ -209,7 +210,7 @@ fun ConfirmLogout(
                 onClick = { onAccept() },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text("Confirm")
+                Text(stringResource(R.string.confirm))
             }
         },
 
@@ -218,7 +219,7 @@ fun ConfirmLogout(
                 onClick = { onReject() },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text("Dismiss")
+                Text(stringResource(R.string.dismiss))
             }
         }
     )
