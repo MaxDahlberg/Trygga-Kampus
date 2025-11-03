@@ -1,11 +1,10 @@
-@file:OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @file:Suppress("unused")
-
 package com.example.tryggakampus.presentation.profilePage
 
 import android.content.Context
 import com.example.tryggakampus.R
 import com.example.tryggakampus.domain.model.UserInfoModel
+import com.example.tryggakampus.domain.repository.UserInformationRepository
 import com.example.tryggakampus.domain.repository.UserInformationRepository.RepositoryResult
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
@@ -14,36 +13,21 @@ import com.example.tryggakampus.util.HobbyList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import io.mockk.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 
-class MainDispatcherRule(
-    val dispatcher: TestDispatcher = StandardTestDispatcher()
-) : TestWatcher() {
-    override fun starting(description: Description) {
-        Dispatchers.setMain(dispatcher)
-    }
 
-    override fun finished(description: Description) {
-        Dispatchers.resetMain()
-    }
-}
-
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class ProfileViewModelTest {
 
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
-
-    private val mockRepo = mockk<com.example.tryggakampus.domain.repository.UserInformationRepository>(relaxed = true)
+    private val mockRepo = mockk<UserInformationRepository>(relaxed = true)
     private val mockAuth = mockk<FirebaseAuth>(relaxed = true)
     private val mockUser = mockk<FirebaseUser>(relaxed = true)
     private val mockGdprHelper = mockk<GdprUserDataHelper>(relaxed = true)
@@ -68,15 +52,16 @@ class ProfileViewModelTest {
         every { context.getString(R.string.error_password_required) } returns "Password required"
         every { context.getString(R.string.error_account_deletion_failed, any()) } returns "Deletion failed: detail"
 
-        // Mock GdprHelper (suspend functions -> use coEvery)
+        // Mock GdprHelper
         coEvery { mockGdprHelper.deleteUserData(any()) } just Runs
         coEvery { mockGdprHelper.fetchUserData(any()) } returns "{}"
 
-        // Mock HobbyList (static) - ensure element types match real API (Pair<String, Int> is common)
+        // Mock HobbyList (static)
         mockkStatic(HobbyList::class)
         every { HobbyList.allHobbies } returns listOf("hobby1" to 1, "hobby2" to 2)
         every { HobbyList.getDisplayName(any(), any()) } returns "Hobby 1"
 
+        // Mock repo (static)
         mockkObject(UserInformationRepositoryImpl)
     }
 
@@ -92,7 +77,7 @@ class ProfileViewModelTest {
         val fakeUserInfo = UserInfoModel(userId = "test-uid", username = "Test User", hobbies = listOf("hobby1"))
         coEvery { UserInformationRepositoryImpl.getUserInformation(any(), any()) } returns (RepositoryResult.SUCCESS to fakeUserInfo)
 
-        val vm = ProfileViewModel()
+        val vm = ProfileViewModel()  // Init triggers load
 
         assertEquals("Test User", vm.username)
         assertEquals("test@example.com", vm.email)
