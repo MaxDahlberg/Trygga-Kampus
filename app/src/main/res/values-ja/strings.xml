@@ -75,6 +75,15 @@
     <string name="read_more">続きを読む</string>
     <string name="no_link">リンクなし</string>
 
+    <!-- フォーム -->
+    <string name="get_in_touch">お問い合わせ</string>
+    <string name="receive_help_text">必要なサポートを受けてください</string>
+    <string name="enter_your_name">お名前を入力してください</string>
+    <string name="subject_field">件名</string>
+    <string name="enter_your_message">ここにメッセージを入力してください</string>
+    <string name="fill_out_all_fields">名前を除くすべての項目を入力してください。</string>
+    <string name="email_body_template">こんにちは、私の名前は%1$sです。\n\n%2$s\n\nありがとうございます！</string>
+
     <!-- アンケート -->
     <string name="survey_title">アンケート</string>
     <string name="question_prefix">質問 %d：</string>

@@ -75,6 +75,15 @@
     <string name="read_more">Lue lisää</string>
     <string name="no_link">Ei linkkiä</string>
 
+    <!-- Lomake -->
+    <string name="get_in_touch">Ota yhteyttä</string>
+    <string name="receive_help_text">Saat tarvitsemasi apua</string>
+    <string name="enter_your_name">Kirjoita nimesi</string>
+    <string name="subject_field">Aihekenttä</string>
+    <string name="enter_your_message">Kirjoita viestisi tähän</string>
+    <string name="fill_out_all_fields">Täytä kaikki kentät paitsi nimi.</string>
+    <string name="email_body_template">Hei, nimeni on %1$s.\n\n%2$s\n\nKiitos!</string>
+
     <!-- Kysely -->
     <string name="survey_title">Kysely</string>
     <string name="question_prefix">Kysymys %d:</string>

@@ -74,6 +74,15 @@
     <string name="read_more">Läs mer</string>
     <string name="no_link">Ingen länk</string>
 
+    <!-- Formulär -->
+    <string name="get_in_touch">Ta kontakt</string>
+    <string name="receive_help_text">Få den hjälp du behöver</string>
+    <string name="enter_your_name">Ange ditt namn</string>
+    <string name="subject_field">Ämnesfält</string>
+    <string name="enter_your_message">Skriv ditt meddelande här</string>
+    <string name="fill_out_all_fields">Vänligen fyll i alla fält utom Namn.</string>
+    <string name="email_body_template">Hej, mitt namn är %1$s.\n\n%2$s\n\nTack!</string>
+
     <!-- app/src/main/res/values-sv/strings.xml -->
     <string name="survey_title">Enkät</string>
     <string name="question_prefix">Fråga %d:</string>

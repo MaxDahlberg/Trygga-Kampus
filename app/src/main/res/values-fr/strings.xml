@@ -75,6 +75,15 @@
     <string name="read_more">Lire la suite</string>
     <string name="no_link">Aucun lien</string>
 
+    <!-- Formulaire -->
+    <string name="get_in_touch">Prenez contact</string>
+    <string name="receive_help_text">Recevez l\'aide dont vous avez besoin</string>
+    <string name="enter_your_name">Entrez votre nom</string>
+    <string name="subject_field">Champ de sujet</string>
+    <string name="enter_your_message">Entrez votre message ici</string>
+    <string name="fill_out_all_fields">Veuillez remplir tous les champs sauf le nom.</string>
+    <string name="email_body_template">Bonjour, je m\'appelle %1$s.\n\n%2$s\n\nMerci !</string>
+
     <!-- app/src/main/res/values-fr/strings.xml -->
     <string name="survey_title">Sondage</string>
     <string name="question_prefix">Question %d :</string>

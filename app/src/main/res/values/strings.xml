@@ -90,8 +90,16 @@
     <string name="read_more">Read More</string>
     <string name="no_link">No Link</string>
 
+    <!-- Form -->
+    <string name="get_in_touch">Get in touch</string>
+    <string name="receive_help_text">Receive the help you need</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="subject_field">Subject Field</string>
+    <string name="enter_your_message">Enter your message here</string>
+    <string name="fill_out_all_fields">Please fill out all fields except for Name.</string>
+    <string name="email_body_template">Hello, my name is %1$s.\n\n%2$s\n\nThank you!</string>
 
-    <!-- app/src/main/res/values/strings.xml -->
+    <!-- Survey -->
     <string name="survey_title">Survey</string>
     <string name="question_prefix">Question %d:</string>
     <string name="your_answer">Your Answer</string>
