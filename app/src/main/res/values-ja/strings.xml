@@ -12,7 +12,15 @@
     <string name="stories_title_label">タイトル（任意）</string>
     <string name="stories_content_label">何を共有したいですか？</string>
     <string name="stories_anonymous_label">匿名</string>
-    <!-- ストーリー終了 -->
+
+    <!-- ストーリーコメント -->
+    <string name="write_a_comment">コメントを書く...</string>
+    <string name="post">投稿</string>
+    <string name="no_comments">まだコメントはありません。最初にコメントしてください！</string>
+    <string name="unknown_user">不明なユーザー</string>
+    <string name="fetch_comment_error">コメントの読み込みに失敗しました。もう一度お試しください。</string>
+    <string name="post_comment_error">コメントの投稿に失敗しました。もう一度お試しください。</string>
+    <string name="delete_comment_error">コメントの削除中にエラーが発生しました。もう一度お試しください。</string>
 
     <!-- サイドメニュー -->
     <string name="drawer_home">ホーム</string>

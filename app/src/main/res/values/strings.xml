@@ -22,12 +22,21 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
     <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
 
-    <!-- Stories Begin -->
+    <!-- Stories -->
     <string name="stories_page_title">Share your story with others</string>
     <string name="stories_title_label">Title (Optional)</string>
     <string name="stories_content_label">What would you like to share?</string>
     <string name="stories_anonymous_label">Anonymous</string>
-    <!-- Stories End -->
+
+    <!-- Story comments -->
+    <string name="write_a_comment">Write a comment...</string>
+    <string name="post">Post</string>
+    <string name="no_comments">No comments yet. Be the first to comment!</string>
+    <string name="unknown_user">Unknown User</string>
+    <string name="fetch_comment_error">Failed to load comments. Please try again.</string>
+    <string name="post_comment_error">Failed to post comment. Please try again.</string>
+    <string name="delete_comment_error">Error deleting comment. Please try again.</string>
+
 
     <!-- side menu-->
     <string name="drawer_home">Home</string>

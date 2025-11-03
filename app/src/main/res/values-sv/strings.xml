@@ -7,12 +7,20 @@
     <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
     <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
 
-    <!-- Berättelser Börjar -->
+    <!-- Berättelser -->
     <string name="stories_page_title">Dela din berättelse med andra</string>
     <string name="stories_title_label">Titel (Valfritt)</string>
     <string name="stories_content_label">Vad skulle du vilja dela med dig av?</string>
     <string name="stories_anonymous_label">Anonym</string>
-    <!-- Berättelser Slutar -->
+
+    <!-- Berättelsekommentarer -->
+    <string name="write_a_comment">Skriv en kommentar...</string>
+    <string name="post">Posta</string>
+    <string name="no_comments">Inga kommentarer ännu. Bli den första att kommentera!</string>
+    <string name="unknown_user">Okänd användare</string>
+    <string name="fetch_comment_error">Det gick inte att ladda kommentarer. Försök igen.</string>
+    <string name="post_comment_error">Det gick inte att skicka kommentaren. Försök igen.</string>
+    <string name="delete_comment_error">Fel vid borttagning av kommentar. Försök igen.</string>
 
     <!-- sidomeny -->
     <string name="drawer_home">Hem</string>

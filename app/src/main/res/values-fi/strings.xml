@@ -13,6 +13,15 @@
     <string name="stories_content_label">Mitä haluaisit jakaa?</string>
     <string name="stories_anonymous_label">Anonyymi</string>
 
+    <!-- Tarinan kommentteja -->
+    <string name="write_a_comment">Kirjoita kommentti...</string>
+    <string name="post">Lähetä</string>
+    <string name="no_comments">Ei vielä kommentteja. Ole ensimmäinen joka kommentoi!</string>
+    <string name="unknown_user">Tuntematon käyttäjä</string>
+    <string name="fetch_comment_error">Kommenttien lataaminen epäonnistui. Yritä uudelleen.</string>
+    <string name="post_comment_error">Kommentin lähettäminen epäonnistui. Yritä uudelleen.</string>
+    <string name="delete_comment_error">Virhe kommentin poistamisessa. Yritä uudelleen.</string>
+
     <!-- Sivupalkkivalikko -->
     <string name="drawer_home">Etusivu</string>
     <string name="drawer_profile">Profiili</string>

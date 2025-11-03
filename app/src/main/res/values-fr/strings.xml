@@ -12,7 +12,15 @@
     <string name="stories_title_label">Titre (Facultatif)</string>
     <string name="stories_content_label">Que voudriez-vous partager ?</string>
     <string name="stories_anonymous_label">Anonyme</string>
-    <!-- Les histoires se terminent -->
+
+    <!-- Commentaires de l'histoire -->
+    <string name="write_a_comment">Écrire un commentaire...</string>
+    <string name="post">Publier</string>
+    <string name="no_comments">Pas encore de commentaires. Soyez le premier à commenter !</string>
+    <string name="unknown_user">Utilisateur inconnu</string>
+    <string name="fetch_comment_error">Échec du chargement des commentaires. Veuillez réessayer.</string>
+    <string name="post_comment_error">Échec de la publication du commentaire. Veuillez réessayer.</string>
+    <string name="delete_comment_error">Erreur lors de la suppression du commentaire. Veuillez réessayer.</string>
 
     <!-- menu latéral -->
     <string name="drawer_home">Accueil</string>
