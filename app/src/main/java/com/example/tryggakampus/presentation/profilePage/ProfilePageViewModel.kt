@@ -1,5 +1,6 @@
 package com.example.tryggakampus.presentation.profilePage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+@SuppressLint("MutableCollectionMutableState")
 open class ProfileViewModel : ViewModel() {
 
     private val userRepo = UserInformationRepositoryImpl
