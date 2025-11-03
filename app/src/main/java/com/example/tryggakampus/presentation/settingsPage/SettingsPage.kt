@@ -9,12 +9,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.R
 import com.example.tryggakampus.presentation.component.PageContainer
 import com.example.tryggakampus.util.AppThemeOption
 import com.example.tryggakampus.util.LanguageManager
 import com.example.tryggakampus.util.ThemeManager
+import java.util.Locale
 
 @Composable
 fun SettingsPage(
@@ -37,30 +39,36 @@ fun SettingsPage(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
+            Box(modifier = Modifier.testTag("settings_title")) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 24.dp)
+                )
+            }
 
             // Language switch
-            SimpleLanguageSwitch(
-                currentLanguage = viewModel.currentLanguage,
-                onLanguageSelected = { languageCode ->
-                    viewModel.setLanguage(languageCode)
-                    LanguageManager.setAppLanguage(context, languageCode)
-                }
-            )
+            Box(modifier = Modifier.testTag("language_switch_section")) {
+                SimpleLanguageSwitch(
+                    currentLanguage = viewModel.currentLanguage,
+                    onLanguageSelected = { languageCode ->
+                        viewModel.setLanguage(languageCode)
+                        LanguageManager.setAppLanguage(context, languageCode)
+                    }
+                )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             // Theme switch
-            SimpleThemeSwitch(
-                currentTheme = currentTheme,
-                onThemeSelected = { themeOption ->
-                    ThemeManager.setTheme(themeOption, context)
-                }
-            )
+            Box(modifier = Modifier.testTag("theme_switch_section")) {
+                SimpleThemeSwitch(
+                    currentTheme = currentTheme,
+                    onThemeSelected = { themeOption ->
+                        ThemeManager.setTheme(themeOption, context)
+                    }
+                )
+            }
         }
     }
 }
@@ -80,18 +88,22 @@ fun SimpleLanguageSwitch(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = "App Language",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+            Box(modifier = Modifier.testTag("language_title_text")) {
+                Text(
+                    text = "App Language",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
 
-            Text(
-                text = "Change the language of the app",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+            Box(modifier = Modifier.testTag("language_description_text")) {
+                Text(
+                    text = "Change the language of the app",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
 
             Row(
                 modifier = Modifier
@@ -105,15 +117,17 @@ fun SimpleLanguageSwitch(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text(
-                        text = when (currentLanguage) {
-                            "fr" -> "Français"
-                            "sv" -> "Svenska"
-                            else -> "English"
-                        },
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Box(modifier = Modifier.testTag("current_language_text")) {
+                        Text(
+                            text = when (currentLanguage) {
+                                "fr" -> "Français"
+                                "sv" -> "Svenska"
+                                else -> "English"
+                            },
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
 
                 // Language selection buttons
@@ -121,56 +135,66 @@ fun SimpleLanguageSwitch(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     // English
-                    Button(
-                        onClick = { onLanguageSelected("en") },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "en") MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("EN")
+                    Box(modifier = Modifier.testTag("english_language_button")) {
+                        Button(
+                            onClick = { onLanguageSelected("en") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (currentLanguage == "en") MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        ) {
+                            Text("EN")
+                        }
                     }
 
                     // French
-                    Button(
-                        onClick = { onLanguageSelected("fr") },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "fr") MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("FR")
+                    Box(modifier = Modifier.testTag("french_language_button")) {
+                        Button(
+                            onClick = { onLanguageSelected("fr") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (currentLanguage == "fr") MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        ) {
+                            Text("FR")
+                        }
                     }
 
                     // Swedish
-                    Button(
-                        onClick = { onLanguageSelected("sv") },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "sv") MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("SV")
+                    Box(modifier = Modifier.testTag("swedish_language_button")) {
+                        Button(
+                            onClick = { onLanguageSelected("sv") },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (currentLanguage == "sv") MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        ) {
+                            Text("SV")
+                        }
                     }
                 }
             }
 
-            Text(
-                text = "The app will restart to apply changes",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            Text(
-                text = "Note: Translations was provided by AI",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+            Box(modifier = Modifier.testTag("language_restart_notice_text")) {
+                Text(
+                    text = "The app will restart to apply changes",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            Box(modifier = Modifier.testTag("language_note_text")) {
+                Text(
+                    text = "Note: Translations was provided by AI",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
         }
     }
 }
-
 
 @Composable
 fun SimpleThemeSwitch(
@@ -185,18 +209,22 @@ fun SimpleThemeSwitch(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = stringResource(R.string.app_theme_title),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+            Box(modifier = Modifier.testTag("theme_title_text")) {
+                Text(
+                    text = stringResource(R.string.app_theme_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
 
-            Text(
-                text = stringResource(R.string.app_theme_description),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+            Box(modifier = Modifier.testTag("theme_description_text")) {
+                Text(
+                    text = stringResource(R.string.app_theme_description),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -204,32 +232,36 @@ fun SimpleThemeSwitch(
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     AppThemeOption.entries.forEach { option ->
-                        Button(
-                            onClick = { onThemeSelected(option) },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (currentTheme == option)
-                                    MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.surfaceVariant
-                            )
-                        ) {
-                            Text(
-                                text = when (option) {
-                                    AppThemeOption.LIGHT -> stringResource(R.string.theme_light)
-                                    AppThemeOption.DARK -> stringResource(R.string.theme_dark)
-                                    AppThemeOption.SYSTEM -> stringResource(R.string.theme_system)
-                                }
-                            )
+                        Box(modifier = Modifier.testTag("theme_${option.name.lowercase(Locale.ROOT)}_button")) {
+                            Button(
+                                onClick = { onThemeSelected(option) },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = if (currentTheme == option)
+                                        MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.surfaceVariant
+                                )
+                            ) {
+                                Text(
+                                    text = when (option) {
+                                        AppThemeOption.LIGHT -> stringResource(R.string.theme_light)
+                                        AppThemeOption.DARK -> stringResource(R.string.theme_dark)
+                                        AppThemeOption.SYSTEM -> stringResource(R.string.theme_system)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             }
 
-            Text(
-                text = stringResource(R.string.app_theme_restart_notice),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+            Box(modifier = Modifier.testTag("theme_restart_notice_text")) {
+                Text(
+                    text = stringResource(R.string.app_theme_restart_notice),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
         }
     }
 }

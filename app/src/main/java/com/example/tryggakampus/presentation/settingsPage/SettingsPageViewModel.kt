@@ -1,11 +1,9 @@
-// app/src/main/java/com/example/tryggakampus/presentation/settingsPage/SettingsPageViewModel.kt
 package com.example.tryggakampus.presentation.settingsPage
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.tryggakampus.util.LanguageManager
 import java.util.*
 
 class SettingsPageViewModel : ViewModel() {
