@@ -113,6 +113,13 @@
         <item>Su</item>
     </string-array>
 
+    <string name="week">Viikko %1$d</string>
+    <string name="today">Päivittäinen edistys</string>
+    <string name="no_habits">Ei tapoja vielä. Lisää ensimmäinen tapasi!</string>
+    <string name="description">Kuvaus (valinnainen)</string>
+    <string name="habit_title">Tapan nimi</string>
+    <string name="add_new_habit">Lisää uusi tapa</string>
+
     <string name="title_activity_maps">Karttanäkymä</string>
     <string name="sign_out">Kirjaudu ulos</string>
     <string name="email_hint">Sähköposti *</string>

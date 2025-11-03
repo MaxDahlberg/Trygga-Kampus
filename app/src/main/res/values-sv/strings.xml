@@ -112,6 +112,13 @@
         <item>Sön</item>
     </string-array>
 
+    <string name="week">Vecka %1$d</string>
+    <string name="today">Daglig framsteg</string>
+    <string name="no_habits">Inga vanor än. Lägg till din första vana!</string>
+    <string name="description">Beskrivning (valfritt)</string>
+    <string name="habit_title">Vananamn</string>
+    <string name="add_new_habit">Lägg till ny vana</string>
+
     <string name="title_activity_maps">MapsActivity</string>
     <string name="sign_out">Logga ut</string>
     <string name="email_hint">E-post *</string>

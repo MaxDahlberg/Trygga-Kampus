@@ -19,11 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.util.DateUtils
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
+import com.example.tryggakampus.R
 
 @Composable
 fun DateSelector(
@@ -61,7 +62,7 @@ fun DateSelector(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Week $weekOfYear",
+                text =  stringResource(R.string.week),
                 style = MaterialTheme.typography.labelSmall
             )
         }
@@ -78,7 +79,7 @@ fun DateSelector(
         TextButton(
             onClick = { onDateSelected(Date()) }
         ) {
-            Text("Today", color = Color.Black)
+            Text(stringResource(R.string.today), color = Color.Black)
         }
     }
 }

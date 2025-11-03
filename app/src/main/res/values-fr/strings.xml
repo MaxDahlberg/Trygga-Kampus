@@ -113,6 +113,13 @@
         <item>Dim</item>
     </string-array>
 
+    <string name="week">Semaine %1$d</string>
+    <string name="today">Progression quotidienne</string>
+    <string name="no_habits">Aucune habitude pour le moment. Ajoutez votre première habitude !</string>
+    <string name="description">Description (optionnel)</string>
+    <string name="habit_title">Titre de l\'habitude</string>
+    <string name="add_new_habit">Ajouter une nouvelle habitude</string>
+
     <string name="title_activity_maps">MapsActivity</string>
     <string name="sign_out">Se déconnecter</string>
     <string name="email_hint">E-mail *</string>

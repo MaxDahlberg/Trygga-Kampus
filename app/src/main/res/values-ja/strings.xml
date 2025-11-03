@@ -113,6 +113,13 @@
         <item>日</item>
     </string-array>
 
+    <string name="week">第%1$d週</string>
+    <string name="today">今日の進捗</string>
+    <string name="no_habits">まだ習慣がありません。最初の習慣を追加しましょう！</string>
+    <string name="description">説明（任意）</string>
+    <string name="habit_title">習慣のタイトル</string>
+    <string name="add_new_habit">新しい習慣を追加</string>
+
     <string name="title_activity_maps">MapsActivity</string>
     <string name="sign_out">サインアウト</string>
     <string name="email_hint">メールアドレス *</string>

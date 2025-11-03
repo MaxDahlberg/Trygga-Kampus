@@ -144,6 +144,13 @@
         <item>Sun</item>
     </string-array>
 
+    <string name="week">Week %1$d</string>
+    <string name="today">Daily Progress</string>
+    <string name="no_habits">No habits yet. Add your first habit!</string>
+    <string name="description">Description (optional)</string>
+    <string name="habit_title">Habit Title</string>
+    <string name="add_new_habit">Add New Habit</string>
+
     <!-- Profile Page -->
     <string name="profile_title">Profile</string>
     <string name="account_information">Account Information</string>
