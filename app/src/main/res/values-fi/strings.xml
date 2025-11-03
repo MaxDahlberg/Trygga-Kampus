@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trygga Campus</string>
+    <string name="title">Tervetuloa Trygga Campukselle!</string>
+    <string name="about_us">Tietoa meistä</string>
+    <string name="info1">Täältä löydät tietoa sovelluksesta, sen tavoitteista ja toiminnasta.</string>
+    <string name="button">Jos tarvitset vakavaa apua, ota yhteyttä joko yliopistosi neuvonantajaan tai johonkin ammattilaisistamme tämän painikkeen kautta.</string>
+    <string name="buttonInfo">Tämä painike avaa lomakkeen, johon voit kirjoittaa tilanteestasi ja lähettää sen, jotta saat tarvitsemaasi apua.</string>
+
+    <!-- Tarinat -->
+    <string name="stories_page_title">Jaa tarinasi muiden kanssa</string>
+    <string name="stories_title_label">Otsikko (valinnainen)</string>
+    <string name="stories_content_label">Mitä haluaisit jakaa?</string>
+    <string name="stories_anonymous_label">Anonyymi</string>
+
+    <!-- Sivupalkkivalikko -->
+    <string name="drawer_home">Etusivu</string>
+    <string name="drawer_profile">Profiili</string>
+    <string name="drawer_articles">Artikkelit</string>
+    <string name="drawer_form">Lomake</string>
+    <string name="drawer_survey">Kysely</string>
+    <string name="drawer_habits">Tottumusten seuranta</string>
+    <string name="drawer_stories">Tarinat</string>
+    <string name="drawer_advice">Neuvot</string>
+    <string name="drawer_login">Kirjaudu sisään</string>
+    <string name="drawer_logout">Kirjaudu ulos</string>
+    <string name="drawer_settings">Asetukset</string>
+
+    <!-- Artikkelisivu -->
+    <string name="new_article">Uusi artikkeli</string>
+    <string name="delete_article">Poista artikkeli</string>
+    <string name="article_title">Otsikko</string>
+    <string name="summary">Yhteenveto</string>
+    <string name="webpage_url">Verkkosivun URL</string>
+    <string name="all_fields_required">Kaikki kentät ovat pakollisia.</string>
+    <string name="add">Lisää</string>
+    <string name="cancel">Peruuta</string>
+    <string name="loading_articles">Ladataan artikkeleita...</string>
+    <string name="no_articles_available">Ei artikkeleita saatavilla. Yritä myöhemmin uudelleen tai päivitä sivu.</string>
+    <string name="cancel_delete_mode">Peruuta poistotila</string>
+    <string name="add_article">Lisää artikkeli</string>
+    <string name="enable_delete_mode">Ota poistotila käyttöön</string>
+    <string name="confirm_deletion">Vahvista poisto</string>
+    <string name="delete_confirmation">Haluatko varmasti poistaa tämän artikkelin?</string>
+    <string name="delete">Poista</string>
+    <string name="error">Virhe</string>
+    <string name="unknown_error">Tuntematon virhe tapahtui.</string>
+    <string name="ok">OK</string>
+    <string name="read_more">Lue lisää</string>
+    <string name="no_link">Ei linkkiä</string>
+
+    <!-- Kysely -->
+    <string name="survey_title">Kysely</string>
+    <string name="question_prefix">Kysymys %d:</string>
+    <string name="your_answer">Vastauksesi</string>
+    <string name="submit_answers">Lähetä vastaukset</string>
+    <string name="survey_complete_title">Kysely suoritettu</string>
+    <string name="survey_complete_message">Kiitos kyselyyn vastaamisesta!</string>
+
+    <!-- Kyselyn kysymykset -->
+    <string name="survey_question_1">Kuinka usein mietit päihteiden tai alkoholin vaikutuksia opintoihisi?</string>
+    <string name="survey_question_2">Oletko koskaan tuntenut painetta käyttää päihteitä tai alkoholia sopiaksesi joukkoon?</string>
+    <string name="survey_question_3">Koetko, että päihteiden käyttö on normaalia yliopistoympäristössäsi?</string>
+    <string name="survey_question_4">Kuinka varma olet siitä, että pystyt sanomaan "ei" päihteille tai alkoholille sosiaalisessa tilanteessa?</string>
+    <string name="survey_question_5">Kuinka usein käytät päihteitä (esim. alkoholia, huumeita) selviytyäksesi stressistä tai opiskelupaineista?</string>
+    <string name="survey_question_6">Uskotko, että apua riippuvuuteen hakevia ihmisiä kohtaan on stigmaa yliopistossasi?</string>
+    <string name="weekly_progress">Viikkoseuranta - Viikko %1$d</string>
+    <string name="daily_progress">Päivittäinen seuranta</string>
+    <string-array name="weekdays">
+        <item>Ma</item>
+        <item>Ti</item>
+        <item>Ke</item>
+        <item>To</item>
+        <item>Pe</item>
+        <item>La</item>
+        <item>Su</item>
+    </string-array>
+
+    <string name="title_activity_maps">Karttanäkymä</string>
+    <string name="sign_out">Kirjaudu ulos</string>
+    <string name="email_hint">Sähköposti *</string>
+    <string name="password_hint">Salasana *</string>
+    <string name="log_in_button_text">Kirjaudu sisään</string>
+    <string name="forgot_password_text">Unohditko salasanasi?</string>
+    <string name="create_account_text">Luo tili</string>
+    <string name="home">Etusivu</string>
+    <string name="news">Uutiset</string>
+    <string name="map">Kartta</string>
+    <string name="faq">UKK</string>
+    <string name="report">Ilmoita</string>
+    <string name="weekly_progress_title">Viikkoseuranta</string>
+
+    <!-- Profiilisivu -->
+    <string name="profile_title">Profiili</string>
+    <string name="account_information">Tilin tiedot</string>
+    <string name="username_label">Käyttäjänimi</string>
+    <string name="email_label">Sähköposti</string>
+    <string name="my_hobbies">Harrastukseni</string>
+    <string name="save_hobbies">Tallenna harrastukset</string>
+    <string name="change_username">Vaihda käyttäjänimi</string>
+    <string name="password_required">Salasana (pakollinen)</string>
+    <string name="new_username">Uusi käyttäjänimi</string>
+    <string name="update_username">Päivitä käyttäjänimi</string>
+    <string name="change_password">Vaihda salasana</string>
+    <string name="current_password">Nykyinen salasana</string>
+    <string name="new_password">Uusi salasana</string>
+    <string name="repeat_new_password">Toista uusi salasana</string>
+    <string name="update_password">Päivitä salasana</string>
+    <string name="account_data">Tili ja tiedot</string>
+    <string name="request_my_data">Pyydä tietoni</string>
+    <string name="delete_account">Poista tilini ja tietoni</string>
+    <string name="hobbies_saved_success">Harrastukset tallennettu onnistuneesti!</string>
+    <string name="username_changed_success">Käyttäjänimi vaihdettu onnistuneesti!</string>
+    <string name="password_changed_success">Salasana vaihdettu onnistuneesti!</string>
+
+    <!-- Dialogit -->
+    <string name="confirm_account_deletion">Vahvista tilin poisto</string>
+    <string name="delete_account_warning">Henkilötietosi ja tilisi poistetaan GDPR:n mukaisesti. Tämä toimenpide on pysyvä eikä sitä voi peruuttaa.</string>
+    <string name="enter_password">Anna salasana</string>
+    <string name="personal_data_request">Tietopyyntö</string>
+    <string name="personal_data_request_message">Paina "Pyydä" hakeaksesi henkilökohtaiset tietosi palvelimelta. Kun ne ovat valmiina, voit ladata ne.</string>
+    <string name="personal_data_ready_message">Tietosi ovat valmiina. Paina "Lataa" tallentaaksesi ne laitteellesi.</string>
+    <string name="request">Pyydä</string>
+    <string name="download">Lataa</string>
+
+    <!-- Virheilmoitukset -->
+    <string name="error_fill_all_fields">Täytä kaikki kentät.</string>
+    <string name="error_user_email_unavailable">Sähköpostiosoite ei ole käytettävissä.</string>
+    <string name="error_username_taken">Käyttäjänimi on jo varattu.</string>
+    <string name="error_update_username_failed">Käyttäjänimen päivitys epäonnistui: %1$s</string>
+    <string name="error_update_hobbies">Harrastusten päivitys epäonnistui</string>
+    <string name="error_update_hobbies_detail">Harrastusten päivitys epäonnistui: %1$s</string>
+    <string name="error_invalid_passwords">Salasanat eivät täsmää tai ovat virheellisiä.</string>
+    <string name="error_password_change_failed">Salasanan vaihto epäonnistui: %1$s</string>
+    <string name="error_password_required">Salasana vaaditaan tilin poistamiseen.</string>
+    <string name="error_account_deletion_failed">Tilin poisto epäonnistui: %1$s</string>
+
+    <!-- Harrastukset -->
+    <string name="hobby_reading">Lukeminen</string>
+    <string name="hobby_gaming">Pelaaminen</string>
+    <string name="hobby_traveling">Matkustaminen</string>
+    <string name="hobby_cooking">Ruoanlaitto</string>
+    <string name="hobby_sports">Urheilu</string>
+    <string name="hobby_music">Musiikki</string>
+    <string name="hobby_art">Taide</string>
+    <string name="hobby_photography">Valokuvaus</string>
+    <string name="hobby_dancing">Tanssi</string>
+    <string name="hobby_hiking">Vaellus</string>
+    <string name="hobby_fishing">Kalastus</string>
+    <string name="hobby_swimming">Uinti</string>
+    <string name="hobby_coding">Ohjelmointi</string>
+    <string name="hobby_yoga">Jooga</string>
+    <string name="hobby_meditation">Meditaatio</string>
+    <string name="hobby_writing">Kirjoittaminen</string>
+    <string name="hobby_cycling">Pyöräily</string>
+    <string name="hobby_board_games">Lautapelit</string>
+    <string name="hobby_movies">Elokuvat</string>
+    <string name="hobby_gardening">Puutarhanhoito</string>
+    <string name="hobby_knitting">Neulominen</string>
+    <string name="hobby_crafts">Askartelu</string>
+    <string name="hobby_volunteering">Vapaaehtoistyö</string>
+    <string name="hobby_languages">Kielet</string>
+    <string name="hobby_running">Juokseminen</string>
+    <string name="hobby_singing">Laulaminen</string>
+    <string name="hobby_collecting">Keräily</string>
+    <string name="hobby_shopping">Ostoksilla käyminen</string>
+    <string name="hobby_theater">Teatteri</string>
+    <string name="hobby_baking">Leivonta</string>
+
+    <!-- Teema-asetukset -->
+    <string name="app_theme_title">Sovelluksen teema</string>
+    <string name="app_theme_description">Vaihda sovelluksen teemaa</string>
+    <string name="theme_light">Vaalea</string>
+    <string name="theme_dark">Tumma</string>
+    <string name="theme_system">Järjestelmä</string>
+    <string name="app_theme_restart_notice">Sovellus saattaa käynnistyä uudelleen muutosten voimaantulemiseksi</string>
+
+    <string name="settings_language_title">Sovelluksen kieli</string>
+    <string name="settings_language_description">Vaihda sovelluksen kieltä</string>
+    <string name="settings_language_restart_notice">Sovellus käynnistyy uudelleen muutosten toteuttamiseksi</string>
+    <string name="settings_language_ai_note">Huom: Käännökset tarjosi tekoäly</string>
+</resources>

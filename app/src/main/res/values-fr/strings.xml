@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Trygga Campus</string>
     <string name="title">Bienvenue à Trygga Campus !</string>
@@ -175,4 +176,8 @@
     <string name="theme_system">Système</string>
     <string name="app_theme_restart_notice">L\'application peut redémarrer pour appliquer les modifications</string>
 
+    <string name="settings_language_title">Langue de l\'application</string>
+    <string name="settings_language_description">Changer la langue de l\'application</string>
+    <string name="settings_language_restart_notice">L\'application va redémarrer pour appliquer les changements</string>
+    <string name="settings_language_ai_note">Note : Les traductions ont été fournies par l\'IA</string>
 </resources>

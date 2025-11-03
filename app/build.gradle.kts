@@ -23,7 +23,7 @@ android {
         }
 
         // Added from remote branch
-        resConfigs("en", "fr", "sv")
+        resConfigs("en", "fr", "sv", "fi", "ja")
     }
 
     buildTypes {

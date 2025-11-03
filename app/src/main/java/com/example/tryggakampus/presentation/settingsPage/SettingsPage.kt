@@ -1,8 +1,25 @@
 package com.example.tryggakampus.presentation.settingsPage
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -65,6 +82,7 @@ fun SettingsPage(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SimpleLanguageSwitch(
     currentLanguage: String,
@@ -80,89 +98,73 @@ fun SimpleLanguageSwitch(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(
-                text = "App Language",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
-            Text(
-                text = "Change the language of the app",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Current language display
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Text(
-                        text = when (currentLanguage) {
-                            "fr" -> "Français"
-                            "sv" -> "Svenska"
-                            else -> "English"
-                        },
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+                Text(
+                    // UPDATED to use stringResource for translation
+                    text = stringResource(R.string.settings_language_title),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = when (currentLanguage) {
+                        "fr" -> "🇫🇷 Français"
+                        "sv" -> "🇸🇪 Svenska"
+                        "fi" -> "🇫🇮 Suomi"
+                        "ja" -> "🇯🇵 日本語"
+                        else -> "🇬🇧 English"
+                    },
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
 
-                // Language selection buttons
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    // English
+
+            Text(
+                // UPDATED to use stringResource for translation
+                text = stringResource(R.string.settings_language_description),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+            )
+
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                val languages = mapOf(
+                    "en" to "🇬🇧",
+                    "fr" to "🇫🇷",
+                    "sv" to "🇸🇪",
+                    "fi" to "🇫🇮",
+                    "ja" to "🇯🇵"
+                )
+                languages.forEach { (langCode, flag) ->
                     Button(
-                        onClick = { onLanguageSelected("en") },
+                        onClick = { onLanguageSelected(langCode) },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "en") MaterialTheme.colorScheme.primary
+                            containerColor = if (currentLanguage == langCode) MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.surfaceVariant
                         )
                     ) {
-                        Text("EN")
-                    }
-
-                    // French
-                    Button(
-                        onClick = { onLanguageSelected("fr") },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "fr") MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("FR")
-                    }
-
-                    // Swedish
-                    Button(
-                        onClick = { onLanguageSelected("sv") },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (currentLanguage == "sv") MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("SV")
+                        Text(flag)
                     }
                 }
             }
 
             Text(
-                text = "The app will restart to apply changes",
+                // UPDATED to use stringResource for translation
+                text = stringResource(R.string.settings_language_restart_notice),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
             Text(
-                text = "Note: Translations was provided by AI",
+                // UPDATED to use stringResource for translation
+                text = stringResource(R.string.settings_language_ai_note),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp)
