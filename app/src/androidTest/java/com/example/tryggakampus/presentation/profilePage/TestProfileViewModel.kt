@@ -2,6 +2,7 @@
 
 package com.example.tryggakampus.presentation.profilePage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.example.tryggakampus.presentation.authentication.loginPage.AuthError
 
+@SuppressLint("MutableCollectionMutableState")
 class TestProfileViewModel : ProfileViewModel() {
 
     override var username by mutableStateOf("Test User")
@@ -67,14 +69,12 @@ class TestProfileViewModel : ProfileViewModel() {
         allHobbies = listOf("Hobby1", "Hobby2", "Hobby3")
     }
 
-    // Match super: suspend signature
     override suspend fun onSaveHobbies(context: Context): Boolean {
         delay(500)
         hobbiesError = null
         return true
     }
 
-    // Match super: suspend signature
     override suspend fun onChangeUsername(context: Context): Boolean {
         delay(500)
         username = newUsername
@@ -87,13 +87,11 @@ class TestProfileViewModel : ProfileViewModel() {
         isUsernameChangePasswordVisible = !isUsernameChangePasswordVisible
     }
 
-    // use 'password' name to match supertype
     override fun onUsernameChangePasswordChange(password: String) {
         usernameChangePassword = password
         usernameChangePasswordIsValid = password.length >= 8
     }
 
-    // Match super: suspend signature
     override suspend fun onChangePassword(context: Context): Boolean {
         delay(500)
         passwordError = null
@@ -114,7 +112,6 @@ class TestProfileViewModel : ProfileViewModel() {
         isNewPasswordVisible = !isNewPasswordVisible
     }
 
-    // use 'password' name to match supertype
     override fun onNewPasswordChange(password: String) {
         newPassword = password
         newPasswordIsValid = password.length >= 8
