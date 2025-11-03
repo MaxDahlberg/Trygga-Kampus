@@ -23,12 +23,14 @@ import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.util.DateUtils
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
+
+@Suppress("UNCHECKED_CAST", "Unused")
 
 @Composable
 fun DateSelector(
     selectedDate: Date,
-    onDateSelected: (Date) -> Unit
+    onDateSelected: (Date) -> Unit,
+    modifier: Modifier
 ) {
     val currentLocale = LocalConfiguration.current.locales[0]
     val dayOfWeek = remember(selectedDate, currentLocale) { SimpleDateFormat("EEEE", currentLocale).format(selectedDate) }
