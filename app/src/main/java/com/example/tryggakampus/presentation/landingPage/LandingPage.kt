@@ -1,11 +1,8 @@
 package com.example.tryggakampus.presentation.landingPage
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,9 +31,15 @@ fun LandingPage(title: String) {
         .padding(15.dp)
     ) {
         Column (verticalArrangement = Arrangement.spacedBy(20.dp)) {
-            Logo()
-            AboutUs()
-            GetHelp()
+            Box(modifier = Modifier.testTag("logo_section")) {
+                Logo()
+            }
+            Box(modifier = Modifier.testTag("about_us_section")) {
+                AboutUs()
+            }
+            Box(modifier = Modifier.testTag("get_help_section")) {
+                GetHelp()
+            }
         }
     }
 }
@@ -46,20 +50,24 @@ fun Logo() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.logo_2),
-            contentDescription = "Logo"
-        )
+        Box(modifier = Modifier.testTag("logo_image")) {
+            Image(
+                painter = painterResource(R.drawable.logo_2),
+                contentDescription = "Logo"
+            )
+        }
 
-        Text(
-            text = stringResource(R.string.title),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp),
-            fontSize = 25.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+        Box(modifier = Modifier.testTag("title_text")) {
+            Text(
+                text = stringResource(R.string.title),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp),
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
     }
 }
 
@@ -72,18 +80,22 @@ fun AboutUs() {
             .padding(15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        Text(
-            text = stringResource(R.string.about_us),
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
-        )
+        Box(modifier = Modifier.testTag("about_us_title_text")) {
+            Text(
+                text = stringResource(R.string.about_us),
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
 
-        Text(
-            text = stringResource(R.string.info1),
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 14.sp
-        )
+        Box(modifier = Modifier.testTag("about_us_content_text")) {
+            Text(
+                text = stringResource(R.string.info1),
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontSize = 14.sp
+            )
+        }
     }
 }
 
@@ -98,31 +110,37 @@ fun GetHelp() {
             .padding(15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        Text(
-            text = stringResource(R.string.button),
-            color = MaterialTheme.colorScheme.onSecondary,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Text(
-            text = stringResource(R.string.buttonInfo),
-            color = Color.Black,
-            fontSize = 14.sp
-        )
-
-        Button(
-            onClick = { navController.navigate(Routes.FormPage()) },
-            modifier = Modifier.padding(top = 26.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.onBackground
-            )
-        ) {
+        Box(modifier = Modifier.testTag("get_help_title_text")) {
             Text(
-                text = "Get in touch!",
-                fontWeight = FontWeight.Bold
+                text = stringResource(R.string.button),
+                color = MaterialTheme.colorScheme.onSecondary,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold
             )
+        }
+
+        Box(modifier = Modifier.testTag("get_help_content_text")) {
+            Text(
+                text = stringResource(R.string.buttonInfo),
+                color = Color.Black,
+                fontSize = 14.sp
+            )
+        }
+
+        Box(modifier = Modifier.testTag("get_help_button")) {
+            Button(
+                onClick = { navController.navigate(Routes.FormPage()) },
+                modifier = Modifier.padding(top = 26.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
+            ) {
+                Text(
+                    text = "Get in touch!",
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }

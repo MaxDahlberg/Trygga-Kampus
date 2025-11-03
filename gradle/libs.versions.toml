@@ -28,6 +28,7 @@ coroutines-test = "1.8.1"
 turbine = "1.1.0"
 robolectric = "4.13"
 compose-ui-test = "1.5.4"
+uiTestJunit4 = "1.9.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +74,7 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 
 # Added for habit tracker
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "uiTestJunit4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
