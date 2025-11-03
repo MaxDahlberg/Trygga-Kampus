@@ -7,11 +7,23 @@
     <string name="button">Si vous avez besoin d\'une aide sérieuse, veuillez contacter soit votre conseiller universitaire, soit l\'un de nos professionnels en utilisant ce bouton.</string>
     <string name="buttonInfo">Ce bouton vous présentera un formulaire que vous remplirez avec ce que vous vivez et l\'enverrez à quelqu\'un pour fournir l\'aide nécessaire.</string>
 
+    <string name="network_unavailable">Connexion réseau indisponible</string>
+
     <!-- Les histoires commencent -->
     <string name="stories_page_title">Partagez votre histoire avec les autres</string>
     <string name="stories_title_label">Titre (Facultatif)</string>
     <string name="stories_content_label">Que voudriez-vous partager ?</string>
     <string name="stories_anonymous_label">Anonyme</string>
+    <string name="submit">Soumettre</string>
+    <string name="add_story">Ajouter une histoire</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="comments">Commentaires</string>
+    <string name="submit_a_story">Soumettre une histoire</string>
+    <string name="no_stories">Aucune histoire à afficher.</string>
+    <string name="loading_stories">Chargement des histoires ...</string>
+    <string name="submit_your_story">Soumettre votre histoire</string>
+
 
     <!-- Commentaires de l'histoire -->
     <string name="write_a_comment">Écrire un commentaire...</string>

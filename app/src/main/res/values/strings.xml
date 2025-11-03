@@ -22,11 +22,22 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
     <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
 
+    <string name="network_unavailable">Network connection unavailable</string>
+
     <!-- Stories -->
     <string name="stories_page_title">Share your story with others</string>
     <string name="stories_title_label">Title (Optional)</string>
     <string name="stories_content_label">What would you like to share?</string>
     <string name="stories_anonymous_label">Anonymous</string>
+    <string name="submit">Submit</string>
+    <string name="add_story">Add a story</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="comments">Comments</string>
+    <string name="submit_a_story">Submit a story</string>
+    <string name="no_stories">There are no stories to show.</string>
+    <string name="loading_stories">Loading stories ...</string>
+    <string name="submit_your_story">Submit your story</string>
 
     <!-- Story comments -->
     <string name="write_a_comment">Write a comment...</string>

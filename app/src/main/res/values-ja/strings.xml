@@ -7,11 +7,23 @@
     <string name="button">本格的なサポートが必要な場合は、このボタンを使って大学のカウンセラーか専門家にご連絡ください。</string>
     <string name="buttonInfo">このボタンを押すと、現在の状況を記入するフォームが表示され、必要な支援を提供する人に送信できます。</string>
 
+    <string name="network_unavailable">ネットワーク接続が利用できません</string>
+
     <!-- ストーリー -->
     <string name="stories_page_title">あなたのストーリーを共有しましょう</string>
     <string name="stories_title_label">タイトル（任意）</string>
     <string name="stories_content_label">何を共有したいですか？</string>
     <string name="stories_anonymous_label">匿名</string>
+    <string name="submit">送信</string>
+    <string name="add_story">ストーリーを追加</string>
+    <string name="minimum">最小</string>
+    <string name="maximum">最大</string>
+    <string name="comments">コメント</string>
+    <string name="submit_a_story">ストーリーを送信</string>
+    <string name="no_stories">表示するストーリーはありません。</string>
+    <string name="loading_stories">ストーリーを読み込み中 ...</string>
+    <string name="submit_your_story">ストーリーを送信</string>
+
 
     <!-- ストーリーコメント -->
     <string name="write_a_comment">コメントを書く...</string>

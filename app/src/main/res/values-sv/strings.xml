@@ -7,11 +7,22 @@
     <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
     <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
 
+    <string name="network_unavailable">Nätverksanslutning ej tillgänglig</string>
+
     <!-- Berättelser -->
     <string name="stories_page_title">Dela din berättelse med andra</string>
     <string name="stories_title_label">Titel (Valfritt)</string>
     <string name="stories_content_label">Vad skulle du vilja dela med dig av?</string>
     <string name="stories_anonymous_label">Anonym</string>
+    <string name="submit">Posta</string>
+    <string name="add_story">Lägg till en berättelse</string>
+    <string name="minimum">Minst</string>
+    <string name="maximum">Högst</string>
+    <string name="comments">Kommentarer</string>
+    <string name="submit_a_story">Skicka in en berättelse</string>
+    <string name="no_stories">Det finns inga berättelser att visa.</string>
+    <string name="loading_stories">Laddar berättelser ...</string>
+    <string name="submit_your_story">Posta din berättelse</string>
 
     <!-- Berättelsekommentarer -->
     <string name="write_a_comment">Skriv en kommentar...</string>

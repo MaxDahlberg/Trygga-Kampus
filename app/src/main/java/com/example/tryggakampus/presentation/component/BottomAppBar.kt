@@ -35,14 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.tryggakampus.ConnectivityObserver
-
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.NetworkConnectivityObserver
+import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.data.Config
 import com.example.tryggakampus.presentation.storiesPage.StoriesPageViewModel
@@ -74,7 +74,7 @@ fun DisplayErrorWhenNetworkUnavailable(content: @Composable () -> Unit) {
             )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
-                "Network connection unavailable",
+                stringResource(R.string.network_unavailable),
                 color = MaterialTheme.colorScheme.onError
             )
         }
@@ -139,7 +139,10 @@ fun BottomStoriesBar() {
                     ),
                     onClick = { vm.setShowNewStoryForm(!vm.showNewStoryForm.value) }
                 ) {
-                    val text = if (!vm.showNewStoryForm.value) "Add a story" else "Cancel"
+                    val text = if (!vm.showNewStoryForm.value)
+                        stringResource(R.string.add_story)
+                    else
+                        stringResource(R.string.cancel)
                     Icon(
                         imageVector = if (!vm.showNewStoryForm.value) Icons.Default.Add else Icons.Default.Close,
                         contentDescription = text
@@ -161,9 +164,9 @@ fun BottomStoriesBar() {
                     ) {
                         Icon(
                             imageVector = Icons.Filled.PlayArrow,
-                            contentDescription = "Submit your story"
+                            contentDescription = stringResource(R.string.submit_your_story)
                         )
-                        Text("Submit")
+                        Text(stringResource(R.string.submit))
                     }
                 }
             }

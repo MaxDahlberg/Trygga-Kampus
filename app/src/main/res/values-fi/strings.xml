@@ -7,11 +7,23 @@
     <string name="button">Jos tarvitset vakavaa apua, ota yhteyttä joko yliopistosi neuvonantajaan tai johonkin ammattilaisistamme tämän painikkeen kautta.</string>
     <string name="buttonInfo">Tämä painike avaa lomakkeen, johon voit kirjoittaa tilanteestasi ja lähettää sen, jotta saat tarvitsemaasi apua.</string>
 
+    <string name="network_unavailable">Verkkoyhteys ei ole käytettävissä</string>
+
     <!-- Tarinat -->
     <string name="stories_page_title">Jaa tarinasi muiden kanssa</string>
     <string name="stories_title_label">Otsikko (valinnainen)</string>
     <string name="stories_content_label">Mitä haluaisit jakaa?</string>
     <string name="stories_anonymous_label">Anonyymi</string>
+    <string name="submit">Lähetä</string>
+    <string name="add_story">Lisää tarina</string>
+    <string name="minimum">Minimi</string>
+    <string name="maximum">Maksimi</string>
+    <string name="comments">Kommentit</string>
+    <string name="submit_a_story">Lähetä tarina</string>
+    <string name="no_stories">Näytettäviä tarinoita ei ole.</string>
+    <string name="loading_stories">Ladataan tarinoita ...</string>
+    <string name="submit_your_story">Lähetä tarinasi</string>
+
 
     <!-- Tarinan kommentteja -->
     <string name="write_a_comment">Kirjoita kommentti...</string>
