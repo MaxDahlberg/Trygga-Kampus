@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.R
@@ -23,9 +24,6 @@ fun AdviceListScreen(title: String, adviceItems: List<AdviceItem>, onBack: () ->
             .padding(16.dp)
     ) {
         Row (
-//testing commit
-
-
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -44,7 +42,7 @@ fun AdviceListScreen(title: String, adviceItems: List<AdviceItem>, onBack: () ->
                 shape = MaterialTheme.shapes.small,
                 border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.secondary)
             ) {
-                Text("Back")
+                Text(stringResource(id = R.string.back))
             }
         }
 

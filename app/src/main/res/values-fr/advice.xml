@@ -2,6 +2,9 @@
 <resources>
 
     <!-- Category Titles -->
+    <string name="select_category">Sélectionner une catégorie</string>
+    <string name="back">Retour</string>
+
     <string name="preventive_advice_category_title">Conseils Préventifs</string>
     <string name="support_advice_category_title">Aider un Ami</string>
     <string name="family_advice_category_title">Parler à Ma Famille</string>
