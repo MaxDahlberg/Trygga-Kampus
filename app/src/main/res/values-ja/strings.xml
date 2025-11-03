@@ -133,6 +133,7 @@
     <string name="hobbies_saved_success">趣味が正常に保存されました！</string>
     <string name="username_changed_success">ユーザー名が正常に変更されました！</string>
     <string name="password_changed_success">パスワードが正常に変更されました！</string>
+    <string name="password_rules">パスワードは8文字以上で、大文字、数字、特殊文字を含める必要があります。</string>
 
     <!-- ダイアログ -->
     <string name="confirm_account_deletion">アカウント削除の確認</string>

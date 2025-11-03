@@ -133,6 +133,7 @@
     <string name="hobbies_saved_success">Harrastukset tallennettu onnistuneesti!</string>
     <string name="username_changed_success">Käyttäjänimi vaihdettu onnistuneesti!</string>
     <string name="password_changed_success">Salasana vaihdettu onnistuneesti!</string>
+    <string name="password_rules">Salasanan on oltava vähintään 8 merkkiä pitkä ja sisältää isoja kirjaimia, numeroita ja erikoismerkkejä.</string>
 
     <!-- Dialogit -->
     <string name="confirm_account_deletion">Vahvista tilin poisto</string>

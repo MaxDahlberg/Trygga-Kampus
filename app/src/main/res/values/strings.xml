@@ -151,6 +151,7 @@
     <string name="hobbies_saved_success">Hobbies saved successfully!</string>
     <string name="username_changed_success">Username changed successfully!</string>
     <string name="password_changed_success">Password changed successfully!</string>
+    <string name="password_rules">Password must be 8+ characters with uppercase, number, and special character.</string>
 
     <!-- Dialogs -->
     <string name="confirm_account_deletion">Confirm Account Deletion</string>

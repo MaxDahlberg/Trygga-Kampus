@@ -133,6 +133,7 @@
     <string name="hobbies_saved_success">Passe-temps enregistrés avec succès !</string>
     <string name="username_changed_success">Nom d\'utilisateur modifié avec succès !</string>
     <string name="password_changed_success">Mot de passe modifié avec succès !</string>
+    <string name="password_rules">Le mot de passe doit comporter au moins 8 caractères, incluant une majuscule, un chiffre et un caractère spécial.</string>
 
     <!-- Dialogues -->
     <string name="confirm_account_deletion">Confirmer la suppression du compte</string>

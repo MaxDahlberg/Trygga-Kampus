@@ -132,6 +132,7 @@
     <string name="hobbies_saved_success">Intressen sparades!</string>
     <string name="username_changed_success">Användarnamn ändrat!</string>
     <string name="password_changed_success">Lösenord ändrat!</string>
+    <string name="password_rules">Lösenordet måste vara minst 8 tecken långt och innehålla stora bokstäver, siffror och specialtecken.</string>
 
     <!-- Dialoger -->
     <string name="confirm_account_deletion">Bekräfta kontoradering</string>
