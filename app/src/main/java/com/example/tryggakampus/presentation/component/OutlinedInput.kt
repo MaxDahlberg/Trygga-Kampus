@@ -52,6 +52,9 @@ fun OutlinedInput(
 
             cursorColor = MaterialTheme.colorScheme.secondary,
 
+            focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+
             selectionColors = TextSelectionColors(
                 handleColor = MaterialTheme.colorScheme.secondary,
                 backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
