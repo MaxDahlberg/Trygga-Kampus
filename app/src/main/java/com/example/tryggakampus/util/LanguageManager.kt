@@ -1,6 +1,5 @@
 package com.example.tryggakampus.util
 
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,48 +8,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import java.util.*
+import androidx.core.content.edit
 
 object LanguageManager {
 
+    private const val PREFS_NAME = "app_settings"
+    private const val KEY_LANGUAGE = "app_language"
+
     fun setAppLanguage(context: Context, languageCode: String) {
-        // Save preference to DataStore
         saveLanguagePreference(context, languageCode)
-
-        // Apply language
         applyLanguage(context, languageCode)
-
-        // Restart activity
         restartActivity(context)
     }
 
     private fun saveLanguagePreference(context: Context, languageCode: String) {
-
-        val sharedPref = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        sharedPref.edit().putString("app_language", languageCode).apply()
+        val sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        sharedPref.edit { putString(KEY_LANGUAGE, languageCode) }
     }
 
     fun getSavedLanguage(context: Context): String {
-        val sharedPref = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        return sharedPref.getString("app_language", Locale.getDefault().language) ?: "en"
+        val sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return sharedPref.getString(KEY_LANGUAGE, Locale.getDefault().language) ?: "en"
     }
 
-    private fun applyLanguage(context: Context, languageCode: String) {
+    fun applyLanguage(context: Context, languageCode: String): Context {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
 
-        val resources = context.resources
-        val configuration = Configuration(resources.configuration)
-        configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
 
-        context.createConfigurationContext(configuration)
-        resources.updateConfiguration(configuration, resources.displayMetrics)
+        return context.createConfigurationContext(config)
     }
 
     private fun restartActivity(context: Context) {
         if (context is Activity) {
             val intent = Intent(context, context::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
             context.finish()
         }
