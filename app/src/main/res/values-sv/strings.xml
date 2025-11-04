@@ -6,6 +6,11 @@
     <string name="info1">Här kommer information om appen, som vad vi siktar på att göra och hur den fungerar.</string>
     <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
     <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
+    <string name="get_in_touch_landing">Ta kontakt!</string>
+    <string name="choose_username">Välj ett användarnamn</string>
+    <string name="username_empty">Användarnamnet kan inte vara tomt</string>
+    <string name="submitting">Skickar...</string>
+    <string name="username_update_fail">Misslyckades med att uppdatera användarnamnet</string>
 
     <string name="network_unavailable">Nätverksanslutning ej tillgänglig</string>
 

@@ -16,6 +16,13 @@
     <string name="buttonInfo">
         This button will prompt you with a form that you fill in with what you\'re dealing with and send it to someone to provide the help needed.
     </string>
+    <string name="get_in_touch_landing">Get in touch!</string>
+    <string name="choose_username">Choose a username</string>
+    <string name="username_empty">Username cannot be empty</string>
+    <string name="submitting">Submitting...</string>
+    <string name="username_update_fail">Failed to update username</string>
+
+    <!-- Facebook -->
     <string
         name="facebook_app_id" translatable="false">1742868223033407
     </string>

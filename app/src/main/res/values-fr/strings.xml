@@ -6,6 +6,11 @@
     <string name="info1">Ici, vous trouverez des informations concernant l\'application, comme ce que nous visons à faire et comment elle fonctionne.</string>
     <string name="button">Si vous avez besoin d\'une aide sérieuse, veuillez contacter soit votre conseiller universitaire, soit l\'un de nos professionnels en utilisant ce bouton.</string>
     <string name="buttonInfo">Ce bouton vous présentera un formulaire que vous remplirez avec ce que vous vivez et l\'enverrez à quelqu\'un pour fournir l\'aide nécessaire.</string>
+    <string name="get_in_touch_landing">Contactez-nous !</string>
+    <string name="choose_username">Choisissez un nom d\'utilisateur</string>
+    <string name="username_empty">Le nom d\'utilisateur ne peut pas être vide</string>
+    <string name="submitting">En cours d\'envoi...</string>
+    <string name="username_update_fail">Échec de la mise à jour du nom d\'utilisateur</string>
 
     <string name="network_unavailable">Connexion réseau indisponible</string>
 
