@@ -4,11 +4,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.tryggakampus.R
 import com.example.tryggakampus.presentation.component.OutlinedInput
 
 @Composable
 fun UsernameDialog(viewModel: LandingPageViewModel) {
+    val context = LocalContext.current
+
     var usernameInput by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
 
@@ -17,11 +22,11 @@ fun UsernameDialog(viewModel: LandingPageViewModel) {
 
     AlertDialog(
         onDismissRequest = { /* Mandatory, cannot dismiss */ },
-        title = { Text(text = "Choose a username") },
+        title = { Text(stringResource(R.string.choose_username)) },
         text = {
             Column {
                 OutlinedInput(
-                    label = "Username",
+                    label = stringResource(R.string.username_label),
                     value = usernameInput,
                     onValueChange = { usernameInput = it; showError = false },
                     isError = showError || usernameError != null
@@ -29,7 +34,7 @@ fun UsernameDialog(viewModel: LandingPageViewModel) {
 
                 if (showError) {
                     Text(
-                        text = "Username cannot be empty",
+                        text = stringResource(R.string.username_empty),
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(top = 8.dp)
                     )
@@ -48,7 +53,7 @@ fun UsernameDialog(viewModel: LandingPageViewModel) {
             Button(
                 onClick = {
                     if (usernameInput.isNotBlank()) {
-                        viewModel.updateUsername(usernameInput) { success ->
+                        viewModel.updateUsername(usernameInput, context) { success ->
                             // The dialog will automatically close in LandingPage once ViewModel updates username
                         }
                     } else {
@@ -57,7 +62,7 @@ fun UsernameDialog(viewModel: LandingPageViewModel) {
                 },
                 enabled = !updating
             ) {
-                Text(text = if (updating) "Submitting..." else "Submit")
+                Text(text = if (updating) stringResource(R.string.submitting) else stringResource(R.string.submit))
             }
         },
         // No dismiss button since user must select a username

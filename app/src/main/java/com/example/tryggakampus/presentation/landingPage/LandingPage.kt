@@ -149,7 +149,7 @@ fun GetHelp() {
             )
         ) {
             Text(
-                text = "Get in touch!",
+                text = stringResource(R.string.get_in_touch_landing),
                 fontWeight = FontWeight.Bold
             )
         }

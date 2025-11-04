@@ -1,7 +1,9 @@
 package com.example.tryggakampus.presentation.landingPage
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tryggakampus.R
 import com.example.tryggakampus.domain.model.UserInfoModel
 import com.example.tryggakampus.domain.repository.UserInformationRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -42,9 +44,9 @@ class LandingPageViewModel : ViewModel() {
         }
     }
 
-    fun updateUsername(newUsername: String, onResult: (success: Boolean) -> Unit) {
+    fun updateUsername(newUsername: String, context: Context, onResult: (success: Boolean) -> Unit) {
         if (newUsername.isBlank()) {
-            _usernameError.value = "Username cannot be empty"
+            _usernameError.value = context.getString(R.string.username_empty)
             onResult(false)
             return
         }
@@ -53,7 +55,7 @@ class LandingPageViewModel : ViewModel() {
             _updatingUsername.value = true
             val available = UserInformationRepositoryImpl.isUsernameAvailable(newUsername)
             if (!available) {
-                _usernameError.value = "Username already taken"
+                _usernameError.value = context.getString(R.string.error_username_taken)
                 _updatingUsername.value = false
                 onResult(false)
                 return@launch
@@ -70,7 +72,7 @@ class LandingPageViewModel : ViewModel() {
                 _updatingUsername.value = false
                 onResult(true)
             } else {
-                _usernameError.value = "Failed to update username"
+                _usernameError.value = context.getString(R.string.username_update_fail)
                 _updatingUsername.value = false
                 onResult(false)
             }
