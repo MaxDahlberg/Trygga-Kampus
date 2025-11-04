@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date
 
 @Suppress("UNCHECKED_CAST", "Unused")
-class TestHabitTrackerViewModel(
+class HabitTrackerPageTest(
     private val mockRepo: HabitRepository = TestHabitRepository()
 ) {
     val viewModel: HabitTrackerViewModel = HabitTrackerViewModel(mockRepo)
