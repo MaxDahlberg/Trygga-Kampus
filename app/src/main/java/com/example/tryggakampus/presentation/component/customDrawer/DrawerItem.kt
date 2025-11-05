@@ -44,9 +44,21 @@ enum class DrawerItem(
         icon = R.drawable.baseline_articles_24,
         titleResId = R.string.drawer_stories
     ),
+    Videos(
+        icon = R.drawable.baseline_articles_24,
+        titleResId = R.string.drawer_videos
+    ),
     Advice(
         icon = R.drawable.baseline_advice_24,
         titleResId = R.string.drawer_advice
+    ),
+    Voice(
+        icon = R.drawable.baseline_articles_24,
+        titleResId = R.string.drawer_voice_note
+    ),
+    Game(
+        icon = R.drawable.baseline_diamond_24,
+        titleResId = R.string.drawer_game
     ),
     Login(
         icon = R.drawable.baseline_articles_24,

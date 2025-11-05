@@ -56,6 +56,9 @@
     <string name="drawer_login">Connexion</string>
     <string name="drawer_logout">Déconnexion</string>
     <string name="drawer_settings">Paramètres</string>
+    <string name="drawer_videos">Vidéos</string>
+    <string name="drawer_voice_note">Note vocale</string>
+    <string name="drawer_game">Jeu</string>
 
     <!-- Page des articles -->
     <string name="new_article">Nouvel article</string>
@@ -229,4 +232,29 @@
     <string name="settings_language_description">Changer la langue de l\'application</string>
     <string name="settings_language_restart_notice">L\'application va redémarrer pour appliquer les changements</string>
     <string name="settings_language_ai_note">Note : Les traductions ont été fournies par l\'IA</string>
+
+    <!-- Auto-évaluation Début -->
+    <string name="self_assessment_title">Auto-évaluation</string>
+    <string name="self_assessment_notes_label">Notes (facultatif, privé)</string>
+    <string name="self_assessment_save">Enregistrer</string>
+    <string name="self_assessment_saved">Enregistré</string>
+    <string name="self_assessment_saved_offline">Enregistré hors ligne</string>
+    <string name="self_assessment_delete">Supprimer l\’entrée de ce jour</string>
+    <string name="self_assessment_history">Historique</string>
+    <string name="empty_state_no_data">Aucune donnée pour le moment.</string>
+    <string name="select">Sélectionner</string>
+    <string name="export_csv">Exporter en CSV</string>
+    <string name="self_image">Image de soi</string>
+    <string name="self_esteem">Estime de soi</string>
+    <string name="self_reliance">Autonomie</string>
+    <!-- Auto-évaluation Fin -->
+
+    <!-- Notes vocales -->
+    <string name="voice_note_title">Note vocale</string>
+    <string name="start_recording">Commencer l\’enregistrement</string>
+    <string name="stop_recording">Arrêter l\’enregistrement</string>
+    <string name="play">Lire</string>
+    <string name="stop">Arrêter</string>
+    <string name="analyze_emotion">Analyser l\’émotion</string>
+    <string name="analyzing">Analyse en cours...</string>
 </resources>

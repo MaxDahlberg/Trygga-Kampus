@@ -55,6 +55,9 @@
     <string name="drawer_login">Logga in</string>
     <string name="drawer_logout">Logga ut</string>
     <string name="drawer_settings">Inställningar</string>
+    <string name="drawer_videos">Videor</string>
+    <string name="drawer_voice_note">Röstanteckning</string>
+    <string name="drawer_game">Spel</string>
 
     <!-- Artikelsida -->
     <string name="new_article">Ny artikel</string>
@@ -228,4 +231,29 @@
     <string name="settings_language_description">Ändra appens språk</string>
     <string name="settings_language_restart_notice">Appen kommer att starta om för att tillämpa ändringarna</string>
     <string name="settings_language_ai_note">Obs: Översättningar tillhandahölls av AI</string>
+
+    <!-- Självbedömning Början -->
+    <string name="self_assessment_title">Självbedömning</string>
+    <string name="self_assessment_notes_label">Anteckningar (valfritt, privat)</string>
+    <string name="self_assessment_save">Spara</string>
+    <string name="self_assessment_saved">Sparat</string>
+    <string name="self_assessment_saved_offline">Sparat offline</string>
+    <string name="self_assessment_delete">Ta bort post för denna dag</string>
+    <string name="self_assessment_history">Historik</string>
+    <string name="empty_state_no_data">Inga data ännu.</string>
+    <string name="select">Välj</string>
+    <string name="export_csv">Exportera CSV</string>
+    <string name="self_image">Självbild</string>
+    <string name="self_esteem">Självkänsla</string>
+    <string name="self_reliance">Självständighet</string>
+    <!-- Självbedömning Slut -->
+
+    <!-- Röstanteckningar -->
+    <string name="voice_note_title">Röstanteckning</string>
+    <string name="start_recording">Börja spela in</string>
+    <string name="stop_recording">Sluta spela in</string>
+    <string name="play">Spela upp</string>
+    <string name="stop">Stoppa</string>
+    <string name="analyze_emotion">Analysera känsla</string>
+    <string name="analyzing">Analyserar...</string>
 </resources>

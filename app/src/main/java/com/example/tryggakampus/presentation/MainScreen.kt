@@ -28,6 +28,7 @@ import com.example.tryggakampus.presentation.component.BottomAppBar
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawer
 import com.example.tryggakampus.presentation.component.customDrawer.CustomDrawerState
 import com.example.tryggakampus.presentation.component.customDrawer.DrawerItem
+import com.example.tryggakampus.presentation.component.customDrawer.PermanentSidebar
 import com.example.tryggakampus.presentation.component.customDrawer.isOpened
 import com.example.tryggakampus.presentation.component.customDrawer.opposite
 import com.example.tryggakampus.presentation.util.coloredShadow
@@ -74,8 +75,37 @@ fun MainScreen(
         label = "Animated Scale"
     )
 
-    BackHandler(enabled = drawerState.isOpened()) {
+    val usePermanentSidebar = false
+
+    BackHandler(enabled = !usePermanentSidebar && drawerState.isOpened()) {
         setDrawerState(CustomDrawerState.Closed)
+    }
+
+    if (usePermanentSidebar) {
+        Row(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .fillMaxSize()
+        ) {
+            PermanentSidebar(
+                selectedDrawerItem = selectedNavItem,
+                onNavigationItemClick = { setSelectedNavItem(it) },
+                modifier = Modifier
+            )
+
+            Box(modifier = Modifier.weight(1f)) {
+                MainContent(
+                    modifier = Modifier,
+                    drawerState = CustomDrawerState.Closed,
+                    onDrawerClick = { /* no-op, no drawer on wide layout */ },
+                    page = page,
+                    showTopBar = showBars.value && false // hide top bar when sidebar is visible
+                )
+            }
+        }
+        return
     }
 
     Box(

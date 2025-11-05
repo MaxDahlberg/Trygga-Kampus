@@ -140,18 +140,29 @@ fun GetHelp() {
             fontSize = 14.sp
         )
 
-        Button(
-            onClick = { navController.navigate(Routes.FormPage()) },
-            modifier = Modifier.padding(top = 26.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                contentColor = MaterialTheme.colorScheme.onBackground
-            )
-        ) {
-            Text(
-                text = stringResource(R.string.get_in_touch_landing),
-                fontWeight = FontWeight.Bold
-            )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(
+                onClick = { navController.navigate(Routes.FormPage()) },
+                modifier = Modifier.padding(top = 26.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.get_in_touch_landing),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Button(
+                onClick = { navController.navigate(Routes.SelfAssessmentPage()) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.onBackground
+                )
+            ) {
+                Text("Self-assessment")
+            }
         }
     }
 }

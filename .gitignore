@@ -1,16 +1,25 @@
-*.iml
-.gradle
+# Python server
+server/.env
+server/__pycache__/
+server/*.pyc
+server/proxy.log
+server/.venv/
+
+# Android/Gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+/.gradle/
+/build/
+app/build/
+*.iml
+.idea/
+app/voice.properties
+
+# OS
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
-.idea/
+Thumbs.db
+
