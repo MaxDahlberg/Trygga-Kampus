@@ -56,12 +56,16 @@ class LoginPageTest {
         provideContent(viewModel)
 
         // Valid email
-        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input", useUnmergedTree = true)
+            .performClick()
+            .performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")  // Sync
         composeTestRule.waitForIdle()
 
         // Valid password
-        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
+        composeTestRule.onNodeWithTag("password_input", useUnmergedTree = true)
+            .performClick()
+            .performTextInput("Password123!")
         viewModel.onPasswordChange("Password123!")
         composeTestRule.waitForIdle()
 
@@ -75,12 +79,16 @@ class LoginPageTest {
         provideContent(viewModel)
 
         // Invalid email
-        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("invalid")
+        composeTestRule.onNodeWithTag("email_input", useUnmergedTree = true)
+            .performClick()
+            .performTextInput("invalid")
         viewModel.onEmailChange("invalid")
         composeTestRule.waitForIdle()
 
         // Invalid password
-        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("short")
+        composeTestRule.onNodeWithTag("password_input", useUnmergedTree = true)
+            .performClick()
+            .performTextInput("short")
         viewModel.onPasswordChange("short")
         composeTestRule.waitForIdle()
 
@@ -93,15 +101,18 @@ class LoginPageTest {
         provideContent(viewModel)
 
         // Valid input
-        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input", useUnmergedTree = true)
+            .performClick().performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")
         composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
+        composeTestRule.onNodeWithTag("password_input", useUnmergedTree = true)
+            .performClick().performTextInput("Password123!")
         viewModel.onPasswordChange("Password123!")
         composeTestRule.waitForIdle()
 
         // Click sign in
         composeTestRule.onNodeWithTag("sign_in_button").performClick()
+        composeTestRule.waitForIdle()
 
         // Spinner shows
         composeTestRule.onNodeWithContentDescription("Loading").assertExists()
@@ -113,7 +124,8 @@ class LoginPageTest {
         provideContent(viewModel)
 
         // Enter valid email
-        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input", useUnmergedTree = true)
+            .performClick().performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")
         composeTestRule.waitForIdle()
 
@@ -161,6 +173,5 @@ class LoginPageTest {
 
         composeTestRule.onNodeWithTag("sign_up_button").performClick()
 
-        // Verify navigation (add NavController test if needed)
     }
 }

@@ -1,9 +1,9 @@
 package com.example.tryggakampus.presentation.landingPage
 
-import androidx.activity.ComponentActivity
+import android.app.Application
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -18,9 +18,9 @@ import org.junit.runner.RunWith
 class LandingPageKtTest {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
+    val composeTestRule = createComposeRule()
 
-    private fun resString(id: Int): String = composeTestRule.activity.getString(id)
+    private fun resString(id: Int): String = ApplicationProvider.getApplicationContext<Application>().getString(id)
 
     @Test
     fun landingPageTitleRendering() {
@@ -110,8 +110,10 @@ class LandingPageKtTest {
             }
         }
 
-        // Click the actual button content
+        // Click the button and assert navigation (adjust the expected route based on LandingPage implementation)
         composeTestRule.onNodeWithText("Get in touch!").performClick()
+        // Example assertion: replace with actual route if known
+        assert(navController.currentDestination?.route == "expected_route")
     }
 
     @Test
