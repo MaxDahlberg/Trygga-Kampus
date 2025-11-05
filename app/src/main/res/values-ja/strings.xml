@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">トリッガキャンパス</string>
+    <string name="title">トリッガキャンパスへようこそ！</string>
+    <string name="about_us">私たちについて</string>
+    <string name="info1">ここでは、アプリの目的や使い方などに関する情報を確認できます。</string>
+    <string name="button">本格的なサポートが必要な場合は、このボタンを使って大学のカウンセラーか専門家にご連絡ください。</string>
+    <string name="buttonInfo">このボタンを押すと、現在の状況を記入するフォームが表示され、必要な支援を提供する人に送信できます。</string>
+    <string name="get_in_touch_landing">お問い合わせください！</string>
+    <string name="choose_username">ユーザー名を選択してください</string>
+    <string name="username_empty">ユーザー名を空にすることはできません</string>
+    <string name="submitting">送信中...</string>
+    <string name="username_update_fail">ユーザー名の更新に失敗しました</string>
+
+    <string name="network_unavailable">ネットワーク接続が利用できません</string>
+
+    <!-- ログアウト -->
+    <string name="logout_prompt">ログアウトしようとしています！</string>
+    <string name="dismiss">キャンセル</string>
+    <string name="confirm">確認</string>
+
+    <!-- ストーリー -->
+    <string name="stories_page_title">あなたのストーリーを共有しましょう</string>
+    <string name="stories_title_label">タイトル（任意）</string>
+    <string name="stories_content_label">何を共有したいですか？</string>
+    <string name="stories_anonymous_label">匿名</string>
+    <string name="submit">送信</string>
+    <string name="add_story">ストーリーを追加</string>
+    <string name="minimum">最小</string>
+    <string name="maximum">最大</string>
+    <string name="comments">コメント</string>
+    <string name="submit_a_story">ストーリーを送信</string>
+    <string name="no_stories">表示するストーリーはありません。</string>
+    <string name="loading_stories">ストーリーを読み込み中 ...</string>
+    <string name="submit_your_story">ストーリーを送信</string>
+
+
+    <!-- ストーリーコメント -->
+    <string name="write_a_comment">コメントを書く...</string>
+    <string name="post">投稿</string>
+    <string name="no_comments">まだコメントはありません。最初にコメントしてください！</string>
+    <string name="unknown_user">不明なユーザー</string>
+    <string name="fetch_comment_error">コメントの読み込みに失敗しました。もう一度お試しください。</string>
+    <string name="post_comment_error">コメントの投稿に失敗しました。もう一度お試しください。</string>
+    <string name="delete_comment_error">コメントの削除中にエラーが発生しました。もう一度お試しください。</string>
+
+    <!-- サイドメニュー -->
+    <string name="drawer_home">ホーム</string>
+    <string name="drawer_profile">プロフィール</string>
+    <string name="drawer_articles">記事</string>
+    <string name="drawer_form">フォーム</string>
+    <string name="drawer_survey">アンケート</string>
+    <string name="drawer_habits">習慣管理</string>
+    <string name="drawer_stories">ストーリー</string>
+    <string name="drawer_advice">アドバイス</string>
+    <string name="drawer_login">ログイン</string>
+    <string name="drawer_logout">ログアウト</string>
+    <string name="drawer_settings">設定</string>
+    <string name="drawer_videos">ビデオ</string>
+    <string name="drawer_voice_note">ボイスメモ</string>
+    <string name="drawer_game">ゲーム</string>
+
+    <!-- 記事ページ -->
+    <string name="new_article">新しい記事</string>
+    <string name="delete_article">記事を削除</string>
+    <string name="article_title">タイトル</string>
+    <string name="summary">概要</string>
+    <string name="webpage_url">ウェブページのURL</string>
+    <string name="all_fields_required">すべての項目を入力してください。</string>
+    <string name="add">追加</string>
+    <string name="cancel">キャンセル</string>
+    <string name="loading_articles">記事を読み込み中...</string>
+    <string name="no_articles_available">利用可能な記事はありません。後で再度確認するか、更新してください。</string>
+    <string name="cancel_delete_mode">削除モードをキャンセル</string>
+    <string name="add_article">記事を追加</string>
+    <string name="enable_delete_mode">削除モードを有効にする</string>
+    <string name="confirm_deletion">削除を確認</string>
+    <string name="delete_confirmation">この記事を削除してもよろしいですか？</string>
+    <string name="delete">削除</string>
+    <string name="error">エラー</string>
+    <string name="unknown_error">不明なエラーが発生しました。</string>
+    <string name="ok">OK</string>
+    <string name="read_more">続きを読む</string>
+    <string name="no_link">リンクなし</string>
+
+    <!-- フォーム -->
+    <string name="get_in_touch">お問い合わせ</string>
+    <string name="receive_help_text">必要なサポートを受けてください</string>
+    <string name="enter_your_name">お名前を入力してください</string>
+    <string name="subject_field">件名</string>
+    <string name="enter_your_message">ここにメッセージを入力してください</string>
+    <string name="fill_out_all_fields">名前を除くすべての項目を入力してください。</string>
+    <string name="email_body_template">こんにちは、私の名前は%1$sです。\n\n%2$s\n\nありがとうございます！</string>
+
+    <!-- アンケート -->
+    <string name="survey_title">アンケート</string>
+    <string name="question_prefix">質問 %d：</string>
+    <string name="your_answer">あなたの回答</string>
+    <string name="submit_answers">回答を送信</string>
+    <string name="survey_complete_title">アンケート完了</string>
+    <string name="survey_complete_message">アンケートへのご協力ありがとうございます！</string>
+    <string name="survey_submit_success">アンケートが正常に送信されました！</string>
+    <string name="survey_submit_failed">アンケートの送信に失敗しました</string>
+
+    <!-- アンケート質問 -->
+    <string name="survey_question_1">勉強に対する薬物やアルコールの影響について、どのくらい考えますか？</string>
+    <string name="survey_question_2">仲間に溶け込むために、薬物やアルコールを使うよう圧力を感じたことがありますか？</string>
+    <string name="survey_question_3">大学環境での物質使用は普通だと思いますか？</string>
+    <string name="survey_question_4">社交の場で薬物やアルコールに「ノー」と言う自信はどのくらいありますか？</string>
+    <string name="survey_question_5">ストレスや大学生活のプレッシャーに対処するために、アルコールや薬物を使用することはどのくらいありますか？</string>
+    <string name="survey_question_6">大学で依存症サポートを求めることにはスティグマ（偏見）があると思いますか？</string>
+    <string name="weekly_progress">週間進捗 - 第%1$d週</string>
+    <string name="daily_progress">日次進捗</string>
+    <string-array name="weekdays">
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+        <item>日</item>
+    </string-array>
+
+    <string name="week">第%1$d週</string>
+    <string name="today">今日の進捗</string>
+    <string name="no_habits">まだ習慣がありません。最初の習慣を追加しましょう！</string>
+    <string name="description">説明（任意）</string>
+    <string name="habit_title">習慣のタイトル</string>
+    <string name="add_new_habit">新しい習慣を追加</string>
+
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">サインアウト</string>
+    <string name="email_hint">メールアドレス *</string>
+    <string name="password_hint">パスワード *</string>
+    <string name="log_in_button_text">ログイン</string>
+    <string name="forgot_password_text">パスワードをお忘れですか？</string>
+    <string name="create_account_text">アカウント作成</string>
+    <string name="home">ホーム</string>
+    <string name="news">ニュース</string>
+    <string name="map">地図</string>
+    <string name="faq">FAQ</string>
+    <string name="report">報告</string>
+    <string name="weekly_progress_title">週間進捗</string>
+
+    <!-- プロフィール -->
+    <string name="profile_title">プロフィール</string>
+    <string name="account_information">アカウント情報</string>
+    <string name="username_label">ユーザー名</string>
+    <string name="email_label">メールアドレス</string>
+    <string name="my_hobbies">趣味</string>
+    <string name="save_hobbies">趣味を保存</string>
+    <string name="change_username">ユーザー名を変更</string>
+    <string name="password_required">パスワード（必須）</string>
+    <string name="new_username">新しいユーザー名</string>
+    <string name="update_username">ユーザー名を更新</string>
+    <string name="change_password">パスワードを変更</string>
+    <string name="current_password">現在のパスワード</string>
+    <string name="new_password">新しいパスワード</string>
+    <string name="repeat_new_password">新しいパスワードを再入力</string>
+    <string name="update_password">パスワードを更新</string>
+    <string name="account_data">アカウントとデータ</string>
+    <string name="request_my_data">データをリクエスト</string>
+    <string name="delete_account">データとアカウントを削除</string>
+    <string name="hobbies_saved_success">趣味が正常に保存されました！</string>
+    <string name="username_changed_success">ユーザー名が正常に変更されました！</string>
+    <string name="password_changed_success">パスワードが正常に変更されました！</string>
+    <string name="password_rules">パスワードは8文字以上で、大文字、数字、特殊文字を含める必要があります。</string>
+
+    <!-- ダイアログ -->
+    <string name="confirm_account_deletion">アカウント削除の確認</string>
+    <string name="delete_account_warning">個人データとアカウントはGDPRに従って削除されます。この操作は元に戻せません。</string>
+    <string name="enter_password">パスワードを入力してください</string>
+    <string name="personal_data_request">個人データのリクエスト</string>
+    <string name="personal_data_request_message">リクエストを押すと、サーバーから個人データを取得できます。準備ができたらダウンロードできます。</string>
+    <string name="personal_data_ready_message">個人データの準備ができました。ダウンロードを押して保存してください。</string>
+    <string name="request">リクエスト</string>
+    <string name="download">ダウンロード</string>
+
+    <!-- エラーメッセージ -->
+    <string name="error_fill_all_fields">すべての項目を入力してください。</string>
+    <string name="error_user_email_unavailable">このメールアドレスは利用できません。</string>
+    <string name="error_username_taken">このユーザー名は既に使用されています。</string>
+    <string name="error_update_username_failed">ユーザー名の更新に失敗しました：%1$s</string>
+    <string name="error_update_hobbies">趣味の更新に失敗しました</string>
+    <string name="error_update_hobbies_detail">趣味の更新に失敗しました：%1$s</string>
+    <string name="error_invalid_passwords">パスワードが一致しないか無効です。</string>
+    <string name="error_password_change_failed">パスワード変更に失敗しました：%1$s</string>
+    <string name="error_password_required">アカウント削除にはパスワードが必要です。</string>
+    <string name="error_account_deletion_failed">アカウント削除に失敗しました：%1$s</string>
+
+    <!-- 趣味 -->
+    <string name="hobby_reading">読書</string>
+    <string name="hobby_gaming">ゲーム</string>
+    <string name="hobby_traveling">旅行</string>
+    <string name="hobby_cooking">料理</string>
+    <string name="hobby_sports">スポーツ</string>
+    <string name="hobby_music">音楽</string>
+    <string name="hobby_art">アート</string>
+    <string name="hobby_photography">写真</string>
+    <string name="hobby_dancing">ダンス</string>
+    <string name="hobby_hiking">ハイキング</string>
+    <string name="hobby_fishing">釣り</string>
+    <string name="hobby_swimming">水泳</string>
+    <string name="hobby_coding">プログラミング</string>
+    <string name="hobby_yoga">ヨガ</string>
+    <string name="hobby_meditation">瞑想</string>
+    <string name="hobby_writing">執筆</string>
+    <string name="hobby_cycling">サイクリング</string>
+    <string name="hobby_board_games">ボードゲーム</string>
+    <string name="hobby_movies">映画</string>
+    <string name="hobby_gardening">ガーデニング</string>
+    <string name="hobby_knitting">編み物</string>
+    <string name="hobby_crafts">クラフト</string>
+    <string name="hobby_volunteering">ボランティア</string>
+    <string name="hobby_languages">語学</string>
+    <string name="hobby_running">ランニング</string>
+    <string name="hobby_singing">歌</string>
+    <string name="hobby_collecting">収集</string>
+    <string name="hobby_shopping">買い物</string>
+    <string name="hobby_theater">演劇</string>
+    <string name="hobby_baking">お菓子作り</string>
+
+    <!-- アプリテーマ -->
+    <string name="app_theme_title">アプリのテーマ</string>
+    <string name="app_theme_description">アプリのテーマを変更</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_system">システム</string>
+    <string name="app_theme_restart_notice">変更を適用するためにアプリが再起動する場合があります</string>
+
+    <string name="settings_language_title">アプリの言語</string>
+    <string name="settings_language_description">アプリの言語を変更する</string>
+    <string name="settings_language_restart_notice">変更を適用するためにアプリが再起動します</string>
+    <string name="settings_language_ai_note">注：翻訳はAIによって提供されました</string>
+
+    <!-- 自己評価 開始 -->
+    <string name="self_assessment_title">自己評価</string>
+    <string name="self_assessment_notes_label">メモ（任意・非公開）</string>
+    <string name="self_assessment_save">保存</string>
+    <string name="self_assessment_saved">保存しました</string>
+    <string name="self_assessment_saved_offline">オフラインで保存しました</string>
+    <string name="self_assessment_delete">この日の記録を削除</string>
+    <string name="self_assessment_history">履歴</string>
+    <string name="empty_state_no_data">データはまだありません。</string>
+    <string name="select">選択</string>
+    <string name="export_csv">CSVとしてエクスポート</string>
+    <string name="self_image">自己イメージ</string>
+    <string name="self_esteem">自尊心</string>
+    <string name="self_reliance">自立</string>
+    <!-- 自己評価 終了 -->
+
+    <!-- ボイスメモ -->
+    <string name="voice_note_title">ボイスメモ</string>
+    <string name="start_recording">録音を開始</string>
+    <string name="stop_recording">録音を停止</string>
+    <string name="play">再生</string>
+    <string name="stop">停止</string>
+    <string name="analyze_emotion">感情を分析</string>
+    <string name="analyzing">分析中...</string>
+</resources>

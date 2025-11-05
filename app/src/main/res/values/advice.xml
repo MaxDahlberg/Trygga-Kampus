@@ -2,6 +2,9 @@
 <resources>
 
     <!-- Category Titles -->
+    <string name="select_category">Select category</string>
+    <string name="back">Back</string>
+
     <string name="preventive_advice_category_title">Preventive Advice</string>
     <string name="support_advice_category_title">Helping a Friend</string>
     <string name="family_advice_category_title">Talking to My Family</string>
@@ -36,7 +39,7 @@
         Stress and emotions can lead to unhealthy behaviors if not managed well.
         Instead of turning to substances, try cultivating practices like mindfulness,
         physical activity, or creative outlets such as art, writing, or music. These healthy
-        coping mechanisms can provide a constructive way to release stress and manage emotions,
+        copng mechanisms can provide a constructive way to release stress and manage emotions,
         ultimately supporting your journey toward a balanced lifestyle
     </string>
 

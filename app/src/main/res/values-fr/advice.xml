@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Category Titles -->
+    <string name="select_category">Sélectionner une catégorie</string>
+    <string name="back">Retour</string>
+
+    <string name="preventive_advice_category_title">Conseils Préventifs</string>
+    <string name="support_advice_category_title">Aider un Ami</string>
+    <string name="family_advice_category_title">Parler à Ma Famille</string>
+
+    <!-- Preventive Advice Cards -->
+    <string name="preventive_advice_title_1">
+        Établir des Limites Claires
+    </string>
+    <string name="preventive_advice_text_1">
+        Établir des limites personnelles claires vous aide à rester concentré et à prioriser les activités
+        qui soutiennent votre bien-être. Fixer ces limites implique également de reconnaître vos
+        propres limites et de faire des choix délibérés pour éviter les environnements ou situations sociales
+        où des substances ou comportements addictifs sont présents. Communiquez vos limites à
+        vos amis et à votre famille pour obtenir leur soutien et éviter les malentendus.
+    </string>
+
+    <string name="preventive_advice_title_2">
+        Construire un Réseau de Soutien
+    </string>
+    <string name="preventive_advice_text_2">
+        Entourez-vous d\'amis, de famille et de mentors qui encouragent des habitudes
+        saines et qui sont là pour vous soutenir dans les moments difficiles. Un réseau de soutien solide
+        peut vous rappeler vos objectifs et vous aider à résister aux tentations pendant les périodes difficiles.
+        N\'hésitez pas à demander conseil à ceux qui ont évité ou surmonté avec succès
+        des addictions, car ils peuvent fournir des conseils précieux et des encouragements.
+    </string>
+
+    <string name="preventive_advice_title_3">
+        Développer des Mécanismes d\'Adaptation Sains
+    </string>
+    <string name="preventive_advice_text_3">
+        Le stress et les émotions peuvent conduire à des comportements malsains s\'ils ne sont pas bien gérés.
+        Au lieu de vous tourner vers des substances, essayez de cultiver des pratiques comme la pleine conscience,
+        l\'activité physique, ou des exutoires créatifs tels que l\'art, l\'écriture ou la musique. Ces mécanismes
+        d\'adaptation sains peuvent fournir un moyen constructif de libérer le stress et de gérer les émotions,
+        soutenant finalement votre cheminement vers un mode de vie équilibré.
+    </string>
+
+    <string name="preventive_advice_title_4">
+        S\'Éduquer
+    </string>
+    <string name="preventive_advice_text_4">
+        Comprendre les risques associés aux comportements addictifs vous permet de faire
+        des choix éclairés et de reconnaître les signes avant-coureurs tôt. Éduquez-vous sur la façon dont
+        différentes substances ou habitudes peuvent affecter votre santé physique, votre bien-être mental,
+        et vos relations personnelles. La sensibilisation peut vous permettre de prendre des décisions
+        conscientes qui s\'alignent sur vos objectifs et vos valeurs.
+    </string>
+
+    <string name="preventive_advice_title_5">
+        Fixer des Objectifs Personnels
+    </string>
+    <string name="preventive_advice_text_5">
+        Fixer des objectifs clairs et réalisables - à court et à long terme - donne à votre
+        vie un but et une direction. En vous concentrant sur des activités significatives,
+        vous construisez une vie qui reflète vos valeurs et vos aspirations. Poursuivez
+        des réalisations qui favorisent l\'épanouissement personnel, que ce soit en développant
+        de nouvelles compétences, en améliorant les relations ou en travaillant à des étapes professionnelles.
+    </string>
+
+    <!-- Support Advice Cards -->
+    <string name="support_advice_title_1">
+        Être un Bon Auditeur
+    </string>
+    <string name="support_advice_text_1">
+        Parfois, la meilleure façon de soutenir quelqu\'un est simplement d\'écouter.
+        Faites savoir à votre ami que vous êtes là pour lui en étant présent et en lui offrant
+        un espace sûr pour exprimer ses sentiments sans jugement. Évitez d\'offrir
+        des solutions trop rapidement, et au lieu de cela, écoutez attentivement ce qu\'il vit
+        et rassurez-le en lui disant qu\'il n\'est pas seul.
+    </string>
+
+    <string name="support_advice_title_2">
+        Éviter les Comportements de Facilitation
+    </string>
+    <string name="support_advice_text_2">
+        Soutenir un ami ne signifie pas encourager un comportement nuisible. Évitez
+        les actions qui pourraient involontairement faciliter son addiction, comme excuser
+        un comportement nuisible ou l\'aider à se procurer des substances addictives. Au lieu de cela, encouragez
+        des habitudes saines et établissez des limites fermes. Faites savoir à votre ami que vous vous souciez de lui tout en promouvant
+        un changement positif.
+    </string>
+
+    <string name="support_advice_title_3">
+        Offrir des Encouragements Positifs
+    </string>
+    <string name="support_advice_text_3">
+        Aidez votre ami à rester motivé en reconnaissant ses forces et en célébrant
+        ses réalisations, aussi petites soient-elles. Les encouragements positifs peuvent renforcer
+        son estime de soi et le faire se sentir soutenu alors qu\'il travaille vers le rétablissement.
+        Rappelez-lui ses succès passés et rassurez-le sur le fait que le progrès est possible.
+    </string>
+
+    <string name="support_advice_title_4">
+        S\'Éduquer sur l\'Addiction
+    </string>
+    <string name="support_advice_text_4">
+        Comprendre l\'addiction peut vous permettre d\'offrir un soutien plus éclairé.
+        Renseignez-vous sur les signes, les déclencheurs et les ressources disponibles, afin de pouvoir répondre
+        efficacement si votre ami demande votre aide. Cette connaissance peut également prévenir
+        les malentendus et vous aider à communiquer avec compassion et de manière constructive.
+    </string>
+
+    <string name="support_advice_title_5">
+        Encourager l\'Aide Professionnelle
+    </string>
+    <string name="support_advice_text_5">
+        Si votre ami a des difficultés, suggérez-lui doucement de envisager un soutien professionnel,
+        comme des conseils, une thérapie ou un groupe de soutien. Proposez de l\'accompagner à
+        sa première séance si cela le met plus à l\'aise. Demander de l\'aide peut
+        être intimidant, mais savoir qu\'il n\'est pas seul peut faire une énorme différence.
+    </string>
+
+    <!-- Family Advice Cards -->
+    <string name="family_advice_title_1">
+        Préparer ce que Vous Voulez Dire
+    </string>
+    <string name="family_advice_text_1">
+        Prenez le temps de planifier ce que vous voulez communiquer à votre famille.
+        Réfléchissez aux points que vous voulez exprimer et aux émotions que vous souhaitez transmettre.
+        Soyez honnête sur vos difficultés et partagez des moyens spécifiques par lesquels leur soutien peut aider.
+        Cette clarté peut créer une conversation plus productive et encourager la compréhension.
+    </string>
+
+    <string name="family_advice_title_2">
+        Choisir le Bon Moment
+    </string>
+    <string name="family_advice_text_2">
+        Trouvez un cadre calme et privé où vous pouvez parler ouvertement sans distractions.
+        Évitez d\'engager la conversation lorsque les tensions sont élevées ou pendant les périodes chargées.
+        Choisissez un moment où les membres de votre famille sont disponibles et disposés à écouter,
+        ce qui leur facilitera la tâche de s\'engager pleinement dans votre message.
+    </string>
+
+    <string name="family_advice_title_3">
+        Exprimer Vos Sentiments
+    </string>
+    <string name="family_advice_text_3">
+        Soyez ouvert sur la façon dont l\'addiction vous a affecté physiquement, émotionnellement et socialement.
+        Faites savoir à votre famille pourquoi vous avez besoin de leur soutien et ce que cela signifie pour vous.
+        Cette honnêteté peut favoriser l\'empathie et aider votre famille à comprendre l\'importance
+        de leur rôle dans votre parcours.
+    </string>
+
+    <string name="family_advice_title_4">
+        Être Ouvert à Leurs Réactions
+    </string>
+    <string name="family_advice_text_4">
+        Les membres de votre famille peuvent répondre avec une gamme d\'émotions, y compris l\'inquiétude,
+        la confusion ou la frustration. Soyez prêt à écouter leurs réponses
+        sans devenir défensif. Donnez-leur l\'espace de poser des questions afin qu\'ils puissent
+        mieux comprendre votre situation et comment ils pourraient vous soutenir.
+    </string>
+
+    <string name="family_advice_title_5">
+        Demander Leur Soutien
+    </string>
+    <string name="family_advice_text_5">
+        Expliquez à votre famille comment ils peuvent aider, que ce soit en assistant à des séances de conseil,
+        en recherchant des ressources ensemble, ou simplement en étant là quand vous avez besoin de parler.
+        Reconnaissez que leur soutien peut faire une différence, et exprimez votre gratitude pour
+        toute aide qu\'ils sont prêts à fournir.
+    </string>
+
+</resources>

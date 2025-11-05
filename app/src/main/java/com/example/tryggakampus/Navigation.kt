@@ -31,6 +31,10 @@ import com.example.tryggakampus.presentation.advicePage.AdvicePage
 import com.example.tryggakampus.presentation.surveyPage.SurveyPage
 import com.example.tryggakampus.presentation.authentication.loginPage.LoginPage
 import com.example.tryggakampus.presentation.authentication.registerPage.RegisterPage
+import com.example.tryggakampus.presentation.habitTracker.HabitTrackerPage
+import com.example.tryggakampus.presentation.habitTracker.HabitTrackerViewModel
+import com.example.tryggakampus.data.repository.LocalHabitRepository
+
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -65,6 +69,10 @@ sealed interface Routes {
 
     @Serializable  data class FormPage(val title: String = "Form"): Routes {
         override fun routeName() = "FormPage"
+    }
+
+    @Serializable data class HabitTrackerPage(val title: String = "Habit Tracker"): Routes {
+        override fun routeName() = "HabitTrackerPage"
     }
 
     @Serializable object StoriesNavGraph {
@@ -161,6 +169,18 @@ fun Navigation(
                 composable<Routes.SurveyPage> {
                     val args = it.toRoute<Routes.SurveyPage>()
                     SurveyPage(args.title)
+                }
+
+                composable<Routes.HabitTrackerPage> {
+                    val args = it.toRoute<Routes.HabitTrackerPage>()
+                    // Get the LocalContext to pass to the repository
+                    val context = androidx.compose.ui.platform.LocalContext.current
+                    val habitRepository = LocalHabitRepository(context)
+                    val viewModel = HabitTrackerViewModel(habitRepository)
+                    HabitTrackerPage(
+                        viewModel = viewModel,
+                        onNavigateBack = { navController.popBackStack() }
+                    )
                 }
 
                 composable<Routes.SelfAssessmentPage> {

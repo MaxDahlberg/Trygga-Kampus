@@ -43,17 +43,22 @@ fun RegisterPage() {
 
         FormContainer {
             OutlinedInput(
-                label = "email",
+                label = "Email",
                 value = vm.email,
                 onValueChange = { vm.onEmailChange(it) },
                 isError = !vm.emailIsValid
             )
 
             OutlinedInput(
-                label = "password",
+                label = "Password",
                 value = vm.password,
                 onValueChange = { vm.onPasswordChange(it) },
-                isError = !vm.passwordIsValid
+                isError = !vm.passwordIsValid,
+                showPasswordRules = true,
+                onVisibilityChange = { vm.togglePasswordVisibility() },
+                isPassword = true,
+                isPasswordVisible = vm.isPasswordVisible
+
             )
 
             BlockButton (

@@ -16,5 +16,10 @@ app/voice.properties
 
 # OS
 .DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
 Thumbs.db
 

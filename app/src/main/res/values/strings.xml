@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Trygga Campus</string>
     <string name="title">
@@ -15,18 +16,241 @@
     <string name="buttonInfo">
         This button will prompt you with a form that you fill in with what you\'re dealing with and send it to someone to provide the help needed.
     </string>
-    <string
-        name="facebook_app_id">1742868223033407
-    </string>
-    <string name="fb_login_protocol_scheme">fb1742868223033407</string>
-    <string name="facebook_client_token">7be65d0c45a0a5076fb19f2f685d12be</string>
+    <string name="get_in_touch_landing">Get in touch!</string>
+    <string name="choose_username">Choose a username</string>
+    <string name="username_empty">Username cannot be empty</string>
+    <string name="submitting">Submitting...</string>
+    <string name="username_update_fail">Failed to update username</string>
 
-    <!-- Stories Begin -->
+    <!-- Facebook -->
+    <string
+        name="facebook_app_id" translatable="false">1742868223033407
+    </string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1742868223033407</string>
+    <string name="facebook_client_token" translatable="false">7be65d0c45a0a5076fb19f2f685d12be</string>
+
+    <string name="network_unavailable">Network connection unavailable</string>
+
+    <!-- Log out -->
+    <string name="logout_prompt">You are about to logout!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="confirm">Confirm</string>
+
+    <!-- Stories -->
     <string name="stories_page_title">Share your story with others</string>
     <string name="stories_title_label">Title (Optional)</string>
     <string name="stories_content_label">What would you like to share?</string>
     <string name="stories_anonymous_label">Anonymous</string>
-    <!-- Stories End -->
+    <string name="submit">Submit</string>
+    <string name="add_story">Add a story</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="comments">Comments</string>
+    <string name="submit_a_story">Submit a story</string>
+    <string name="no_stories">There are no stories to show.</string>
+    <string name="loading_stories">Loading stories ...</string>
+    <string name="submit_your_story">Submit your story</string>
+
+    <!-- Story comments -->
+    <string name="write_a_comment">Write a comment...</string>
+    <string name="post">Post</string>
+    <string name="no_comments">No comments yet. Be the first to comment!</string>
+    <string name="unknown_user">Unknown User</string>
+    <string name="fetch_comment_error">Failed to load comments. Please try again.</string>
+    <string name="post_comment_error">Failed to post comment. Please try again.</string>
+    <string name="delete_comment_error">Error deleting comment. Please try again.</string>
+
+
+    <!-- side menu-->
+    <string name="drawer_home">Home</string>
+    <string name="drawer_profile">Profile</string>
+    <string name="drawer_articles">Articles</string>
+    <string name="drawer_form">Form</string>
+    <string name="drawer_survey">Survey</string>
+    <string name="drawer_habits">Habit Tracker</string>
+    <string name="drawer_stories">Stories</string>
+    <string name="drawer_advice">Advice</string>
+    <string name="drawer_login">Login</string>
+    <string name="drawer_logout">Logout</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_videos">Videos</string>
+    <string name="drawer_voice_note">Voice Note</string>
+    <string name="drawer_game">Game</string>
+
+    <!-- Article page-->
+    <string name="new_article">New Article</string>
+    <string name="delete_article">Delete Article</string>
+    <string name="article_title">Title</string>
+    <string name="summary">Summary</string>
+    <string name="webpage_url">Webpage URL</string>
+    <string name="all_fields_required">All fields are required.</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="loading_articles">Loading articles ...</string>
+    <string name="no_articles_available">No articles available. Please check back later or try refreshing.</string>
+    <string name="cancel_delete_mode">Cancel Delete Mode</string>
+    <string name="add_article">Add Article</string>
+    <string name="enable_delete_mode">Enable Delete Mode</string>
+    <string name="confirm_deletion">Confirm Deletion</string>
+    <string name="delete_confirmation">Are you sure you want to delete this article?</string>
+    <string name="delete">Delete</string>
+    <string name="error">Error</string>
+    <string name="unknown_error">An unknown error occurred.</string>
+    <string name="ok">OK</string>
+    <string name="read_more">Read More</string>
+    <string name="no_link">No Link</string>
+
+    <!-- Form -->
+    <string name="get_in_touch">Get in touch</string>
+    <string name="receive_help_text">Receive the help you need</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="subject_field">Subject Field</string>
+    <string name="enter_your_message">Enter your message here</string>
+    <string name="fill_out_all_fields">Please fill out all fields except for Name.</string>
+    <string name="email_body_template">Hello, my name is %1$s.\n\n%2$s\n\nThank you!</string>
+
+    <!-- Survey -->
+    <string name="survey_title">Survey</string>
+    <string name="question_prefix">Question %d:</string>
+    <string name="your_answer">Your Answer</string>
+    <string name="submit_answers">Submit Answers</string>
+    <string name="survey_complete_title">Survey Complete</string>
+    <string name="survey_complete_message">Thank you for completing the survey!</string>
+    <string name="survey_submit_success">Survey submitted successfully!</string>
+    <string name="survey_submit_failed">Survey failed to submit</string>
+
+
+    <!-- Survey Questions -->
+    <string name="survey_question_1">How often do you think about the effects of drugs or alcohol on your studies?</string>
+    <string name="survey_question_2">Have you ever felt pressured to use drugs or alcohol to fit in with your peers?</string>
+    <string name="survey_question_3">Do you feel that substance use is normalized in your university environment?</string>
+    <string name="survey_question_4">How confident do you feel about saying \'no\' to drugs or alcohol in a social setting?</string>
+    <string name="survey_question_5">How often do you find yourself using substances (e.g., alcohol, drugs) to cope with stress or pressure from university life?</string>
+    <string name="survey_question_6">Do you believe there\'s a stigma around seeking help for addiction at your university?</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="email_hint">Email *</string>
+    <string name="password_hint">Password *</string>
+    <string name="log_in_button_text">Log In</string>
+    <string name="forgot_password_text">Forgot password?</string>
+    <string name="create_account_text">Create an account</string>
+    <string name="home">Home</string>
+    <string name="news">News</string>
+    <string name="map">Map</string>
+    <string name="faq">FAQ</string>
+    <string name="report">Report</string>
+
+    <string name="weekly_progress_title">Weekly Progress</string>
+
+    <string name="weekly_progress">Weekly Progress - Week %1$d</string>
+    <string name="daily_progress">Daily Progress</string>
+    <string-array name="weekdays">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string name="week">Week %1$d</string>
+    <string name="today">Daily Progress</string>
+    <string name="no_habits">No habits yet. Add your first habit!</string>
+    <string name="description">Description (optional)</string>
+    <string name="habit_title">Habit Title</string>
+    <string name="add_new_habit">Add New Habit</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profile</string>
+    <string name="account_information">Account Information</string>
+    <string name="username_label">Username</string>
+    <string name="email_label">Email</string>
+    <string name="my_hobbies">My Hobbies</string>
+    <string name="save_hobbies">Save Hobbies</string>
+    <string name="change_username">Change Username</string>
+    <string name="password_required">Password (required)</string>
+    <string name="new_username">New Username</string>
+    <string name="update_username">Update Username</string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="repeat_new_password">Repeat New Password</string>
+    <string name="update_password">Update Password</string>
+    <string name="account_data">Account And Data</string>
+    <string name="request_my_data">Request My Data</string>
+    <string name="delete_account">Delete My Data and Account</string>
+    <string name="hobbies_saved_success">Hobbies saved successfully!</string>
+    <string name="username_changed_success">Username changed successfully!</string>
+    <string name="password_changed_success">Password changed successfully!</string>
+    <string name="password_rules">Password must be 8+ characters with uppercase, number, and special character.</string>
+
+    <!-- Dialogs -->
+    <string name="confirm_account_deletion">Confirm Account Deletion</string>
+    <string name="delete_account_warning">Your personal data and account will be deleted in compliance with GDPR. This action is permanent and cannot be undone.</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="personal_data_request">Personal Data Request</string>
+    <string name="personal_data_request_message">Press Request to fetch your personal data from the server. When it\'s ready, you\'ll be able to download it.</string>
+    <string name="personal_data_ready_message">Your personal data is ready. Press Download to save it to your device.</string>
+    <string name="request">Request</string>
+    <string name="download">Download</string>
+
+    <!-- ViewModel error messages -->
+    <string name="error_fill_all_fields">Please fill in all fields.</string>
+    <string name="error_user_email_unavailable">User email not available.</string>
+    <string name="error_username_taken">This username is already taken.</string>
+    <string name="error_update_username_failed">Failed to update username: %1$s</string>
+    <string name="error_update_hobbies">Failed to update hobbies</string>
+    <string name="error_update_hobbies_detail">Failed to update hobbies: %1$s</string>
+    <string name="error_invalid_passwords">Passwords do not match or are invalid.</string>
+    <string name="error_password_change_failed">Password change failed: %1$s</string>
+    <string name="error_password_required">Password required to delete account.</string>
+    <string name="error_account_deletion_failed">Account deletion failed: %1$s</string>
+
+    <!-- Hobbies -->
+    <string name="hobby_reading">Reading</string>
+    <string name="hobby_gaming">Gaming</string>
+    <string name="hobby_traveling">Traveling</string>
+    <string name="hobby_cooking">Cooking</string>
+    <string name="hobby_sports">Sports</string>
+    <string name="hobby_music">Music</string>
+    <string name="hobby_art">Art</string>
+    <string name="hobby_photography">Photography</string>
+    <string name="hobby_dancing">Dancing</string>
+    <string name="hobby_hiking">Hiking</string>
+    <string name="hobby_fishing">Fishing</string>
+    <string name="hobby_swimming">Swimming</string>
+    <string name="hobby_coding">Coding</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Meditation</string>
+    <string name="hobby_writing">Writing</string>
+    <string name="hobby_cycling">Cycling</string>
+    <string name="hobby_board_games">Board Games</string>
+    <string name="hobby_movies">Movies</string>
+    <string name="hobby_gardening">Gardening</string>
+    <string name="hobby_knitting">Knitting</string>
+    <string name="hobby_crafts">Crafts</string>
+    <string name="hobby_volunteering">Volunteering</string>
+    <string name="hobby_languages">Languages</string>
+    <string name="hobby_running">Running</string>
+    <string name="hobby_singing">Singing</string>
+    <string name="hobby_collecting">Collecting</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Theater</string>
+    <string name="hobby_baking">Baking</string>
+
+    <!-- Theme settings -->
+    <string name="app_theme_title">App Theme</string>
+    <string name="app_theme_description">Change the theme of the app</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+    <string name="app_theme_restart_notice">The app may restart to apply changes</string>
+
+    <string name="settings_language_title">App Language</string>
+    <string name="settings_language_description">Change the language of the app</string>
+    <string name="settings_language_restart_notice">The app will restart to apply changes</string>
+    <string name="settings_language_ai_note">Note: Translations was provided by AI</string>
 
     <!-- Self-assessment Begin -->
     <string name="self_assessment_title">Self-assessment</string>

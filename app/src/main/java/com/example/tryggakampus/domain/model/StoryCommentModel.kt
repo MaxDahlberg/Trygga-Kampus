@@ -9,6 +9,6 @@ data class StoryCommentModel(
     val userId: String= "",
     val author: String? = null,
     val content: String = "No content",
-    val anonymous: Boolean = false,
+    val anonymous: Boolean = true,
     val createdAt: Long = System.currentTimeMillis()
 )

@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -49,8 +50,16 @@ fun FormPage(title: String) {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Get in touch", fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-                Text("receive the help you need", fontSize = 14.sp) // not sure, Per might want a different text here
+                Text(
+                    stringResource(R.string.get_in_touch),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    stringResource(R.string.receive_help_text),
+                    fontSize = 14.sp
+                )
+
                 FormsFields(
                     name.value.text,
                     onChangeName = { name.value = TextFieldValue(it) },
@@ -79,11 +88,11 @@ fun FormsFields(
 
     message: String,
     onChangeMessage: (s: String) -> Unit
-){
+) {
     OutlinedInput(
         value = name,
         onValueChange = onChangeName,
-        label = "Enter your name",
+        label = stringResource(R.string.enter_your_name),
         singleLine = true
     )
 
@@ -92,7 +101,7 @@ fun FormsFields(
     OutlinedInput(
         value = subject,
         onValueChange = onChangeSubject,
-        label = "Subject Field",
+        label = stringResource(R.string.subject_field),
         singleLine = true
     )
 
@@ -101,7 +110,7 @@ fun FormsFields(
     OutlinedInput(
         value = message,
         onValueChange = onChangeMessage,
-        label = "Enter your message here"
+        label = stringResource(R.string.enter_your_message)
     )
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -118,14 +127,21 @@ fun SubmitButton(
     Button(
         onClick = {
             if (subject.isEmpty() || message.isEmpty()) {
-                // Show a toast if required fields are missing
-                Toast.makeText(ctx, "Please fill out all fields except for Name.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    ctx,
+                    ctx.getString(R.string.fill_out_all_fields),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 val recipientEmail = "ibrx2002forwork@gmail.com"
-                val senderName = if (name.isEmpty()) "Anonymous" else name
-                val emailBody = "Hello, my name is $senderName.\n\n$message\n\nThank you!"
-                val intent = Intent(Intent.ACTION_SEND)
+                val senderName = if (name.isEmpty()) ctx.getString(R.string.stories_anonymous_label) else name
+                val emailBody = ctx.getString(
+                    R.string.email_body_template,
+                    senderName,
+                    message
+                )
 
+                val intent = Intent(Intent.ACTION_SEND)
                 intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
                 intent.putExtra(Intent.EXTRA_SUBJECT, subject)
                 intent.putExtra(Intent.EXTRA_TEXT, emailBody)
@@ -144,7 +160,7 @@ fun SubmitButton(
         )
     ) {
         Text(
-            "Submit",
+            stringResource(R.string.submit),
             fontSize = 20.sp
         )
     }

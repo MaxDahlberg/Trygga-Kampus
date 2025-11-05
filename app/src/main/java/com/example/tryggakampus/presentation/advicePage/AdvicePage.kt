@@ -41,7 +41,7 @@ fun AdvicePage() {
 fun CategorySelectionScreen(onCategorySelected: (AdviceCategory) -> Unit) {
     Column (modifier = Modifier.padding(15.dp)) {
         Text(
-            text = "Select Category",
+            text = stringResource(id = R.string.select_category),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(8.dp)
         )

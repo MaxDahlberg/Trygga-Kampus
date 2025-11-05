@@ -9,17 +9,22 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tryggakampus.R
 import com.example.tryggakampus.data.SurveyQuestions
 import com.example.tryggakampus.data.repository.SurveyViewModelFactory
 
 @Composable
 fun SurveyPage(title: String) {
-    val questions = SurveyQuestions.questions
+    val context = LocalContext.current
+    val questions = remember { SurveyQuestions.getQuestions(context) }
     var answers = remember { mutableStateListOf(*Array(questions.size) { "" }) }
+    var showCompletionDialog by remember { mutableStateOf(false) }
 
     val viewModel: SurveyViewModel = viewModel(factory = SurveyViewModelFactory())
     val isFormComplete by remember { derivedStateOf { answers.all { it.isNotBlank() } } }
@@ -27,13 +32,17 @@ fun SurveyPage(title: String) {
     val snackbarHostState = remember { SnackbarHostState() }
     var submitting by remember { mutableStateOf(false) }
 
+    // Pre-fetch string resources to use in suspend functions
+    val successMessage = stringResource(R.string.survey_submit_success)
+    val failureMessage = stringResource(R.string.survey_submit_failed)
+
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState) { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = Color.White,
-                    contentColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor =  MaterialTheme.colorScheme.onPrimary,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.padding(8.dp)
                 )
@@ -49,7 +58,7 @@ fun SurveyPage(title: String) {
         ) {
             item {
                 Text(
-                    text = title,
+                    text = stringResource(R.string.survey_title),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -69,7 +78,7 @@ fun SurveyPage(title: String) {
                 ) {
                     Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                         Text(
-                            text = "Question ${index + 1}: $question",
+                            text = stringResource(R.string.question_prefix, index + 1) + " " + question,
                             color = MaterialTheme.colorScheme.onPrimary,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium
@@ -78,7 +87,7 @@ fun SurveyPage(title: String) {
                         OutlinedTextField(
                             value = answers[index],
                             onValueChange = { answers[index] = it },
-                            label = { Text("Your Answer", color = MaterialTheme.colorScheme.onBackground) },
+                            label = { Text(stringResource(R.string.your_answer), color = MaterialTheme.colorScheme.onBackground) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = TextFieldDefaults.colors(
                                 focusedContainerColor = MaterialTheme.colorScheme.background,
@@ -115,7 +124,7 @@ fun SurveyPage(title: String) {
                     elevation = ButtonDefaults.buttonElevation(4.dp),
                     enabled = isFormComplete && !submitting
                 ) {
-                    Text("Submit Answers", fontSize = 18.sp)
+                    Text(stringResource(R.string.submit_answers), fontSize = 18.sp)
                 }
             }
         }
@@ -123,20 +132,21 @@ fun SurveyPage(title: String) {
 
     LaunchedEffect(submitting) {
         if (submitting) {
-            try {
+            val result = runCatching {
                 viewModel.submitSurvey(questions, answers)
-
-                // Clear the form
-                answers.clear()
-                answers.addAll(Array(questions.size) { "" })
-
-                snackbarHostState.showSnackbar("Survey submitted successfully!")
-
-            } catch (e: Exception) {
-                snackbarHostState.showSnackbar("Failed to submit: ${e.message}")
-            } finally {
-                submitting = false
             }
+
+            // Clear the form regardless of success or failure
+            answers.clear()
+            answers.addAll(Array(questions.size) { "" })
+
+            if (result.isSuccess) {
+                snackbarHostState.showSnackbar(successMessage)
+            } else {
+                snackbarHostState.showSnackbar(failureMessage)
+            }
+
+            submitting = false
         }
     }
 }

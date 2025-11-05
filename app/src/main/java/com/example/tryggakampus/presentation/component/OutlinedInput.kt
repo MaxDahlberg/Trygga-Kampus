@@ -16,10 +16,12 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.tryggakampus.R
 
 
 @Composable
@@ -31,6 +33,7 @@ fun OutlinedInput(
     singleLine: Boolean = false,
     isPassword: Boolean = false,
     isPasswordVisible: Boolean = false,
+    showPasswordRules: Boolean? = null,
     onVisibilityChange: () -> Unit = {}
 
 ) {
@@ -48,6 +51,9 @@ fun OutlinedInput(
             unfocusedIndicatorColor = Color.Transparent,
 
             cursorColor = MaterialTheme.colorScheme.secondary,
+
+            focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+            unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
 
             selectionColors = TextSelectionColors(
                 handleColor = MaterialTheme.colorScheme.secondary,
@@ -73,9 +79,9 @@ fun OutlinedInput(
             }
         }
     )
-    if (isPassword && !isError) {
+    if (isPassword && (showPasswordRules == true)) {
         Text(
-            text = "Password must be 8+ characters with uppercase, number, and special character.",
+            text = stringResource(R.string.password_rules),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             modifier = Modifier.padding(start = 16.dp, top = 4.dp)
