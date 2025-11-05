@@ -56,6 +56,9 @@
     <string name="drawer_login">ログイン</string>
     <string name="drawer_logout">ログアウト</string>
     <string name="drawer_settings">設定</string>
+    <string name="drawer_videos">ビデオ</string>
+    <string name="drawer_voice_note">ボイスメモ</string>
+    <string name="drawer_game">ゲーム</string>
 
     <!-- 記事ページ -->
     <string name="new_article">新しい記事</string>
@@ -229,4 +232,29 @@
     <string name="settings_language_description">アプリの言語を変更する</string>
     <string name="settings_language_restart_notice">変更を適用するためにアプリが再起動します</string>
     <string name="settings_language_ai_note">注：翻訳はAIによって提供されました</string>
+
+    <!-- 自己評価 開始 -->
+    <string name="self_assessment_title">自己評価</string>
+    <string name="self_assessment_notes_label">メモ（任意・非公開）</string>
+    <string name="self_assessment_save">保存</string>
+    <string name="self_assessment_saved">保存しました</string>
+    <string name="self_assessment_saved_offline">オフラインで保存しました</string>
+    <string name="self_assessment_delete">この日の記録を削除</string>
+    <string name="self_assessment_history">履歴</string>
+    <string name="empty_state_no_data">データはまだありません。</string>
+    <string name="select">選択</string>
+    <string name="export_csv">CSVとしてエクスポート</string>
+    <string name="self_image">自己イメージ</string>
+    <string name="self_esteem">自尊心</string>
+    <string name="self_reliance">自立</string>
+    <!-- 自己評価 終了 -->
+
+    <!-- ボイスメモ -->
+    <string name="voice_note_title">ボイスメモ</string>
+    <string name="start_recording">録音を開始</string>
+    <string name="stop_recording">録音を停止</string>
+    <string name="play">再生</string>
+    <string name="stop">停止</string>
+    <string name="analyze_emotion">感情を分析</string>
+    <string name="analyzing">分析中...</string>
 </resources>

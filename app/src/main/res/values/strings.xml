@@ -73,6 +73,9 @@
     <string name="drawer_login">Login</string>
     <string name="drawer_logout">Logout</string>
     <string name="drawer_settings">Settings</string>
+    <string name="drawer_videos">Videos</string>
+    <string name="drawer_voice_note">Voice Note</string>
+    <string name="drawer_game">Game</string>
 
     <!-- Article page-->
     <string name="new_article">New Article</string>

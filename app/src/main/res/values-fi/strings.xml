@@ -56,6 +56,9 @@
     <string name="drawer_login">Kirjaudu sisään</string>
     <string name="drawer_logout">Kirjaudu ulos</string>
     <string name="drawer_settings">Asetukset</string>
+    <string name="drawer_videos">Videot</string>
+    <string name="drawer_voice_note">Äänimuistiinpano</string>
+    <string name="drawer_game">Peli</string>
 
     <!-- Artikkelisivu -->
     <string name="new_article">Uusi artikkeli</string>
@@ -229,4 +232,29 @@
     <string name="settings_language_description">Vaihda sovelluksen kieltä</string>
     <string name="settings_language_restart_notice">Sovellus käynnistyy uudelleen muutosten toteuttamiseksi</string>
     <string name="settings_language_ai_note">Huom: Käännökset tarjosi tekoäly</string>
+
+    <!-- Self-assessment Begin -->
+    <string name="self_assessment_title">Itsearviointi</string>
+    <string name="self_assessment_notes_label">Muistiinpanot (valinnainen, yksityinen)</string>
+    <string name="self_assessment_save">Tallenna</string>
+    <string name="self_assessment_saved">Tallennettu</string>
+    <string name="self_assessment_saved_offline">Tallennettu offline-tilassa</string>
+    <string name="self_assessment_delete">Poista merkintä tältä päivältä</string>
+    <string name="self_assessment_history">Historia</string>
+    <string name="empty_state_no_data">Ei vielä tietoja.</string>
+    <string name="select">Valitse</string>
+    <string name="export_csv">Vie CSV-tiedostona</string>
+    <string name="self_image">Minäkuva</string>
+    <string name="self_esteem">Itsetunto</string>
+    <string name="self_reliance">Omatoimisuus</string>
+    <!-- Self-assessment End -->
+
+    <!-- Voice Note feature strings -->
+    <string name="voice_note_title">Äänimuistiinpano</string>
+    <string name="start_recording">Aloita nauhoitus</string>
+    <string name="stop_recording">Lopeta nauhoitus</string>
+    <string name="play">Toista</string>
+    <string name="stop">Pysäytä</string>
+    <string name="analyze_emotion">Analysoi tunne</string>
+    <string name="analyzing">Analysoidaan...</string>
 </resources>
