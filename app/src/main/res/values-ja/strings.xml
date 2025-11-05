@@ -7,6 +7,7 @@
     <string name="button">本格的なサポートが必要な場合は、このボタンを使って大学のカウンセラーか専門家にご連絡ください。</string>
     <string name="buttonInfo">このボタンを押すと、現在の状況を記入するフォームが表示され、必要な支援を提供する人に送信できます。</string>
     <string name="get_in_touch_landing">お問い合わせください！</string>
+    <string name="self_assesment">自己評価</string>
     <string name="choose_username">ユーザー名を選択してください</string>
     <string name="username_empty">ユーザー名を空にすることはできません</string>
     <string name="submitting">送信中...</string>

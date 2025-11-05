@@ -161,7 +161,7 @@ fun GetHelp() {
                     contentColor = MaterialTheme.colorScheme.onBackground
                 )
             ) {
-                Text("Self-assessment")
+                Text(stringResource(R.string.self_assesment))
             }
         }
     }
