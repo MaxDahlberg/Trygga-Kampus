@@ -7,6 +7,7 @@
     <string name="button">Jos tarvitset vakavaa apua, ota yhteyttä joko yliopistosi neuvonantajaan tai johonkin ammattilaisistamme tämän painikkeen kautta.</string>
     <string name="buttonInfo">Tämä painike avaa lomakkeen, johon voit kirjoittaa tilanteestasi ja lähettää sen, jotta saat tarvitsemaasi apua.</string>
     <string name="get_in_touch_landing">Ota yhteyttä!</string>
+    <string name="self_assesment">Itsearviointi</string>
     <string name="choose_username">Valitse käyttäjänimi</string>
     <string name="username_empty">Käyttäjänimi ei voi olla tyhjä</string>
     <string name="submitting">Lähetetään...</string>

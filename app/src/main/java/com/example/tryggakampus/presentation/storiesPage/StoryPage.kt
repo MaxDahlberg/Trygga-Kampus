@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.domain.model.StoryCommentModel
@@ -25,6 +26,7 @@ import com.example.tryggakampus.presentation.component.PageContainer
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import com.example.tryggakampus.R
+import com.example.tryggakampus.presentation.component.OutlinedInput
 
 @Composable
 fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
@@ -77,29 +79,13 @@ fun StoryPage(viewModel: StoriesPageViewModel, storyModelId: String) {
                     .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                    value = viewModel.commentText.value,
-                    label = { Text(stringResource(R.string.write_a_comment)) },
-                    onValueChange = { viewModel.setCommentText(it) },
-                    singleLine = false,
-                    maxLines = 5,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.background,
-                        focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-
-                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                        unfocusedIndicatorColor = Color.Transparent,
-
-                        cursorColor = MaterialTheme.colorScheme.secondary,
-
-                        selectionColors = TextSelectionColors(
-                            handleColor = MaterialTheme.colorScheme.secondary,
-                            backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
-                        )
-                    )
+                OutlinedInput(
+                    label = stringResource(R.string.write_a_comment),
+                    value = viewModel.commentText.value.text,
+                    onValueChange = { newText ->
+                        viewModel.setCommentText(TextFieldValue(newText))
+                    },
+                    singleLine = false
                 )
 
                 Row(
