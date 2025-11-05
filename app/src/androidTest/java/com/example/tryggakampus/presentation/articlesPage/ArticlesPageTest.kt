@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.tryggakampus.R
 import com.example.tryggakampus.domain.model.ArticleModel
+import com.example.tryggakampus.ui.theme.TryggaKampusTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +24,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = loadingViewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = loadingViewModel)
+            }
         }
 
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.loading_articles)).assertExists()
@@ -38,7 +41,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = emptyViewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = emptyViewModel)
+            }
         }
 
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.no_articles_available)).assertExists()
@@ -51,7 +56,9 @@ class ArticlesPageTest {
         composeTestRule.waitForIdle()
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = loadedViewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = loadedViewModel)
+            }
         }
 
         // Wait for render (simple public existence check)
@@ -79,7 +86,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(R.string.add_article)).assertExists()
@@ -97,7 +106,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(R.string.enable_delete_mode)).performClick()
@@ -118,7 +129,9 @@ class ArticlesPageTest {
         val viewModel = TestArticlesPageViewModel()
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(R.string.add_article)).performClick()
@@ -133,7 +146,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = errorViewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = errorViewModel)
+            }
         }
 
         composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.error)).assertExists()
@@ -151,7 +166,9 @@ class ArticlesPageTest {
         }
 
         composeTestRule.setContent {
-            ArticlesPage(viewModel = offlineViewModel)
+            TryggaKampusTheme {
+                ArticlesPage(viewModel = offlineViewModel)
+            }
         }
 
         composeTestRule.onNodeWithText("Cached Article").assertExists()

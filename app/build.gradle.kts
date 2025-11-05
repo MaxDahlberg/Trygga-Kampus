@@ -49,9 +49,11 @@ android {
     }
 
     testOptions {
-        unitTests.all {
-            it.jvmArgs("-noverify")
+        unitTests {
+            isIncludeAndroidResources = true // Include Android resources in unit tests
+            isReturnDefaultValues = true    // Return default values for unmocked methods
         }
+        animationsDisabled = true // Speed up UI tests by disabling animations
     }
 
 
@@ -72,6 +74,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
     // Firebase
@@ -118,34 +122,26 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(libs.androidx.navigation.testing)
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Testing (local unit tests)
     testImplementation(libs.junit)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
-    // testImplementation("io.mockk:mockk:1.13.12")
-    testImplementation("io.mockk:mockk:1.13.5")
-    androidTestImplementation("io.mockk:mockk-android:1.13.8")
-    testImplementation("io.mockk:mockk-inline:1.13.5")
-    testRuntimeOnly("io.mockk:mockk-agent-jvm:1.13.5")
     testImplementation("app.cash.turbine:turbine:1.1.0")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("org.jacoco:org.jacoco.core:0.8.13")
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("org.mockito:mockito-core:5.14.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
 
     // Android instrumented testing
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit) // 1.1.5 from libs
+    androidTestImplementation(libs.androidx.espresso.core) // 3.5.0 from libs
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
-    androidTestImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
+    androidTestImplementation(libs.androidx.ui.test.junit4) // 1.9.4
+    androidTestImplementation("androidx.navigation:navigation-testing:2.7.2")
     debugImplementation(libs.androidx.ui.tooling)
+    // Use a matching version with ui-test-junit4 to provide a resolvable test Activity
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.9.4")
 }

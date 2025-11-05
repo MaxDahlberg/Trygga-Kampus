@@ -1,9 +1,13 @@
 package com.example.tryggakampus.presentation.authentication.registerPage
 
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.tryggakampus.LocalNavController
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,25 +18,24 @@ class RegisterPageTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
+    private fun provideContent(viewModel: TestRegisterViewModel) {
+        val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        composeTestRule.setContent {
+            CompositionLocalProvider(LocalNavController provides navController) {
+                RegisterPage(viewModel = viewModel)
+            }
+        }
+    }
+
     @Test
     fun initialStateShowsFormWithDisabledButton() {
         val viewModel = TestRegisterViewModel()
+        provideContent(viewModel)
 
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
-
-        // Header logo
         composeTestRule.onNodeWithContentDescription("Trygga Kampus Logo").assertExists()
-
-        // Inputs empty
         composeTestRule.onNodeWithTag("email_input").assertTextEquals("")
         composeTestRule.onNodeWithTag("password_input").assertTextEquals("")
-
-        // Button disabled
         composeTestRule.onNodeWithTag("sign_up_button").assertIsNotEnabled()
-
-        // Footer
         composeTestRule.onNodeWithText("Already registered?").assertExists()
         composeTestRule.onNodeWithTag("sign_in_button").assertExists()
     }
@@ -40,37 +43,26 @@ class RegisterPageTest {
     @Test
     fun validInputEnablesSignUpButton() {
         val viewModel = TestRegisterViewModel()
+        provideContent(viewModel)
 
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
-
-        // Valid email
-        composeTestRule.onNodeWithTag("email_input").performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
         viewModel.setEmailForTest("test@example.com")
 
-        // Valid password
-        composeTestRule.onNodeWithTag("password_input").performTextInput("Password123!")
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
         viewModel.setPasswordForTest("Password123!")
 
-        // Button enabled
         composeTestRule.onNodeWithTag("sign_up_button").assertIsEnabled()
     }
 
     @Test
     fun invalidInputKeepsButtonDisabled() {
         val viewModel = TestRegisterViewModel()
+        provideContent(viewModel)
 
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
-
-        // Invalid email
-        composeTestRule.onNodeWithTag("email_input").performTextInput("invalid")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("invalid")
         viewModel.setEmailForTest("invalid")
 
-        // Invalid password
-        composeTestRule.onNodeWithTag("password_input").performTextInput("short")
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("short")
         viewModel.setPasswordForTest("short")
 
         composeTestRule.onNodeWithTag("sign_up_button").assertIsNotEnabled()
@@ -79,21 +71,14 @@ class RegisterPageTest {
     @Test
     fun signUpClickShowsLoadingSpinner() {
         val viewModel = TestRegisterViewModel()
+        provideContent(viewModel)
 
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
-
-        // Valid input
-        composeTestRule.onNodeWithTag("email_input").performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
         viewModel.setEmailForTest("test@example.com")
-        composeTestRule.onNodeWithTag("password_input").performTextInput("Password123!")
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
         viewModel.setPasswordForTest("Password123!")
 
-        // Click sign up
         composeTestRule.onNodeWithTag("sign_up_button").performClick()
-
-        // Spinner shows
         composeTestRule.onNodeWithContentDescription("Loading").assertExists()
     }
 
@@ -102,14 +87,9 @@ class RegisterPageTest {
         val viewModel = TestRegisterViewModel().apply {
             setErrorForTest("Test error")
         }
-
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         composeTestRule.onNodeWithText("Test error").assertExists()
-
-        // Dismiss
         composeTestRule.onNodeWithText("OK").performClick()
         composeTestRule.onNodeWithText("Test error").assertDoesNotExist()
     }
@@ -117,13 +97,8 @@ class RegisterPageTest {
     @Test
     fun footerSignInButtonIsClickable() {
         val viewModel = TestRegisterViewModel()
-
-        composeTestRule.setContent {
-            RegisterPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         composeTestRule.onNodeWithTag("sign_in_button").performClick()
-
-        // Verify navigation (add NavController test if needed)
     }
 }

@@ -4,6 +4,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.tryggakampus.ui.theme.TryggaKampusTheme
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +21,9 @@ class ProfilePageTest {
         val viewModel = TestProfileViewModel()
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         // Header
@@ -56,7 +59,9 @@ class ProfilePageTest {
         }
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         // Toggle hobby
@@ -76,7 +81,9 @@ class ProfilePageTest {
         val viewModel = TestProfileViewModel()
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         // Valid password
@@ -96,7 +103,9 @@ class ProfilePageTest {
         val viewModel = TestProfileViewModel()
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         // Valid current password
@@ -120,7 +129,9 @@ class ProfilePageTest {
         val viewModel = TestProfileViewModel()
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithTag("request_data_button").performClick()
@@ -146,7 +157,9 @@ class ProfilePageTest {
         val viewModel = TestProfileViewModel()
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithTag("delete_account_button").performClick()
@@ -172,7 +185,9 @@ class ProfilePageTest {
         }
 
         composeTestRule.setContent {
-            ProfilePage(viewModel = viewModel)
+            TryggaKampusTheme {
+                ProfilePage(viewModel = viewModel)
+            }
         }
 
         composeTestRule.onNodeWithText("Test error").assertExists()

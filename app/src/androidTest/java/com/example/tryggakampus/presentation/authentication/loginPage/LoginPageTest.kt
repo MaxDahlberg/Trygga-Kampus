@@ -1,9 +1,14 @@
 package com.example.tryggakampus.presentation.authentication.loginPage
 
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.tryggakampus.LocalNavController
+import com.example.tryggakampus.ui.theme.TryggaKampusTheme
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,13 +19,21 @@ class LoginPageTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
+    private fun provideContent(viewModel: TestLoginViewModel) {
+        val navController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        composeTestRule.setContent {
+            TryggaKampusTheme {
+                CompositionLocalProvider(LocalNavController provides navController) {
+                    LoginPage(viewModel = viewModel)
+                }
+            }
+        }
+    }
+
     @Test
     fun initialStateShowsFormWithDisabledButton() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Header logo
         composeTestRule.onNodeWithContentDescription("Trygga Kampus Logo").assertExists()
@@ -40,18 +53,17 @@ class LoginPageTest {
     @Test
     fun validInputEnablesSignInButton() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Valid email
-        composeTestRule.onNodeWithTag("email_input").performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")  // Sync
+        composeTestRule.waitForIdle()
 
         // Valid password
-        composeTestRule.onNodeWithTag("password_input").performTextInput("Password123!")
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
         viewModel.onPasswordChange("Password123!")
+        composeTestRule.waitForIdle()
 
         // Button enabled
         composeTestRule.onNodeWithTag("sign_in_button").assertIsEnabled()
@@ -60,18 +72,17 @@ class LoginPageTest {
     @Test
     fun invalidInputKeepsButtonDisabled() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Invalid email
-        composeTestRule.onNodeWithTag("email_input").performTextInput("invalid")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("invalid")
         viewModel.onEmailChange("invalid")
+        composeTestRule.waitForIdle()
 
         // Invalid password
-        composeTestRule.onNodeWithTag("password_input").performTextInput("short")
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("short")
         viewModel.onPasswordChange("short")
+        composeTestRule.waitForIdle()
 
         composeTestRule.onNodeWithTag("sign_in_button").assertIsNotEnabled()
     }
@@ -79,16 +90,15 @@ class LoginPageTest {
     @Test
     fun signInClickShowsLoadingSpinner() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Valid input
-        composeTestRule.onNodeWithTag("email_input").performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")
-        composeTestRule.onNodeWithTag("password_input").performTextInput("Password123!")
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithTag("password_input").performClick().performTextInput("Password123!")
         viewModel.onPasswordChange("Password123!")
+        composeTestRule.waitForIdle()
 
         // Click sign in
         composeTestRule.onNodeWithTag("sign_in_button").performClick()
@@ -100,14 +110,12 @@ class LoginPageTest {
     @Test
     fun forgotPasswordShowsSuccessBox() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Enter valid email
-        composeTestRule.onNodeWithTag("email_input").performTextInput("test@example.com")
+        composeTestRule.onNodeWithTag("email_input").performClick().performTextInput("test@example.com")
         viewModel.onEmailChange("test@example.com")
+        composeTestRule.waitForIdle()
 
         // Click forgot
         composeTestRule.onNodeWithTag("forgot_password_button").performClick()
@@ -125,10 +133,7 @@ class LoginPageTest {
         val viewModel = TestLoginViewModel().apply {
             setErrorForTest("Test error")
         }
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         composeTestRule.onNodeWithText("Test error").assertExists()
 
@@ -140,10 +145,7 @@ class LoginPageTest {
     @Test
     fun socialLoginClicksTriggerViewModelMethods() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         // Google click
         composeTestRule.onNodeWithTag("google_icon").performClick()
@@ -155,10 +157,7 @@ class LoginPageTest {
     @Test
     fun footerSignUpButtonIsClickable() {
         val viewModel = TestLoginViewModel()
-
-        composeTestRule.setContent {
-            LoginPage(viewModel = viewModel)
-        }
+        provideContent(viewModel)
 
         composeTestRule.onNodeWithTag("sign_up_button").performClick()
 

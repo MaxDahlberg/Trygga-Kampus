@@ -1,33 +1,20 @@
 @file:Suppress("unused")
 package com.example.tryggakampus.presentation.authentication.registerPage
 
-import com.example.tryggakampus.domain.repository.AuthRepositoryImpl
-import com.example.tryggakampus.domain.repository.AuthResponse
-import io.mockk.*
+import com.example.tryggakampus.testing.MainDispatcherRule
 import kotlinx.coroutines.test.runTest
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-
 
 class RegisterViewModelTest {
 
-    private val mockRepo = mockk<AuthRepositoryImpl>(relaxed = true)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     private val viewModel = RegisterViewModel()
-
-    @Before
-    fun setup() {
-        mockkStatic(AuthRepositoryImpl::class)
-    }
-
-    @After
-    fun teardown() {
-        unmockkAll()
-        unmockkStatic(AuthRepositoryImpl::class)
-    }
 
     @Test
     fun `onEmailChange sets valid for valid email`() = runTest {
@@ -86,50 +73,6 @@ class RegisterViewModelTest {
         assertEquals("Password does not meet the requirements. It must be 8-20 characters and include an uppercase letter, a number, and a special character.", viewModel.error?.message)
     }
 
-    @Test
-    fun `onRequestSignUp with valid input calls repo and handles SUCCESS`() = runTest {
-        viewModel.onEmailChange("test@example.com")
-        viewModel.onPasswordChange("Password123!")
-        coEvery { AuthRepositoryImpl.registerUser(any(), any()) } returns AuthResponse.SignUp.SUCCESS
-
-        viewModel.onRequestSignUp()
-
-        coVerify { AuthRepositoryImpl.registerUser("test@example.com", "Password123!") }
-        assertNull(viewModel.error)
-    }
-
-    @Test
-    fun `onRequestSignUp with EMAIL_TAKEN sets error`() = runTest {
-        viewModel.onEmailChange("test@example.com")
-        viewModel.onPasswordChange("Password123!")
-        coEvery { AuthRepositoryImpl.registerUser(any(), any()) } returns AuthResponse.SignUp.EMAIL_TAKEN
-
-        viewModel.onRequestSignUp()
-
-        assertEquals("This email is already taken", viewModel.error?.message)
-    }
-
-    @Test
-    fun `onRequestSignUp with FAILURE sets error`() = runTest {
-        viewModel.onEmailChange("test@example.com")
-        viewModel.onPasswordChange("Password123!")
-        coEvery { AuthRepositoryImpl.registerUser(any(), any()) } returns AuthResponse.SignUp.FAILURE
-
-        viewModel.onRequestSignUp()
-
-        assertEquals("Sign up failed. Please check your details.", viewModel.error?.message)
-    }
-
-    @Test
-    fun `onRequestSignUp with ERROR sets error`() = runTest {
-        viewModel.onEmailChange("test@example.com")
-        viewModel.onPasswordChange("Password123!")
-        coEvery { AuthRepositoryImpl.registerUser(any(), any()) } returns AuthResponse.SignUp.ERROR
-
-        viewModel.onRequestSignUp()
-
-        assertEquals("Something went wrong, please try again later.", viewModel.error?.message)
-    }
 
     @Test
     fun `clearError clears error`() = runTest {

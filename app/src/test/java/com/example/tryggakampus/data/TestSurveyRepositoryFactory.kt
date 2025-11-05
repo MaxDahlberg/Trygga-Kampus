@@ -1,16 +1,16 @@
-package com.example.tryggakampus.data
+@file:Suppress("unused")
 
-import io.mockk.coEvery
-import io.mockk.mockk
+package com.example.tryggakampus.data
 
 fun makeTestSurveyRepository(
     shouldSucceed: Boolean = true,
     errorMessage: String = "Test error"
 ): SurveyRepository {
-    val repo = mockk<SurveyRepository>(relaxed = true)
-    coEvery { repo.submitSurveyAnswers(any()) } coAnswers {
-        if (!shouldSucceed) throw Exception(errorMessage)
-        else Unit
+    // Provide a simple fake implementation for tests
+    return object : SurveyRepository() {
+        override suspend fun submitSurveyAnswers(answers: List<com.example.tryggakampus.domain.model.SurveyAnswer>) {
+            if (!shouldSucceed) throw Exception(errorMessage)
+            // else no-op to simulate success
+        }
     }
-    return repo
 }

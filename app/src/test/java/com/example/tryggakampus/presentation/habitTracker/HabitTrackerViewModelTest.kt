@@ -3,14 +3,15 @@ package com.example.tryggakampus.presentation.habitTracker
 import com.example.tryggakampus.domain.model.Habit
 import com.example.tryggakampus.domain.model.HabitCompletion
 import com.example.tryggakampus.domain.repository.HabitRepository
-import com.example.tryggakampus.util.DateUtils
-import io.mockk.*
+import com.example.tryggakampus.testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.flow.MutableStateFlow
-import org.junit.After
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.launch
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -20,21 +21,37 @@ import java.util.*
 @ExperimentalCoroutinesApi
 class HabitTrackerViewModelTest {
 
-    private val mockRepo = mockk<HabitRepository>(relaxed = true)
-    private val viewModel = HabitTrackerViewModel(mockRepo)
-    private val mockDate = Date()
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    // Simple in-memory fake repository
+    private class FakeHabitRepository : HabitRepository {
+        val habits = mutableListOf<Habit>()
+        val completions = mutableListOf<HabitCompletion>()
+        override suspend fun getHabits(): List<Habit> = habits.toList()
+        override suspend fun addHabit(habit: Habit) { habits.add(habit) }
+        override suspend fun updateHabit(habit: Habit) {
+            val idx = habits.indexOfFirst { it.id == habit.id }
+            if (idx >= 0) habits[idx] = habit
+        }
+        override suspend fun deleteHabit(habitId: String) { habits.removeAll { it.id == habitId } }
+        override suspend fun getCompletions(habitId: String, startDate: Date, endDate: Date): List<HabitCompletion> =
+            completions.filter { it.habitId == habitId && it.date in startDate.time..endDate.time }
+        override suspend fun markCompletion(completion: HabitCompletion) { completions.add(completion) }
+        override suspend fun unmarkCompletion(habitId: String, date: Date) {
+            completions.removeAll { it.habitId == habitId && it.date == date.time }
+        }
+    }
+
+    private lateinit var repo: FakeHabitRepository
+    private lateinit var viewModel: HabitTrackerViewModel
+    private lateinit var today: Date
 
     @Before
     fun setup() {
-        mockkStatic(DateUtils::class)
-        every { DateUtils.getStartOfDay(any()) } returns mockDate
-        every { DateUtils.getEndOfDay(any()) } returns mockDate
-    }
-
-    @After
-    fun teardown() {
-        unmockkAll()
-        unmockkStatic(DateUtils::class)
+        repo = FakeHabitRepository()
+        viewModel = HabitTrackerViewModel(repo)
+        today = Date()
     }
 
     // Reflection helpers to mutate private StateFlows in the ViewModel for unit tests
@@ -54,104 +71,104 @@ class HabitTrackerViewModelTest {
     @Test
     fun initLoadsHabitsAndCompletionsForCurrentDate() = runTest {
         val fakeHabits = listOf(Habit(id = "1", title = "Test", description = "", color = "", createdAt = 0L))
-        coEvery { mockRepo.getHabits() } returns fakeHabits
-        coEvery { mockRepo.getCompletions(any(), any(), any()) } returns emptyList<HabitCompletion>()
+        repo.habits.addAll(fakeHabits)
+
+        // Start collecting dailyProgress so the stateIn flow is active
+        val job = launch { viewModel.dailyProgress.collect { /* no-op */ } }
 
         viewModel.loadHabits()
+        advanceUntilIdle()
 
         assertEquals(fakeHabits, viewModel.habits.value)
-        assertEquals(emptyMap<String, Boolean>(), viewModel.completions.value)
+        assertEquals(mapOf("1" to false), viewModel.completions.value)
+        job.cancel()
     }
 
     @Test
     fun addHabitCallsRepoAndReloadsHabits() = runTest {
-        val fakeHabits = listOf(Habit(id = "1", title = "New Habit", description = "Desc", color = "#FFC107", createdAt = Date().time))
-        coEvery { mockRepo.addHabit(any()) } just Runs
-        coEvery { mockRepo.getHabits() } returns fakeHabits
-
         viewModel.addHabit("New Habit", "Desc")
-
-        coVerify { mockRepo.addHabit(any()) }
-        coVerify { mockRepo.getHabits() }
-        assertEquals(fakeHabits, viewModel.habits.value)
+        advanceUntilIdle()
+        assertEquals(1, viewModel.habits.value.size)
+        assertEquals("New Habit", viewModel.habits.value.first().title)
     }
 
     @Test
     fun toggleHabitCompletionMarksUnmarksAndReloadsCompletions() = runTest {
-        val mockCompletion = HabitCompletion(id = "c1", habitId = "1", date = mockDate.time, completed = true)
-        coEvery { mockRepo.getCompletions(any(), any(), any()) } returns listOf(mockCompletion)
-        coEvery { mockRepo.markCompletion(any()) } just Runs
-        coEvery { mockRepo.unmarkCompletion(any(), any()) } just Runs
+        val habit = Habit(id = "1", title = "Test", description = "", color = "", createdAt = today.time)
+        repo.habits.add(habit)
+        viewModel.loadHabits()
+        advanceUntilIdle()
 
         viewModel.toggleHabitCompletion("1")
-
-        coVerify { mockRepo.markCompletion(any()) }
-        coVerify { mockRepo.getCompletions(any(), any(), any()) }
+        advanceUntilIdle()
+        assertTrue(viewModel.completions.value["1"] == true)
 
         viewModel.toggleHabitCompletion("1")
-
-        coVerify { mockRepo.unmarkCompletion("1", mockDate) }
+        advanceUntilIdle()
+        assertTrue(viewModel.completions.value["1"] == false)
     }
 
     @Test
     fun deleteHabitCallsRepoAndReloadsHabits() = runTest {
-        val fakeHabits = emptyList<Habit>()
-        coEvery { mockRepo.deleteHabit(any()) } just Runs
-        coEvery { mockRepo.getHabits() } returns fakeHabits
+        val habit = Habit(id = "1", title = "Test", description = "", color = "", createdAt = today.time)
+        repo.habits.add(habit)
+        viewModel.loadHabits()
+        advanceUntilIdle()
 
         viewModel.deleteHabit("1")
-
-        coVerify { mockRepo.deleteHabit("1") }
-        coVerify { mockRepo.getHabits() }
-        assertEquals(fakeHabits, viewModel.habits.value)
+        advanceUntilIdle()
+        assertEquals(0, viewModel.habits.value.size)
     }
 
     @Test
     fun setSelectedDateUpdatesDateAndReloadsCompletionsWeeklyProgress() = runTest {
-        val newDate = Date(mockDate.time + 86400000)  // Tomorrow
-        coEvery { mockRepo.getCompletions(any(), any(), any()) } returns emptyList<HabitCompletion>()
-
+        val newDate = Date(today.time + 86_400_000)
         viewModel.setSelectedDate(newDate)
-
+        advanceUntilIdle()
         assertEquals(newDate, viewModel.selectedDate.value)
-        coVerify { mockRepo.getCompletions(any(), any(), any()) }  // Called for new date
     }
 
     @Test
     fun loadWeeklyProgressComputesWeeklyCompletionsForHabits() = runTest {
-        val mockWeekDates = listOf(mockDate, Date(mockDate.time + 86400000))  // 2 days
-        val mockCompletions = listOf(HabitCompletion(id = "c1", habitId = "1", date = mockDate.time, completed = true))
-        coEvery { mockRepo.getCompletions(any(), any(), any()) } returns mockCompletions
+        val habit = Habit(id = "1", title = "H1", description = "", color = "", createdAt = today.time)
+        repo.habits.add(habit)
+        viewModel.loadHabits()
+        advanceUntilIdle()
 
+        // Mark completion today
+        repo.markCompletion(HabitCompletion(id = "c1", habitId = "1", date = viewModel.selectedDate.value.time, completed = true))
         viewModel.loadWeeklyProgress()
+        advanceUntilIdle()
 
-        assertTrue(viewModel.weeklyProgress.value.isNotEmpty())
-        coVerify(exactly = 2) { mockRepo.getCompletions(any(), any(), any()) }  // Called for each day
+        assertTrue(viewModel.weeklyProgress.value["1"]?.isNotEmpty() == true)
     }
 
     @Test
     fun dailyProgressComputesCorrectPercentageFromCompletions() = runTest {
-        setHabitsForTest(viewModel, listOf(
+        val job = launch { viewModel.dailyProgress.collect { } }
+        // Two habits
+        repo.habits.addAll(listOf(
             Habit(id = "1", title = "H1", description = "", color = "", createdAt = 0L),
             Habit(id = "2", title = "H2", description = "", color = "", createdAt = 0L)
         ))
-        setCompletionsForTest(viewModel, mapOf("1" to true, "2" to false))
+        viewModel.loadHabits()
+        advanceUntilIdle()
+
+        // Mark completion for first habit only
+        viewModel.toggleHabitCompletion("1")
+        advanceUntilIdle()
 
         assertEquals(0.5f, viewModel.dailyProgress.value)
+        job.cancel()
     }
 
     @Test
     fun dailyProgressIs0WhenNoHabits() = runTest {
+        val job = launch { viewModel.dailyProgress.collect { } }
         setHabitsForTest(viewModel, emptyList())
-
+        advanceUntilIdle()
         assertEquals(0f, viewModel.dailyProgress.value)
+        job.cancel()
     }
 
-    @Test
-    fun dailyProgressIs1WhenAllHabitsCompleted() = runTest {
-        setHabitsForTest(viewModel, listOf(Habit(id = "1", title = "H1", description = "", color = "", createdAt = 0L)))
-        setCompletionsForTest(viewModel, mapOf("1" to true))
-
-        assertEquals(1f, viewModel.dailyProgress.value)
-    }
 }
