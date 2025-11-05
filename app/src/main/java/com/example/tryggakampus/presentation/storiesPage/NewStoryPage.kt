@@ -26,10 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tryggakampus.R
 import com.example.tryggakampus.data.Config
+import com.example.tryggakampus.presentation.component.OutlinedInput
 import com.example.tryggakampus.presentation.component.PageContainer
 
 @Composable
@@ -42,27 +44,10 @@ fun NewStoryPage(modifier: Modifier = Modifier, viewModel: StoriesPageViewModel)
             .background(MaterialTheme.colorScheme.primary)
             .padding(15.dp)
         ) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                value = viewModel.storyTitleValue.value,
-                label = { Text(stringResource(R.string.stories_title_label)) },
-                onValueChange = { viewModel.setStoryTitleValue(it) },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.background,
-                    focusedIndicatorColor = MaterialTheme.colorScheme.secondary,
-
-                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                    unfocusedIndicatorColor = Color.Transparent,
-
-                    cursorColor = MaterialTheme.colorScheme.secondary,
-
-                    selectionColors = TextSelectionColors(
-                        handleColor = MaterialTheme.colorScheme.secondary,
-                        backgroundColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
-                    )
-                )
+            OutlinedInput(
+                label = stringResource(R.string.stories_title_label),
+                value = viewModel.storyTitleValue.value.text,
+                onValueChange = { viewModel.setStoryTitleValue(TextFieldValue(it)) }
             )
 
             OutlinedTextField(
@@ -80,6 +65,9 @@ fun NewStoryPage(modifier: Modifier = Modifier, viewModel: StoriesPageViewModel)
 
                     unfocusedContainerColor = MaterialTheme.colorScheme.background,
                     unfocusedIndicatorColor = Color.Transparent,
+
+                    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
 
                     cursorColor = MaterialTheme.colorScheme.secondary,
 
