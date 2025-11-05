@@ -16,9 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Warning
@@ -30,7 +27,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,18 +35,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.tryggakampus.ConnectivityObserver
-
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.NetworkConnectivityObserver
+import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.data.Config
-import com.example.tryggakampus.presentation.settingsPage.ArticleTabs
-import com.example.tryggakampus.presentation.settingsPage.SettingsPageViewModel
 import com.example.tryggakampus.presentation.storiesPage.StoriesPageViewModel
 
 @Composable
@@ -80,7 +74,7 @@ fun DisplayErrorWhenNetworkUnavailable(content: @Composable () -> Unit) {
             )
             Spacer(modifier = Modifier.size(10.dp))
             Text(
-                "Network connection unavailable",
+                stringResource(R.string.network_unavailable),
                 color = MaterialTheme.colorScheme.onError
             )
         }
@@ -102,57 +96,12 @@ fun BottomAppBar() {
 
     DisplayErrorWhenNetworkUnavailable() {
         when (className) {
-            Routes.SettingsPage().routeName() -> BottomSettingsBar()
             Routes.StoriesNavGraph.StoriesPage.routeName() -> BottomStoriesBar()
             // Routes.StoriesNavGraph.StoryPage().routeName() -> BottomAppBar { BottomStoryBar() }
             // Routes.ArticlesPage().routeName() -> BottomAppBar { BottomArticlesBar() }
             // Routes.LandingPage().routeName() -> BottomAppBar { BottomLandingBar() }
             // Routes.ProfilePage().routeName() -> BottomAppBar { BottomProfileBar() }
             else -> {}
-        }
-    }
-}
-
-
-@Composable
-fun BottomSettingsBar() {
-    val navController = LocalNavController.current
-    val navigationGraphEntry = remember {
-        navController.getBackStackEntry<Routes.SettingsPage>()
-    }
-    val vm = viewModel<SettingsPageViewModel>(navigationGraphEntry)
-
-    BottomAppBar(
-        modifier = Modifier
-            .clip(shape = RoundedCornerShape(10.dp))
-            .padding(10.dp),
-        containerColor = MaterialTheme.colorScheme.primary
-    ) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-            IconButton(
-                onClick = { vm.setTabIndex(ArticleTabs.TAB_ONE) },
-                // temporary color for an active state:
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = MaterialTheme.colorScheme.secondary
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "general info"
-                )
-            }
-            IconButton(onClick = { vm.setTabIndex(ArticleTabs.TAB_TWO) }) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "articles about health"
-                )
-            }
-            IconButton(onClick = { vm.setTabIndex(ArticleTabs.TAB_THREE) }) {
-                Icon(
-                    imageVector = Icons.Default.LocationOn,
-                    contentDescription = "location"
-                )
-            }
         }
     }
 }
@@ -190,7 +139,10 @@ fun BottomStoriesBar() {
                     ),
                     onClick = { vm.setShowNewStoryForm(!vm.showNewStoryForm.value) }
                 ) {
-                    val text = if (!vm.showNewStoryForm.value) "Add a story" else "Cancel"
+                    val text = if (!vm.showNewStoryForm.value)
+                        stringResource(R.string.add_story)
+                    else
+                        stringResource(R.string.cancel)
                     Icon(
                         imageVector = if (!vm.showNewStoryForm.value) Icons.Default.Add else Icons.Default.Close,
                         contentDescription = text
@@ -212,9 +164,9 @@ fun BottomStoriesBar() {
                     ) {
                         Icon(
                             imageVector = Icons.Filled.PlayArrow,
-                            contentDescription = "Submit your story"
+                            contentDescription = stringResource(R.string.submit_your_story)
                         )
-                        Text("Submit")
+                        Text(stringResource(R.string.submit))
                     }
                 }
             }

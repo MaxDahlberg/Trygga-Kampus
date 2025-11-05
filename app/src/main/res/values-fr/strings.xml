@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trygga Campus</string>
+    <string name="title">Bienvenue à Trygga Campus !</string>
+    <string name="about_us">À propos de nous !</string>
+    <string name="info1">Ici, vous trouverez des informations concernant l\'application, comme ce que nous visons à faire et comment elle fonctionne.</string>
+    <string name="button">Si vous avez besoin d\'une aide sérieuse, veuillez contacter soit votre conseiller universitaire, soit l\'un de nos professionnels en utilisant ce bouton.</string>
+    <string name="buttonInfo">Ce bouton vous présentera un formulaire que vous remplirez avec ce que vous vivez et l\'enverrez à quelqu\'un pour fournir l\'aide nécessaire.</string>
+    <string name="get_in_touch_landing">Contactez-nous !</string>
+    <string name="choose_username">Choisissez un nom d\'utilisateur</string>
+    <string name="username_empty">Le nom d\'utilisateur ne peut pas être vide</string>
+    <string name="submitting">En cours d\'envoi...</string>
+    <string name="username_update_fail">Échec de la mise à jour du nom d\'utilisateur</string>
+
+    <string name="network_unavailable">Connexion réseau indisponible</string>
+
+    <!-- Déconnexion -->
+    <string name="logout_prompt">Vous êtes sur le point de vous déconnecter !</string>
+    <string name="dismiss">Annuler</string>
+    <string name="confirm">Confirmer</string>
+
+    <!-- Les histoires commencent -->
+    <string name="stories_page_title">Partagez votre histoire avec les autres</string>
+    <string name="stories_title_label">Titre (Facultatif)</string>
+    <string name="stories_content_label">Que voudriez-vous partager ?</string>
+    <string name="stories_anonymous_label">Anonyme</string>
+    <string name="submit">Soumettre</string>
+    <string name="add_story">Ajouter une histoire</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="comments">Commentaires</string>
+    <string name="submit_a_story">Soumettre une histoire</string>
+    <string name="no_stories">Aucune histoire à afficher.</string>
+    <string name="loading_stories">Chargement des histoires ...</string>
+    <string name="submit_your_story">Soumettre votre histoire</string>
+
+
+    <!-- Commentaires de l'histoire -->
+    <string name="write_a_comment">Écrire un commentaire...</string>
+    <string name="post">Publier</string>
+    <string name="no_comments">Pas encore de commentaires. Soyez le premier à commenter !</string>
+    <string name="unknown_user">Utilisateur inconnu</string>
+    <string name="fetch_comment_error">Échec du chargement des commentaires. Veuillez réessayer.</string>
+    <string name="post_comment_error">Échec de la publication du commentaire. Veuillez réessayer.</string>
+    <string name="delete_comment_error">Erreur lors de la suppression du commentaire. Veuillez réessayer.</string>
+
+    <!-- menu latéral -->
+    <string name="drawer_home">Accueil</string>
+    <string name="drawer_profile">Profil</string>
+    <string name="drawer_articles">Articles</string>
+    <string name="drawer_form">Formulaire</string>
+    <string name="drawer_survey">Sondage</string>
+    <string name="drawer_habits">Suivi des habitudes</string>
+    <string name="drawer_stories">Histoires</string>
+    <string name="drawer_advice">Conseils</string>
+    <string name="drawer_login">Connexion</string>
+    <string name="drawer_logout">Déconnexion</string>
+    <string name="drawer_settings">Paramètres</string>
+
+    <!-- Page des articles -->
+    <string name="new_article">Nouvel article</string>
+    <string name="delete_article">Supprimer l\'article</string>
+    <string name="article_title">Titre</string>
+    <string name="summary">Résumé</string>
+    <string name="webpage_url">URL de la page Web</string>
+    <string name="all_fields_required">Tous les champs sont obligatoires.</string>
+    <string name="add">Ajouter</string>
+    <string name="cancel">Annuler</string>
+    <string name="loading_articles">Chargement des articles...</string>
+    <string name="no_articles_available">Aucun article disponible. Veuillez revenir plus tard ou essayer de rafraîchir.</string>
+    <string name="cancel_delete_mode">Annuler le mode de suppression</string>
+    <string name="add_article">Ajouter un article</string>
+    <string name="enable_delete_mode">Activer le mode de suppression</string>
+    <string name="confirm_deletion">Confirmer la suppression</string>
+    <string name="delete_confirmation">Êtes-vous sûr de vouloir supprimer cet article ?</string>
+    <string name="delete">Supprimer</string>
+    <string name="error">Erreur</string>
+    <string name="unknown_error">Une erreur inconnue est survenue.</string>
+    <string name="ok">OK</string>
+    <string name="read_more">Lire la suite</string>
+    <string name="no_link">Aucun lien</string>
+
+    <!-- Formulaire -->
+    <string name="get_in_touch">Prenez contact</string>
+    <string name="receive_help_text">Recevez l\'aide dont vous avez besoin</string>
+    <string name="enter_your_name">Entrez votre nom</string>
+    <string name="subject_field">Champ de sujet</string>
+    <string name="enter_your_message">Entrez votre message ici</string>
+    <string name="fill_out_all_fields">Veuillez remplir tous les champs sauf le nom.</string>
+    <string name="email_body_template">Bonjour, je m\'appelle %1$s.\n\n%2$s\n\nMerci !</string>
+
+    <!-- app/src/main/res/values-fr/strings.xml -->
+    <string name="survey_title">Sondage</string>
+    <string name="question_prefix">Question %d :</string>
+    <string name="your_answer">Votre réponse</string>
+    <string name="submit_answers">Envoyer les réponses</string>
+    <string name="survey_complete_title">Sondage terminé</string>
+    <string name="survey_complete_message">Merci d\'avoir répondu au sondage !</string>
+    <string name="survey_submit_success">Le sondage a été envoyé avec succès !</string>
+    <string name="survey_submit_failed">Échec de l\'envoi du sondage</string>
+
+    <!-- Questions du sondage -->
+    <string name="survey_question_1">À quelle fréquence pensez-vous aux effets des drogues ou de l\'alcool sur vos études ?</string>
+    <string name="survey_question_2">Vous êtes-vous déjà senti sous pression d\'utiliser des drogues ou de l\'alcool pour vous intégrer à vos pairs ?</string>
+    <string name="survey_question_3">Pensez-vous que la consommation de substances est normalisée dans votre environnement universitaire ?</string>
+    <string name="survey_question_4">À quel point vous sentez-vous confiant pour dire \'non\' aux drogues ou à l\'alcool dans un contexte social ?</string>
+    <string name="survey_question_5">À quelle fréquence vous retrouvez-vous à utiliser des substances (par exemple, de l\'alcool, des drogues) pour faire face au stress ou à la pression de la vie universitaire ?</string>
+    <string name="survey_question_6">Croyez-vous qu\'il existe un stigmate autour de la recherche d\'aide pour la dépendance dans votre université ?</string>
+    <string name="weekly_progress">Progrès hebdomadaire - Semaine %1$d</string>
+    <string name="daily_progress">Progrès quotidiens</string>
+    <string-array name="weekdays">
+        <item>Lun</item>
+        <item>Mar</item>
+        <item>Mer</item>
+        <item>Jeu</item>
+        <item>Ven</item>
+        <item>Sam</item>
+        <item>Dim</item>
+    </string-array>
+
+    <string name="week">Semaine %1$d</string>
+    <string name="today">Progression quotidienne</string>
+    <string name="no_habits">Aucune habitude pour le moment. Ajoutez votre première habitude !</string>
+    <string name="description">Description (optionnel)</string>
+    <string name="habit_title">Titre de l\'habitude</string>
+    <string name="add_new_habit">Ajouter une nouvelle habitude</string>
+
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">Se déconnecter</string>
+    <string name="email_hint">E-mail *</string>
+    <string name="password_hint">Mot de passe *</string>
+    <string name="log_in_button_text">Se connecter</string>
+    <string name="forgot_password_text">Mot de passe oublié ?</string>
+    <string name="create_account_text">Créer un compte</string>
+    <string name="home">Accueil</string>
+    <string name="news">Actualités</string>
+    <string name="map">Carte</string>
+    <string name="faq">FAQ</string>
+    <string name="report">Signaler</string>
+    <string name="weekly_progress_title">Progrès hebdomadaires</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profil</string>
+    <string name="account_information">Informations du compte</string>
+    <string name="username_label">Nom d\'utilisateur</string>
+    <string name="email_label">E-mail</string>
+    <string name="my_hobbies">Mes passe-temps</string>
+    <string name="save_hobbies">Enregistrer les passe-temps</string>
+    <string name="change_username">Changer le nom d\'utilisateur</string>
+    <string name="password_required">Mot de passe (obligatoire)</string>
+    <string name="new_username">Nouveau nom d\'utilisateur</string>
+    <string name="update_username">Mettre à jour le nom d\'utilisateur</string>
+    <string name="change_password">Changer le mot de passe</string>
+    <string name="current_password">Mot de passe actuel</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="repeat_new_password">Répéter le nouveau mot de passe</string>
+    <string name="update_password">Mettre à jour le mot de passe</string>
+    <string name="account_data">Compte et données</string>
+    <string name="request_my_data">Demander mes données</string>
+    <string name="delete_account">Supprimer mes données et mon compte</string>
+    <string name="hobbies_saved_success">Passe-temps enregistrés avec succès !</string>
+    <string name="username_changed_success">Nom d\'utilisateur modifié avec succès !</string>
+    <string name="password_changed_success">Mot de passe modifié avec succès !</string>
+    <string name="password_rules">Le mot de passe doit comporter au moins 8 caractères, incluant une majuscule, un chiffre et un caractère spécial.</string>
+
+    <!-- Dialogues -->
+    <string name="confirm_account_deletion">Confirmer la suppression du compte</string>
+    <string name="delete_account_warning">Vos données personnelles et votre compte seront supprimés conformément au RGPD. Cette action est permanente et ne peut pas être annulée.</string>
+    <string name="enter_password">Entrez le mot de passe</string>
+    <string name="personal_data_request">Demande de données personnelles</string>
+    <string name="personal_data_request_message">Appuyez sur Demander pour récupérer vos données personnelles depuis le serveur. Lorsqu\'elles seront prêtes, vous pourrez les télécharger.</string>
+    <string name="personal_data_ready_message">Vos données personnelles sont prêtes. Appuyez sur Télécharger pour les enregistrer sur votre appareil.</string>
+    <string name="request">Demander</string>
+    <string name="download">Télécharger</string>
+
+    <!-- Messages d'erreur -->
+    <string name="error_fill_all_fields">Veuillez remplir tous les champs.</string>
+    <string name="error_user_email_unavailable">E-mail utilisateur non disponible.</string>
+    <string name="error_username_taken">Ce nom d\'utilisateur est déjà pris.</string>
+    <string name="error_update_username_failed">Échec de la mise à jour du nom d\'utilisateur : %1$s</string>
+    <string name="error_update_hobbies">Échec de la mise à jour des passe-temps</string>
+    <string name="error_update_hobbies_detail">Échec de la mise à jour des passe-temps : %1$s</string>
+    <string name="error_invalid_passwords">Les mots de passe ne correspondent pas ou sont invalides.</string>
+    <string name="error_password_change_failed">Échec du changement de mot de passe : %1$s</string>
+    <string name="error_password_required">Mot de passe requis pour supprimer le compte.</string>
+    <string name="error_account_deletion_failed">Échec de la suppression du compte : %1$s</string>
+
+    <!-- Passe-temps -->
+    <string name="hobby_reading">Lecture</string>
+    <string name="hobby_gaming">Jeux vidéo</string>
+    <string name="hobby_traveling">Voyager</string>
+    <string name="hobby_cooking">Cuisine</string>
+    <string name="hobby_sports">Sports</string>
+    <string name="hobby_music">Musique</string>
+    <string name="hobby_art">Art</string>
+    <string name="hobby_photography">Photographie</string>
+    <string name="hobby_dancing">Danse</string>
+    <string name="hobby_hiking">Randonnée</string>
+    <string name="hobby_fishing">Pêche</string>
+    <string name="hobby_swimming">Natation</string>
+    <string name="hobby_coding">Programmation</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Méditation</string>
+    <string name="hobby_writing">Écriture</string>
+    <string name="hobby_cycling">Cyclisme</string>
+    <string name="hobby_board_games">Jeux de société</string>
+    <string name="hobby_movies">Films</string>
+    <string name="hobby_gardening">Jardinage</string>
+    <string name="hobby_knitting">Tricot</string>
+    <string name="hobby_crafts">Bricolage</string>
+    <string name="hobby_volunteering">Bénévolat</string>
+    <string name="hobby_languages">Langues</string>
+    <string name="hobby_running">Course</string>
+    <string name="hobby_singing">Chant</string>
+    <string name="hobby_collecting">Collection</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Théâtre</string>
+    <string name="hobby_baking">Pâtisserie</string>
+
+    <!-- Paramètres du thème -->
+    <string name="app_theme_title">Thème de l\'application</string>
+    <string name="app_theme_description">Changez le thème de l\'application</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
+    <string name="theme_system">Système</string>
+    <string name="app_theme_restart_notice">L\'application peut redémarrer pour appliquer les modifications</string>
+
+    <string name="settings_language_title">Langue de l\'application</string>
+    <string name="settings_language_description">Changer la langue de l\'application</string>
+    <string name="settings_language_restart_notice">L\'application va redémarrer pour appliquer les changements</string>
+    <string name="settings_language_ai_note">Note : Les traductions ont été fournies par l\'IA</string>
+</resources>

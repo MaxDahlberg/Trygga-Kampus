@@ -128,6 +128,7 @@ fun LoginPage() {
                 isError = !vm.passwordIsValid,
                 isPassword = true,
                 isPasswordVisible = vm.isPasswordVisible,
+                showPasswordRules = true,
                 onVisibilityChange = { vm.togglePasswordVisibility() },
             )
 
@@ -187,7 +188,7 @@ fun LoginPage() {
             Spacer(modifier = Modifier.width(24.dp))
 
             SocialLoginIcon(
-                iconId = R.drawable.ic_facebook_logo,
+                iconId = R.drawable.ic_facebook_logo_primary,
                 contentDescription = "Sign in with Facebook",
                 enabled = !vm.signingIn,
                 onClick = {

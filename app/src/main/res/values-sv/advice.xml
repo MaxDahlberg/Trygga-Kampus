@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- Category Titles -->
+    <string name="select_category">Välj kategori</string>
+    <string name="back">Tillbaka</string>
+
+    <string name="preventive_advice_category_title">Förebyggande Råd</string>
+    <string name="support_advice_category_title">Hjälpa en Vän</string>
+    <string name="family_advice_category_title">Prata med Min Familj</string>
+
+    <!-- Preventive Advice Cards -->
+    <string name="preventive_advice_title_1">Sätt tydliga gränser</string>
+    <string name="preventive_advice_text_1">Att upprätta tydliga personliga gränser hjälper dig att hålla fokus och prioritera aktiviteter som stödjer ditt välbefinnande. Att sätta dessa gränser innebär också att känna igen dina egna begränsningar och göra medvetna val för att undvika miljöer eller sociala situationer där beroendeframkallande substanser eller beteenden finns. Kommunicera dina gränser med vänner och familj för att få deras stöd och undvika missförstånd.</string>
+
+    <string name="preventive_advice_title_2">Bygg ett stödnätverk</string>
+    <string name="preventive_advice_text_2">Omge dig med vänner, familj och mentorer som uppmuntrar hälsosamma vanor och är där för att stödja dig genom utmaningar. Ett starkt stödnätverk kan påminna dig om dina mål och hjälpa dig att motstå frestelser under svåra tider. Tveka inte att söka råd från de som framgångsrikt har undvikit eller övervunnit beroenden, eftersom de kan ge värdefulla insikter och uppmuntran.</string>
+
+    <string name="preventive_advice_title_3">Utveckla hälsosamma copingmekanismer</string>
+    <string name="preventive_advice_text_3">Stress och känslor kan leda till ohälsosamma beteenden om de inte hanteras väl. Istället för att vända dig till substanser, försök odla metoder som mindfulness, fysisk aktivitet eller kreativa utlopp som konst, skrivande eller musik. Dessa hälsosamma copingmekanismer kan ge ett konstruktivt sätt att släppa stress och hantera känslor, vilket i slutändan stödjer din resa mot en balanserad livsstil.</string>
+
+    <string name="preventive_advice_title_4">Utbilda dig själv</string>
+    <string name="preventive_advice_text_4">Att förstå riskerna förknippade med beroendebeteenden gör att du kan fatta informerade beslut och känna igen varningstecken tidigt. Utbilda dig om hur olika substanser eller vanor kan påverka din fysiska hälsa, mentala välbefinnande och personliga relationer. Medvetenhet kan ge dig möjlighet att fatta medvetna beslut som stämmer överens med dina mål och värderingar.</string>
+
+    <string name="preventive_advice_title_5">Sätt personliga mål</string>
+    <string name="preventive_advice_text_5">Att sätta tydliga, uppnåbara mål - både kortsiktiga och långsiktiga - ger ditt liv syfte och riktning. Genom att fokusera på meningsfulla aktiviteter bygger du ett liv som speglar dina värderingar och ambitioner. Sträva efter prestationer som främjar personlig utveckling, oavsett om det är att utveckla nya färdigheter, förbättra relationer eller arbeta mot karriärmilstolpar.</string>
+
+    <!-- Support Advice Cards -->
+    <string name="support_advice_title_1">Var en bra lyssnare</string>
+    <string name="support_advice_text_1">Ibland är det bästa sättet att stödja någon genom att helt enkelt lyssna. Låt din vän veta att du är där för dem genom att vara närvarande och erbjuda dem ett säkert utrymme att uttrycka sina känslor utan omdöme. Undvik att erbjuda lösningar för snabbt, och lyssna istället uppmärksamt på vad de upplever och försäkra dem om att de inte är ensamma.</string>
+
+    <string name="support_advice_title_2">Undvik möjliggörande beteenden</string>
+    <string name="support_advice_text_2">Att stödja en vän betyder inte att uppmuntra skadligt beteende. Undvik handlingar som oavsiktligt kan möjliggöra deras beroende, som att ursäkta skadligt beteende eller hjälpa dem att skaffa beroendeframkallande substanser. Uppmuntra istället hälsosamma vanor och sätt fasta gränser. Låt din vän veta att du bryr dig samtidigt som du främjar positiv förändring.</string>
+
+    <string name="support_advice_title_3">Erbjud positiv uppmuntran</string>
+    <string name="support_advice_text_3">Hjälp din vän att hålla motivationen genom att erkänna deras styrkor och fira deras prestationer, oavsett hur små. Positiv uppmuntran kan förstärka deras självkänsla och få dem att känna sig stödda när de arbetar mot återhämtning. Påminn dem om tidigare framgångar och försäkra dem om att framsteg är möjligt.</string>
+
+    <string name="support_advice_title_4">Utbilda dig om beroende</string>
+    <string name="support_advice_text_4">Att förstå beroende kan göra det möjligt för dig att erbjuda mer informerat stöd. Lär dig om tecknen, utlösarna och tillgängliga resurser, så att du kan svara effektivt om din vän söker din hjälp. Denna kunskap kan också förhindra missförstånd och hjälpa dig att kommunicera med medkänsla och konstruktivt.</string>
+
+    <string name="support_advice_title_5">Uppmuntra professionell hjälp</string>
+    <string name="support_advice_text_5">Om din vän kämpar, föreslå försiktigt att de överväger professionellt stöd, som rådgivning, terapi eller en stödgrupp. Erbjud att följa med dem till deras första session om det skulle få dem att känna sig mer bekväma. Att söka hjälp kan vara skrämmande, men att veta att de inte är ensamma kan göra en enorm skillnad.</string>
+
+    <!-- Family Advice Cards -->
+    <string name="family_advice_title_1">Förbered vad du vill säga</string>
+    <string name="family_advice_text_1">Ta tid att planera vad du vill kommunicera till din familj. Tänk på de punkter du vill uttrycka och de känslor du vill förmedla. Var ärlig om dina svårigheter och dela specifika sätt som deras stöd kan hjälpa. Denna tydlighet kan skapa en mer produktiv konversation och uppmuntra förståelse.</string>
+
+    <string name="family_advice_title_2">Välj rätt tillfälle</string>
+    <string name="family_advice_text_2">Hitta en lugn och privat miljö där du kan prata öppet utan distraktioner. Undvik att inleda konversationen när spänningarna är höga eller under upptagna tider. Välj ett tillfälle när dina familjemedlemmar är tillgängliga och villiga att lyssna, vilket gör det lättare för dem att engagera sig fullt ut i ditt budskap.</string>
+
+    <string name="family_advice_title_3">Uttryck dina känslor</string>
+    <string name="family_advice_text_3">Var öppen med hur beroende har påverkat dig fysiskt, emotionellt och socialt. Låt din familj veta varför du behöver deras stöd och vad det betyder för dig. Denna ärlighet kan främja empati och hjälpa din familj att förstå vikten av deras roll i din resa.</string>
+
+    <string name="family_advice_title_4">Var öppen för deras reaktioner</string>
+    <string name="family_advice_text_4">Dina familjemedlemmar kan svara med en rad olika känslor, inklusive oro, förvirring eller frustration. Var beredd att lyssna på deras svar utan att bli defensiv. Ge dem utrymme att ställa frågor så att de bättre kan förstå din situation och hur de kan stödja dig.</string>
+
+    <string name="family_advice_title_5">Be om deras stöd</string>
+    <string name="family_advice_text_5">Förklara för din familj hur de kan hjälpa, antingen genom att delta i rådgivningssessioner, söka resurser tillsammans eller helt enkelt vara där när du behöver någon att prata med. Erkänn att deras stöd kan göra skillnad och uttryck tacksamhet för all hjälp de är villiga att ge.</string>
+</resources>

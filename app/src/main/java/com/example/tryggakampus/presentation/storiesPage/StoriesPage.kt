@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +47,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.ConnectivityObserver
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.NetworkConnectivityObserver
+import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.domain.model.StoryModel
 import com.google.firebase.auth.FirebaseAuth
@@ -105,7 +107,7 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Loading stories ...")
+            Text(stringResource(R.string.loading_stories))
             Spacer(modifier = Modifier.size(20.dp))
             CircularProgressIndicator(
                 modifier = Modifier.width(64.dp),
@@ -123,10 +125,10 @@ fun StoriesPage(viewModel: StoriesPageViewModel = viewModel<StoriesPageViewModel
     ) {
         if (viewModel.stories.size == 0) {
             Column (modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("There are no stories to show.")
+                Text(stringResource(R.string.no_stories))
 
                 Button(onClick = { viewModel.setShowNewStoryForm(true) }) {
-                    Text("Submit a story")
+                    Text(stringResource(R.string.submit_a_story))
                 }
             }
         }
@@ -168,7 +170,12 @@ fun StoryBox(
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            StoryBoxHeader(story.title ?: "", story.author ?: "Anonymous")
+            val authorText = when {
+                story.anonymous -> stringResource(R.string.stories_anonymous_label)
+                story.author.isNullOrBlank() -> stringResource(R.string.unknown_user)
+                else -> story.author
+            }
+            StoryBoxHeader(story.title ?: "", authorText)
 
             StoryBoxBody(
                 if (story.content.length > 200)
@@ -186,7 +193,7 @@ fun StoryBox(
                 // Bottom left: Comments button (only if enabled)
                 if (showCommentButton) {
                     Text(
-                        text = "Comments",
+                        text = stringResource(R.string.comments),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color(0xFFF19107),
@@ -200,7 +207,7 @@ fun StoryBox(
                 val currentUser = FirebaseAuth.getInstance().currentUser
                 if (currentUser?.uid == story.userId) {
                     Text(
-                        text = "Delete",
+                        text = stringResource(R.string.delete),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.Red,

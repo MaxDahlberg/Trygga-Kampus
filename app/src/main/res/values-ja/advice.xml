@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Category Titles -->
+    <string name="select_category">カテゴリを選択</string>
+    <string name="back">戻る</string>
+
+    <string name="preventive_advice_category_title">予防のアドバイス</string>
+    <string name="support_advice_category_title">友人を助ける</string>
+    <string name="family_advice_category_title">家族と話す</string>
+
+    <!-- Preventive Advice Cards -->
+    <string name="preventive_advice_title_1">
+        明確な境界を設定する
+    </string>
+    <string name="preventive_advice_text_1">
+        自分の限界をはっきりさせることで、集中力を保ち、自分の健康を支える活動を優先しやすくなります。
+        そのためには、自分の限界を理解し、依存につながる物質や行動がある環境・状況を避けるための意識的な選択が必要です。
+        境界を友人や家族に伝え、サポートを得たり誤解を防ぎましょう。
+    </string>
+
+    <string name="preventive_advice_title_2">
+        支援ネットワークを築く
+    </string>
+    <string name="preventive_advice_text_2">
+        健康的な習慣を促し、困難なときに支えてくれる友人、家族、メンターに囲まれてください。
+        強い支援ネットワークは、あなたの目標を思い出させ、誘惑に負けそうなときに踏ん張る力を与えてくれます。
+        依存を避けることに成功した人や克服した人に遠慮せず相談してください。彼らの経験は貴重な助言と励ましになります。
+    </string>
+
+    <string name="preventive_advice_title_3">
+        健康的な対処法を身につける
+    </string>
+    <string name="preventive_advice_text_3">
+        ストレスや感情は、適切に対処しなければ不健康な行動を引き起こすことがあります。
+        物質に頼るのではなく、マインドフルネス、運動、芸術・執筆・音楽など創造的な方法を試してください。
+        こうした健康的な対処法は、建設的にストレスを発散し感情を扱う手段となり、最終的にはバランスの取れた生活へとつながります。
+    </string>
+
+    <string name="preventive_advice_title_4">
+        学ぶこと
+    </string>
+    <string name="preventive_advice_text_4">
+        依存行動に伴うリスクを理解することで、早い段階で兆候に気づき、賢明な選択ができるようになります。
+        さまざまな物質や習慣が身体的健康、精神的幸福、人間関係にどのような影響を及ぼすか学びましょう。
+        知識を持つことで、自分の目標や価値観に沿った意識的な選択をする力が得られます。
+    </string>
+
+    <string name="preventive_advice_title_5">
+        個人の目標を設定する
+    </string>
+    <string name="preventive_advice_text_5">
+        明確で達成可能な短期・長期目標を設定することで、人生に目的と方向性が生まれます。
+        意味のある活動に集中することで、自分の価値観や願望に沿った生活を築くことができます。
+        新しいスキルの習得、人間関係の改善、キャリアのステップアップなど、自己成長につながる目標を追求しましょう。
+    </string>
+
+    <!-- Support Advice Cards -->
+    <string name="support_advice_title_1">
+        良い聞き手であること
+    </string>
+    <string name="support_advice_text_1">
+        誰かを支える最善の方法は、ただ耳を傾けることかもしれません。
+        判断せずに気持ちを話せる安心できる場を作り、あなたがそばにいるということを伝えてください。
+        すぐに解決策を出そうとせず、相手の経験していることを丁寧に聞き、ひとりではないと伝えましょう。
+    </string>
+
+    <string name="support_advice_title_2">
+        助長行動を避ける
+    </string>
+    <string name="support_advice_text_2">
+        支えるということは、有害な行動を許すことではありません。
+        問題行動を見逃したり、依存の原因となる物質を得るのを手伝うような行動は避けましょう。
+        代わりに、健康的な習慣を勧め、明確な境界を示してください。
+        相手を思っているからこそ、前向きな変化を促すことが大切です。
+    </string>
+
+    <string name="support_advice_title_3">
+        前向きな励ましを送る
+    </string>
+    <string name="support_advice_text_3">
+        相手の強みを認め、小さな成果でも一緒に喜び、モチベーションを保てるよう支えてください。
+        前向きな言葉は自己肯定感を高め、回復への道のりで支えになります。
+        過去の成功を思い出させ、進歩は可能だと伝えましょう。
+    </string>
+
+    <string name="support_advice_title_4">
+        依存について学ぶ
+    </string>
+    <string name="support_advice_text_4">
+        依存を理解することは、より適切な支援につながります。
+        サイン、引き金、利用できる支援リソースなどについて知り、相手が助けを求めたときに適切に対応できるようにしましょう。
+        この知識は誤解を防ぎ、思いやりを持った建設的な対話にもつながります。
+    </string>
+
+    <string name="support_advice_title_5">
+        専門的な支援を勧める
+    </string>
+    <string name="support_advice_text_5">
+        もし友人が苦しんでいるなら、カウンセリング、セラピー、支援グループなど専門家の助けを検討するよう穏やかに提案してください。
+        必要であれば最初のセッションに同行すると申し出るのもよいでしょう。
+        助けを求めるのは勇気がいることですが、ひとりではないと感じられるだけで大きな支えになります。
+    </string>
+
+    <!-- Family Advice Cards -->
+    <string name="family_advice_title_1">
+        伝えたいことを準備する
+    </string>
+    <string name="family_advice_text_1">
+        家族に伝えたい内容を事前に整理する時間を取りましょう。
+        伝えたいポイントや伝えたい感情について考え、困難な状況を正直に話し、どのようなサポートが必要かを具体的に伝えてください。
+        明確にすることで、建設的な会話が生まれ、理解につながります。
+    </string>
+
+    <string name="family_advice_title_2">
+        適切なタイミングを選ぶ
+    </string>
+    <string name="family_advice_text_2">
+        静かでプライベートな環境を選び、気が散らずに話せる状況を作ってください。
+        緊張が高まっているときや忙しい時間帯は避けましょう。
+        家族全員が落ち着いて話を聞けるタイミングを選ぶことで、より真剣に話に向き合ってもらいやすくなります。
+    </string>
+
+    <string name="family_advice_title_3">
+        気持ちを伝える
+    </string>
+    <string name="family_advice_text_3">
+        依存が身体的・感情的・社会的にあなたにどのような影響を与えたのか率直に話してください。
+        なぜ家族の支援が必要なのか、その意味を伝えることで、家族の共感を促し、あなたの状況を理解する助けになります。
+    </string>
+
+    <string name="family_advice_title_4">
+        相手の反応を受け入れる
+    </string>
+    <string name="family_advice_text_4">
+        家族は心配、混乱、苛立ちなど、さまざまな感情で応えるかもしれません。
+        防御的にならずに相手の反応を聞く姿勢を持ちましょう。
+        質問する時間を与えることで、家族も状況を理解し、どう支援できるか考えやすくなります。
+    </string>
+
+    <string name="family_advice_title_5">
+        支援を求める
+    </string>
+    <string name="family_advice_text_5">
+        家族がどのように手助けできるのかを伝えてください。例えば、一緒にカウンセリングに行く、情報を調べる、話を聞いてくれるだけでも構いません。
+        家族の支援が大きな力になることを認め、手を差し伸べてくれることへの感謝も伝えましょう。
+    </string>
+
+</resources>

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material3.AlertDialog
@@ -29,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.R
@@ -168,6 +170,7 @@ fun PrimaryDrawerItems(
                         DrawerItem.Advice -> Routes.AdvicePage()
                         DrawerItem.Voice -> Routes.VoiceNotePage()
                         DrawerItem.Stories -> Routes.StoriesNavGraph.StoriesPage
+                        DrawerItem.Habits -> Routes.HabitTrackerPage() // Added habit tracker
                         DrawerItem.Videos -> Routes.VideosNavGraph.VideosPage
                         DrawerItem.Game -> Routes.ScratchGamePage()
                         DrawerItem.Login -> Routes.Authentication.LoginPage
@@ -236,7 +239,7 @@ fun ConfirmLogout(
         titleContentColor = MaterialTheme.colorScheme.onBackground,
 
         icon = { Icon(Icons.Default.Warning, contentDescription = "Warning Icon") },
-        title = { Text(text = "You are about to logout!") },
+        title = { Text(stringResource(R.string.logout_prompt)) },
 
         onDismissRequest = { onReject() },
 
@@ -245,7 +248,7 @@ fun ConfirmLogout(
                 onClick = { onAccept() },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text("Confirm")
+                Text(stringResource(R.string.confirm))
             }
         },
 
@@ -254,9 +257,8 @@ fun ConfirmLogout(
                 onClick = { onReject() },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
-                Text("Dismiss")
+                Text(stringResource(R.string.dismiss))
             }
         }
     )
-
 }

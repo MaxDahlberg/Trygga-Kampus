@@ -24,6 +24,9 @@ android {
             useSupportLibrary = true
         }
 
+        // Added from remote branch
+        resConfigs("en", "fr", "sv", "fi", "ja")
+
         // BuildConfig fields for voice API configuration; can be provided via:
         // 1) Gradle project properties (e.g., -PVOICE_PROXY_URL=...)
         // 2) app/voice.properties (not committed) with keys VOICE_PROXY_URL, VOICE_API_URL, VOICE_API_KEY, APP_API_KEY
@@ -64,21 +67,26 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
         // Enable generation of BuildConfig so custom buildConfigField entries are available at runtime
         buildConfig = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -87,23 +95,45 @@ android {
 }
 
 dependencies {
-
+    // Firebase
     implementation(libs.firebase.auth.ktx)
-    implementation(libs.datastore.preferences.core)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-firestore")
+
+    // AndroidX
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+
+    // Navigation
     implementation(libs.navigation.compose)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.dynamic)
     implementation(libs.navigation.ui)
+    implementation(libs.androidx.navigation.runtime.ktx)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
+    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("androidx.compose.material:material-icons-extended") // Keep hardcoded to avoid alias issues
+
+    // Habit tracker
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0") // ViewModel Compose
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.datastore.preferences.core)
+
+    // Third-party
     implementation("androidx.compose.material:material-icons-extended")
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.appcompat)
@@ -115,6 +145,11 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.facebook.android:facebook-login:16.3.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

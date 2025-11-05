@@ -1,4 +1,5 @@
 package com.example.tryggakampus.presentation.landingPage
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,12 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,22 +28,44 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.LocalNavController
 import com.example.tryggakampus.R
 import com.example.tryggakampus.Routes
 import com.example.tryggakampus.presentation.component.PageContainer
+import kotlinx.coroutines.delay
 
 @Composable
 fun LandingPage(title: String) {
-    PageContainer(modifier = Modifier
-        .background(MaterialTheme.colorScheme.background)
-        .padding(15.dp)
+    val landingViewModel: LandingPageViewModel = viewModel()
+    val username by landingViewModel.username.collectAsState()
+
+    var showUsernameDialog by remember { mutableStateOf(false) }
+
+    // Show dialog after slight delay for smooth UX
+    LaunchedEffect(username) {
+        if (username.isNullOrEmpty()) {
+            delay(700)
+            showUsernameDialog = true
+        } else {
+            showUsernameDialog = false
+        }
+    }
+
+    PageContainer(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(15.dp)
     ) {
-        Column (verticalArrangement = Arrangement.spacedBy(20.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
             Logo()
             AboutUs()
             GetHelp()
         }
+    }
+
+    if (showUsernameDialog) {
+        UsernameDialog(viewModel = landingViewModel)
     }
 }
 
@@ -121,7 +150,7 @@ fun GetHelp() {
                 )
             ) {
                 Text(
-                    text = "Get in touch!",
+                    text = stringResource(R.string.get_in_touch_landing),
                     fontWeight = FontWeight.Bold
                 )
             }

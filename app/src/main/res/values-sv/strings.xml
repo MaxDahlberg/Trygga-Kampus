@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trygga Campus</string>
+    <string name="title">Välkommen till Trygga Campus!</string>
+    <string name="about_us">Om oss!</string>
+    <string name="info1">Här kommer information om appen, som vad vi siktar på att göra och hur den fungerar.</string>
+    <string name="button">Om du behöver akut hjälp, vänligen kontakta antingen din universitetskurator eller en av våra professionella via den här knappen.</string>
+    <string name="buttonInfo">Denna knapp kommer att visa ett formulär som du fyller i med vad du hanterar och skickar det till någon för att få den hjälp som behövs.</string>
+    <string name="get_in_touch_landing">Ta kontakt!</string>
+    <string name="choose_username">Välj ett användarnamn</string>
+    <string name="username_empty">Användarnamnet kan inte vara tomt</string>
+    <string name="submitting">Skickar...</string>
+    <string name="username_update_fail">Misslyckades med att uppdatera användarnamnet</string>
+
+    <string name="network_unavailable">Nätverksanslutning ej tillgänglig</string>
+
+    <!-- Logga ut -->
+    <string name="logout_prompt">Du håller på att logga ut!</string>
+    <string name="dismiss">Avbryt</string>
+    <string name="confirm">Bekräfta</string>
+
+    <!-- Berättelser -->
+    <string name="stories_page_title">Dela din berättelse med andra</string>
+    <string name="stories_title_label">Titel (Valfritt)</string>
+    <string name="stories_content_label">Vad skulle du vilja dela med dig av?</string>
+    <string name="stories_anonymous_label">Anonym</string>
+    <string name="submit">Posta</string>
+    <string name="add_story">Lägg till en berättelse</string>
+    <string name="minimum">Minst</string>
+    <string name="maximum">Högst</string>
+    <string name="comments">Kommentarer</string>
+    <string name="submit_a_story">Skicka in en berättelse</string>
+    <string name="no_stories">Det finns inga berättelser att visa.</string>
+    <string name="loading_stories">Laddar berättelser ...</string>
+    <string name="submit_your_story">Posta din berättelse</string>
+
+    <!-- Berättelsekommentarer -->
+    <string name="write_a_comment">Skriv en kommentar...</string>
+    <string name="post">Posta</string>
+    <string name="no_comments">Inga kommentarer ännu. Bli den första att kommentera!</string>
+    <string name="unknown_user">Okänd användare</string>
+    <string name="fetch_comment_error">Det gick inte att ladda kommentarer. Försök igen.</string>
+    <string name="post_comment_error">Det gick inte att skicka kommentaren. Försök igen.</string>
+    <string name="delete_comment_error">Fel vid borttagning av kommentar. Försök igen.</string>
+
+    <!-- sidomeny -->
+    <string name="drawer_home">Hem</string>
+    <string name="drawer_profile">Profil</string>
+    <string name="drawer_articles">Artiklar</string>
+    <string name="drawer_form">Formulär</string>
+    <string name="drawer_survey">Enkät</string>
+    <string name="drawer_habits">Vane-spårare</string>
+    <string name="drawer_stories">Berättelser</string>
+    <string name="drawer_advice">Råd</string>
+    <string name="drawer_login">Logga in</string>
+    <string name="drawer_logout">Logga ut</string>
+    <string name="drawer_settings">Inställningar</string>
+
+    <!-- Artikelsida -->
+    <string name="new_article">Ny artikel</string>
+    <string name="delete_article">Ta bort artikel</string>
+    <string name="article_title">Titel</string>
+    <string name="summary">Sammanfattning</string>
+    <string name="webpage_url">Webbadress</string>
+    <string name="all_fields_required">Alla fält är obligatoriska.</string>
+    <string name="add">Lägg till</string>
+    <string name="cancel">Avbryt</string>
+    <string name="loading_articles">Laddar artiklar...</string>
+    <string name="no_articles_available">Inga artiklar tillgängliga. Vänligen kontrollera igen senare eller försök uppdatera.</string>
+    <string name="cancel_delete_mode">Avbryt raderingsläge</string>
+    <string name="add_article">Lägg till artikel</string>
+    <string name="enable_delete_mode">Aktivera raderingsläge</string>
+    <string name="confirm_deletion">Bekräfta radering</string>
+    <string name="delete_confirmation">Är du säker på att du vill ta bort den här artikeln?</string>
+    <string name="delete">Radera</string>
+    <string name="error">Fel</string>
+    <string name="unknown_error">Ett okänt fel inträffade.</string>
+    <string name="ok">OK</string>
+    <string name="read_more">Läs mer</string>
+    <string name="no_link">Ingen länk</string>
+
+    <!-- Formulär -->
+    <string name="get_in_touch">Ta kontakt</string>
+    <string name="receive_help_text">Få den hjälp du behöver</string>
+    <string name="enter_your_name">Ange ditt namn</string>
+    <string name="subject_field">Ämnesfält</string>
+    <string name="enter_your_message">Skriv ditt meddelande här</string>
+    <string name="fill_out_all_fields">Vänligen fyll i alla fält utom Namn.</string>
+    <string name="email_body_template">Hej, mitt namn är %1$s.\n\n%2$s\n\nTack!</string>
+
+    <!-- app/src/main/res/values-sv/strings.xml -->
+    <string name="survey_title">Enkät</string>
+    <string name="question_prefix">Fråga %d:</string>
+    <string name="your_answer">Ditt svar</string>
+    <string name="submit_answers">Skicka svar</string>
+    <string name="survey_complete_title">Enkät slutförd</string>
+    <string name="survey_complete_message">Tack för att du slutförde enkäten!</string>
+    <string name="survey_submit_success">Enkäten skickades in!</string>
+    <string name="survey_submit_failed">Det gick inte att skicka in enkäten</string>
+
+    <!-- Enkätfrågor -->
+    <string name="survey_question_1">Hur ofta tänker du på effekterna av droger eller alkohol på dina studier?</string>
+    <string name="survey_question_2">Har du någonsin känt dig pressad att använda droger eller alkohol för att passa in med dina kamrater?</string>
+    <string name="survey_question_3">Känner du att substansanvändning är normaliserat i din universitetsmiljö?</string>
+    <string name="survey_question_4">Hur självsäker känner du dig när det gäller att säga \'nej\' till droger eller alkohol i en social situation?</string>
+    <string name="survey_question_5">Hur ofta använder du substanser (t.ex. alkohol, droger) för att hantera stress eller press från universitetslivet?</string>
+    <string name="survey_question_6">Tror du att det finns ett stigma kring att söka hjälp för beroende på ditt universitet?</string>
+    <string name="weekly_progress">Veckoframsteg - Vecka %1$d</string>
+    <string name="daily_progress">Dagliga framsteg</string>
+    <string-array name="weekdays">
+        <item>Mån</item>
+        <item>Tis</item>
+        <item>Ons</item>
+        <item>Tors</item>
+        <item>Fre</item>
+        <item>Lör</item>
+        <item>Sön</item>
+    </string-array>
+
+    <string name="week">Vecka %1$d</string>
+    <string name="today">Daglig framsteg</string>
+    <string name="no_habits">Inga vanor än. Lägg till din första vana!</string>
+    <string name="description">Beskrivning (valfritt)</string>
+    <string name="habit_title">Vananamn</string>
+    <string name="add_new_habit">Lägg till ny vana</string>
+
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="sign_out">Logga ut</string>
+    <string name="email_hint">E-post *</string>
+    <string name="password_hint">Lösenord *</string>
+    <string name="log_in_button_text">Logga in</string>
+    <string name="forgot_password_text">Glömt lösenord?</string>
+    <string name="create_account_text">Skapa konto</string>
+    <string name="home">Hem</string>
+    <string name="news">Nyheter</string>
+    <string name="map">Karta</string>
+    <string name="faq">FAQ</string>
+    <string name="report">Rapportera</string>
+    <string name="weekly_progress_title">Veckovis framsteg</string>
+
+    <!-- Profile Page -->
+    <string name="profile_title">Profil</string>
+    <string name="account_information">Kontoinformation</string>
+    <string name="username_label">Användarnamn</string>
+    <string name="email_label">E-post</string>
+    <string name="my_hobbies">Mina intressen</string>
+    <string name="save_hobbies">Spara intressen</string>
+    <string name="change_username">Ändra användarnamn</string>
+    <string name="password_required">Lösenord (obligatoriskt)</string>
+    <string name="new_username">Nytt användarnamn</string>
+    <string name="update_username">Uppdatera användarnamn</string>
+    <string name="change_password">Ändra lösenord</string>
+    <string name="current_password">Nuvarande lösenord</string>
+    <string name="new_password">Nytt lösenord</string>
+    <string name="repeat_new_password">Upprepa nytt lösenord</string>
+    <string name="update_password">Uppdatera lösenord</string>
+    <string name="account_data">Konto och data</string>
+    <string name="request_my_data">Begär min data</string>
+    <string name="delete_account">Radera min data och konto</string>
+    <string name="hobbies_saved_success">Intressen sparades!</string>
+    <string name="username_changed_success">Användarnamn ändrat!</string>
+    <string name="password_changed_success">Lösenord ändrat!</string>
+    <string name="password_rules">Lösenordet måste vara minst 8 tecken långt och innehålla stora bokstäver, siffror och specialtecken.</string>
+
+    <!-- Dialoger -->
+    <string name="confirm_account_deletion">Bekräfta kontoradering</string>
+    <string name="delete_account_warning">Din personliga data och ditt konto kommer att tas bort enligt GDPR. Denna åtgärd är permanent och kan inte ångras.</string>
+    <string name="enter_password">Ange lösenord</string>
+    <string name="personal_data_request">Begär personlig data</string>
+    <string name="personal_data_request_message">Tryck på Begär för att hämta din personliga data från servern. När den är klar kan du ladda ner den.</string>
+    <string name="personal_data_ready_message">Din personliga data är klar. Tryck på Ladda ner för att spara den på din enhet.</string>
+    <string name="request">Begär</string>
+    <string name="download">Ladda ner</string>
+
+    <!-- Felmeddelanden -->
+    <string name="error_fill_all_fields">Fyll i alla fält.</string>
+    <string name="error_user_email_unavailable">Användarens e-postadress är inte tillgänglig.</string>
+    <string name="error_username_taken">Detta användarnamn är redan upptaget.</string>
+    <string name="error_update_username_failed">Det gick inte att uppdatera användarnamnet: %1$s</string>
+    <string name="error_update_hobbies">Det gick inte att uppdatera intressen</string>
+    <string name="error_update_hobbies_detail">Det gick inte att uppdatera intressen: %1$s</string>
+    <string name="error_invalid_passwords">Lösenorden matchar inte eller är ogiltiga.</string>
+    <string name="error_password_change_failed">Det gick inte att ändra lösenord: %1$s</string>
+    <string name="error_password_required">Lösenord krävs för att ta bort konto.</string>
+    <string name="error_account_deletion_failed">Det gick inte att ta bort kontot: %1$s</string>
+
+    <!-- Intressen -->
+    <string name="hobby_reading">Läsa</string>
+    <string name="hobby_gaming">Spela</string>
+    <string name="hobby_traveling">Resa</string>
+    <string name="hobby_cooking">Matlagning</string>
+    <string name="hobby_sports">Sport</string>
+    <string name="hobby_music">Musik</string>
+    <string name="hobby_art">Konst</string>
+    <string name="hobby_photography">Fotografering</string>
+    <string name="hobby_dancing">Dans</string>
+    <string name="hobby_hiking">Vandring</string>
+    <string name="hobby_fishing">Fiske</string>
+    <string name="hobby_swimming">Simning</string>
+    <string name="hobby_coding">Programmering</string>
+    <string name="hobby_yoga">Yoga</string>
+    <string name="hobby_meditation">Meditation</string>
+    <string name="hobby_writing">Skriva</string>
+    <string name="hobby_cycling">Cykling</string>
+    <string name="hobby_board_games">Brädspel</string>
+    <string name="hobby_movies">Filmer</string>
+    <string name="hobby_gardening">Trädgårdsskötsel</string>
+    <string name="hobby_knitting">Stickning</string>
+    <string name="hobby_crafts">Hantverk</string>
+    <string name="hobby_volunteering">Volontärarbete</string>
+    <string name="hobby_languages">Språk</string>
+    <string name="hobby_running">Löpning</string>
+    <string name="hobby_singing">Sång</string>
+    <string name="hobby_collecting">Samlande</string>
+    <string name="hobby_shopping">Shopping</string>
+    <string name="hobby_theater">Teater</string>
+    <string name="hobby_baking">Bakning</string>
+
+    <!-- Temainställningar -->
+    <string name="app_theme_title">App-tema</string>
+    <string name="app_theme_description">Byt appens tema</string>
+    <string name="theme_light">Ljus</string>
+    <string name="theme_dark">Mörk</string>
+    <string name="theme_system">System</string>
+    <string name="app_theme_restart_notice">Appen kan starta om för att tillämpa ändringar</string>
+    <string name="settings_language_title">Appspråk</string>
+
+    <string name="settings_language_description">Ändra appens språk</string>
+    <string name="settings_language_restart_notice">Appen kommer att starta om för att tillämpa ändringarna</string>
+    <string name="settings_language_ai_note">Obs: Översättningar tillhandahölls av AI</string>
+</resources>
