@@ -1,0 +1,111 @@
+[33m7588a84[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mOmer-Merge[m[33m, [m[1;31morigin/Omer-Merge[m[33m, [m[1;31morigin/Omer[m[33m, [m[1;32mOmer[m[33m)[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33md254e88[m Self Assesment Back date fix
+[33m4a74157[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33m4288761[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33mb0e3fab[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33m508cfbc[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33mc5d3fc6[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33m6fae3f7[m Merge remote-tracking branch 'origin/Omer' into Omer
+[33m09b14ca[m voice analysis
+[33m1de6ee2[m one commit to rule them all :P
+[33m5fc5b20[m one commit to rule them all :P
+[33meebd45c[m one commit to rule them all :P
+[33mf7a60d0[m[33m ([m[1;32mmain[m[33m)[m Merge pull request #8 from MaxDahlberg/EmperorOlashinbo-patch-1
+[33m55040d7[m[33m ([m[1;31morigin/EmperorOlashinbo-patch-1[m[33m)[m Add Facebook login protocol scheme string
+[33m7ea17ac[m Merge pull request #7 from MaxDahlberg/Ibrahim
+[33mde9d6fc[m Merge pull request #6 from MaxDahlberg/TC25-30-Updating-story-functionality
+[33m44a22b4[m[33m ([m[1;31morigin/TC25-30-Updating-story-functionality[m[33m)[m Clicking on the comments button for a story now brings the user to a page displaying the story and allowing a way to comment. Actual backend calls are not yet implemented but they are prepared.
+[33m937e48f[m Change letter K to C on Trygga Campus logo.
+[33mf5fd940[m Added delete functionality to the stories. The button only becomes visible if the post is created by the signed in userid (Both username and anonymous). Also added button for comments which will get functionality later.
+[33mb4601f3[m Added usernames to stories. These usernames will change if the user changes their username. Also changed story loading to correctly load server and chached stories. Duplicates of stories appeaered in the past.
+[33m4e1bd4c[m Added a model for story comments that includes storyId userId author content and time of creation.
+[33m627ea1d[m Updated the story model to include comment ids in a list and timestamp of creation time.
+[33m98dc768[m Merge remote-tracking branch 'origin/main' into TC25-30-Updating-story-functionality
+[33m381f949[m Merge pull request #5 from MaxDahlberg/TC25-45-User-Info-Document-In-Db
+[33m4c12baa[m[33m ([m[1;31morigin/TC25-45-User-Info-Document-In-Db[m[33m)[m Implemented a user model that stores username and hobbies. Added a user info repository that allows for create, update, and read of the user info.
+[33m27f2725[m Merge pull request #4 from MaxDahlberg/Ibrahim
+[33m95129d3[m Merge pull request #3 from MaxDahlberg/TC25-35-Change-Form-Submission-Structure
+[33m66be636[m Made little corrections.
+[33m63e656f[m Issue with Hamburger nav bar showing on lokgin and register page has been fixed completely.
+[33m56892b5[m I removed Hamburger from Login and Register page.
+[33mb532731[m Change register form header from text to logo.
+[33m7f6dc12[m Cahnge Login form header from text to logo.
+[33mbc83fbd[m[33m ([m[1;31morigin/TC25-35-Change-Form-Submission-Structure[m[33m)[m Added a snackbar with error or succes information on form submission.
+[33m9af97c5[m Survey answers now get submitted as one document instead of one document per question answer. That submission also includes submission time and userId.
+[33mc55012e[m Sign in with facebook is working.
+[33m0ce1487[m Done with sign in with facebook.
+[33me5eb7ce[m Stories now have unique id's and userId's.
+[33m01cd218[m Merge pull request #2 from MaxDahlberg/Ibrahim
+[33m01cdf7c[m Merge pull request #1 from MaxDahlberg/TC25-9-Profile-Page
+[33med132d8[m Done with Google sign in.
+[33m1599fef[m Implementing social login with Google and Facebook.
+[33m6108c61[m Password reset is working perfectly. I add security to password with toggle for password visibility.
+[33maa54db4[m Still working on forgot password.
+[33m8edcd41[m[33m ([m[1;31morigin/TC25-9-Profile-Page[m[33m)[m Added an account and data section to the profile with a button for req of data and a button for del of data. Still missing backend functionality.
+[33m4c385a7[m Implementing password reset.
+[33mff462d5[m Initial commit.
+[33m8082fa4[m Added the change password part to the profile page. All functionality implemented except for actual backend calls.
+[33m27a86f5[m Added the change username part to the profile. Full implementation with functionality is still needed when the backend is set up.
+[33mac7acb2[m Added a title and displaying of username and email. Temp hardcoded values for username and email untill db implementation.
+[33m61ba5d3[m[33m ([m[1;31morigin/TC25-26-Virtual-pet[m[33m, [m[1;31morigin/Farouk[m[33m)[m Update README.md
+[33m2b4eaa5[m Update README.md
+[33m3c4c72c[m Update README.md
+[33m4e8aa94[m Merge pull request #37 from IbMoh/advicepage_fix
+[33m1eea328[m refactored advice page and added more style to cards
+[33m2064799[m added a bit more advice to make the "read more" a bit more useful
+[33m5f33292[m fixing issue with the back button for "family advice"
+[33m15385c7[m Merge pull request #36 from IbMoh/icon_and_name
+[33m4c163fa[m Merge branch 'main' of https://github.com/IbMoh/Trygga-Kampus into icon_and_name
+[33mc7f9aa7[m changing Kampus to Campus
+[33m5150d41[m change app icon
+[33mfbd0832[m Update README.md
+[33m974d792[m Form enhancement (#35)
+[33m1ad6638[m Implement add / delete article functionality (#33)
+[33m5109e05[m Merge remote-tracking branch 'origin/main'
+[33m5834e19[m Updated form content, functionalities should be working now
+[33m7bb2718[m Implement sign-in & sign-out (#21)
+[33mbe8e71c[m Implement "add story" feature, apply new theme, handle failed connection (#31)
+[33mc653856[m Add New Article button for future use in admin (teacher) role. (#24)
+[33mf2a5334[m Configure light mode colors (#30)
+[33mb9c8e87[m Add overlay above main content when drawer is open (#28)
+[33mf69a108[m (WIP) Reword design (#29)
+[33maf57175[m Advice page (#26)
+[33ma7af90b[m Update README.md
+[33m62ce11b[m add ability to create route specific bottom bars (#10)
+[33mb2a2c22[m Implement articles page (#19)
+[33mf713161[m Error fixes (#20)
+[33m4c08bf9[m Survey button (#16)
+[33mf3eae91[m Created Forum and added it to the navigation
+[33m06da978[m Cache stories (#18)
+[33md199014[m Fix merge error (#17)
+[33mf6b3ba6[m Created Forum and added it to the navigation
+[33m273508f[m Created Forum and added it to the navigation
+[33md4df914[m Redundant navigations
+[33m90cff04[m Missing bracets and spelling correction from my older merge sorry
+[33mcb93007[m Missing bracets and spelling correction from my older merge sorry
+[33m7b46de4[m Landing page (#15)
+[33m9b4f7bf[m Implement initial version of stories (#13)
+[33mef0a0d1[m remove redundant route configuration
+[33m06a5421[m FireStore should be working fine now! (#6)
+[33m027d46a[m Survey frontend (#7)
+[33m8f7fd23[m Merge pull request #4 from IbMoh/horizontal_swipe_for_nav
+[33m6acf49b[m Remove redundant import statements
+[33m550a1c3[m Toggle sidebar visibility by detecting horizontal dragging
+[33m060c61a[m Fix padding issue (#3)
+[33m565c669[m Merge pull request #2 from IbMoh/Network-error-handling
+[33mbe48d7a[m Made the suggestions on the pull request
+[33m6f71b86[m Update app/src/main/java/com/example/tryggakampus/domain/model/NetworkError.kt
+[33m5f85ce3[m Add articles page
+[33md1796cd[m Update build.gradle.kts
+[33mdf1eb44[m Added New Dependencies and Network error handling
+[33med237ac[m Upgrade kotlin & add navigation (#1)
+[33m7a0212e[m Merge branch 'main' of https://github.com/IbMoh/Trygga-Kampus
+[33m76c7579[m Removed redundant package
+[33mb679e6e[m Update README.md
+[33m701d2f5[m Create README.md
+[33m39bc8ff[m added some test classes
+[33m86188e2[m fixed spelling and structure mistake
+[33m37b6ba1[m fixed spelling and structure mistake
+[33mdba311f[m Created The Structure
+[33m06f5a56[m Initial push
+[33ma0b18c9[m Initial push

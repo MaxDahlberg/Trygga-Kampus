@@ -16,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -26,15 +29,15 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggakampus.R
 import com.example.tryggakampus.presentation.component.PageContainer
-import com.google.firebase.auth.FirebaseAuth
 import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import kotlin.math.max
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -248,13 +251,20 @@ private fun RangeControls(selected: RangeOption, onChange: (RangeOption) -> Unit
 @Composable
 private fun Legend(visibility: MutableState<Triple<Boolean, Boolean, Boolean>>) {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        LegendToggle(stringResource(R.string.self_image), Color(0xFF1E88E5), visibility.value.first) { visibility.value = visibility.value.copy(first = it) }
-        LegendToggle(stringResource(R.string.self_esteem), Color(0xFFD81B60), visibility.value.second) { visibility.value = visibility.value.copy(second = it) }
-        LegendToggle(stringResource(R.string.self_reliance), Color(0xFF43A047), visibility.value.third) { visibility.value = visibility.value.copy(third = it) }
+        LegendToggle(stringResource(R.string.self_image), Color(0xFF1E88E5), visibility.value.first) {
+            val v = visibility.value
+            visibility.value = Triple(it, v.second, v.third)
+        }
+        LegendToggle(stringResource(R.string.self_esteem), Color(0xFFD81B60), visibility.value.second) {
+            val v = visibility.value
+            visibility.value = Triple(v.first, it, v.third)
+        }
+        LegendToggle(stringResource(R.string.self_reliance), Color(0xFF43A047), visibility.value.third) {
+            val v = visibility.value
+            visibility.value = Triple(v.first, v.second, it)
+        }
     }
 }
-
-private fun Triple<Boolean, Boolean, Boolean>.copy(first: Boolean = this.first, second: Boolean = this.second, third: Boolean = this.third) = Triple(first, second, third)
 
 @Composable
 private fun LegendToggle(label: String, color: Color, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
@@ -295,12 +305,20 @@ private fun TimeSeriesChart(
     onNoteClick: (String) -> Unit
 ) {
     val formatter = remember { DateTimeFormatter.ISO_LOCAL_DATE }
-    val dates = remember(entries) { entries.mapNotNull { runCatching { LocalDate.parse(it.date, formatter) }.getOrNull() } }
+    // Ensure chronological order for drawing and axis calculations
+    val sorted = remember(entries) { entries.sortedBy { it.date } }
+    val dates = remember(sorted) { sorted.mapNotNull { runCatching { LocalDate.parse(it.date, formatter) }.getOrNull() } }
     val minDate = dates.first()
     val maxDate = dates.last()
-    val total = (kotlin.math.max(1L, java.time.temporal.ChronoUnit.DAYS.between(minDate, maxDate) + 1)).toFloat()
+    val spanDays = max(1f, java.time.temporal.ChronoUnit.DAYS.between(minDate, maxDate).toFloat())
 
     var tooltip by remember { mutableStateOf<Pair<Offset, String>?>(null) }
+
+    // Layout paddings for axes and labels
+    val leftPad = 40.dp
+    val rightPad = 12.dp
+    val topPad = 8.dp
+    val bottomPad = 28.dp
 
     Column(Modifier
         .fillMaxWidth()
@@ -310,14 +328,22 @@ private fun TimeSeriesChart(
             .fillMaxWidth()
             .height(height)
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-            .pointerInput(entries) {
+            .pointerInput(sorted) {
                 detectTapGestures { offset ->
-                    // compute nearest date by x
-                    val x = offset.x
                     val w = size.width
-                    val day = ((x / w) * total).toInt().coerceAtLeast(0)
+                    val h = size.height
+                    val plotLeft = leftPad.toPx()
+                    val plotRight = w - rightPad.toPx()
+                    val plotTop = topPad.toPx()
+                    val plotBottom = h - bottomPad.toPx()
+                    val plotWidth = plotRight - plotLeft
+
+                    if (offset.x < plotLeft || offset.x > plotRight || offset.y < plotTop || offset.y > plotBottom) return@detectTapGestures
+
+                    val x = offset.x
+                    val day = (((x - plotLeft) / plotWidth) * spanDays).toInt().coerceAtLeast(0)
                     val date = minDate.plusDays(day.toLong()).coerceAtMost(maxDate)
-                    val e = entries.find { it.date == formatter.format(date) }
+                    val e = sorted.find { it.date == formatter.format(date) }
                     if (e != null) {
                         val tip = "${e.date}: SI=${e.selfImage?:"-"}, SE=${e.selfEsteem?:"-"}, SR=${e.selfReliance?:"-"}${if (!e.note.isNullOrBlank()) " (📝)" else ""}"
                         tooltip = offset to tip
@@ -328,39 +354,142 @@ private fun TimeSeriesChart(
         ) {
             val w = size.width
             val h = size.height
-            // grid lines Y 0..10
+
+            val plotLeft = leftPad.toPx()
+            val plotRight = w - rightPad.toPx()
+            val plotTop = topPad.toPx()
+            val plotBottom = h - bottomPad.toPx()
+            val plotWidth = plotRight - plotLeft
+            val plotHeight = plotBottom - plotTop
+
+            // Grid lines and axes
+            val gridColor = Color.LightGray.copy(alpha = 0.6f)
+            // Y axis ticks 0..10 with labels
             for (i in 0..10) {
-                val y = h - (i/10f)*h
-                drawLine(Color.LightGray, start = Offset(0f, y), end = Offset(w, y), strokeWidth = 1f)
+                val y = plotBottom - (i/10f)*plotHeight
+                // horizontal grid
+                drawLine(gridColor, start = Offset(plotLeft, y), end = Offset(plotRight, y), strokeWidth = 1f)
+                // label
+                val label = i.toString()
+                drawIntoCanvas { canvas ->
+                    val textPaint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.GRAY
+                        textSize = 10.sp.toPx()
+                        isAntiAlias = true
+                    }
+                    val textWidth = textPaint.measureText(label)
+                    canvas.nativeCanvas.drawText(
+                        label,
+                        plotLeft - 6.dp.toPx() - textWidth,
+                        y + (textPaint.textSize / 2f) - 2.dp.toPx(),
+                        textPaint
+                    )
+                }
             }
+            // Y axis line
+            drawLine(Color.Gray, start = Offset(plotLeft, plotTop), end = Offset(plotLeft, plotBottom), strokeWidth = 1.5f)
+            // X axis line
+            drawLine(Color.Gray, start = Offset(plotLeft, plotBottom), end = Offset(plotRight, plotBottom), strokeWidth = 1.5f)
+
+            // X axis ticks and labels (up to ~6 labels)
+            val daysBetween = java.time.temporal.ChronoUnit.DAYS.between(minDate, maxDate).toInt().coerceAtLeast(0)
+            val targetTicks = 6
+            val step = max(1, daysBetween / targetTicks)
+            val xLabelFmt = DateTimeFormatter.ofPattern("MMM d")
+            var d = minDate
+            while (!d.isAfter(maxDate)) {
+                val x = plotLeft + (java.time.temporal.ChronoUnit.DAYS.between(minDate, d).toFloat() / spanDays) * plotWidth
+                // tick
+                drawLine(Color.Gray, start = Offset(x, plotBottom), end = Offset(x, plotBottom + 4.dp.toPx()), strokeWidth = 1f)
+                // label
+                val label = d.format(xLabelFmt)
+                drawIntoCanvas { canvas ->
+                    val textPaint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.DKGRAY
+                        textSize = 10.sp.toPx()
+                        isAntiAlias = true
+                    }
+                    val textWidth = textPaint.measureText(label)
+                    canvas.nativeCanvas.drawText(label, x - textWidth/2f, plotBottom + 14.dp.toPx(), textPaint)
+                }
+                d = d.plusDays(step.toLong())
+            }
+            // Ensure the last date label is present
+            run {
+                val x = plotLeft + (java.time.temporal.ChronoUnit.DAYS.between(minDate, maxDate).toFloat() / spanDays) * plotWidth
+                val label = maxDate.format(xLabelFmt)
+                drawIntoCanvas { canvas ->
+                    val textPaint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.DKGRAY
+                        textSize = 10.sp.toPx()
+                        isAntiAlias = true
+                    }
+                    val textWidth = textPaint.measureText(label)
+                    canvas.nativeCanvas.drawText(label, x - textWidth/2f, plotBottom + 14.dp.toPx(), textPaint)
+                }
+            }
+
             fun xFor(date: LocalDate): Float {
                 val days = java.time.temporal.ChronoUnit.DAYS.between(minDate, date).toFloat()
-                return (days / total) * w
+                return plotLeft + (days / spanDays) * plotWidth
             }
             fun yFor(value: Int?): Float? {
                 if (value == null) return null
-                return h - (value/10f) * h
+                return plotBottom - (value/10f) * plotHeight
             }
+
             val blue = Color(0xFF1E88E5)
             val pink = Color(0xFFD81B60)
             val green = Color(0xFF43A047)
-            // Draw series lines with gaps
-            fun drawSeries(selector: (com.example.tryggakampus.data.model.SelfAssessment)->Int?, color: Color, shape: (Offset)->Unit) {
-                var last: Offset? = null
-                entries.forEach { e ->
-                    val d = LocalDate.parse(e.date, formatter)
+
+            // Helper to build a smooth path through points (quadratic Bezier midpoint technique)
+            fun buildSmoothPath(points: List<Offset>): Path {
+                val path = Path()
+                if (points.isEmpty()) return path
+                if (points.size == 1) {
+                    path.moveTo(points.first().x, points.first().y)
+                    return path
+                }
+                path.moveTo(points.first().x, points.first().y)
+                for (i in 0 until points.lastIndex) {
+                    val p0 = points[i]
+                    val p1 = points[i + 1]
+                    val mid = Offset((p0.x + p1.x) / 2f, (p0.y + p1.y) / 2f)
+                    path.quadraticBezierTo(p0.x, p0.y, mid.x, mid.y)
+                }
+                // End to last
+                val last = points.last()
+                path.lineTo(last.x, last.y)
+                return path
+            }
+
+            // Collect contiguous segments for each series (skip nulls)
+            fun drawSeries(
+                selector: (com.example.tryggakampus.data.model.SelfAssessment)->Int?,
+                color: Color,
+                shape: (Offset)->Unit
+            ) {
+                val segments = mutableListOf<MutableList<Offset>>()
+                var current: MutableList<Offset>? = null
+                sorted.forEach { e ->
+                    val dte = LocalDate.parse(e.date, formatter)
                     val y = yFor(selector(e))
                     if (y != null) {
-                        val x = xFor(d)
-                        val p = Offset(x, y)
-                        if (last != null) {
-                            // connect consecutive non-null points
-                            drawLine(color, start = last!!, end = p, strokeWidth = 3f)
+                        val p = Offset(xFor(dte), y)
+                        if (current == null) {
+                            current = mutableListOf()
+                            segments.add(current!!)
                         }
+                        current!!.add(p)
                         shape(p)
-                        last = p
                     } else {
-                        last = null
+                        current = null
+                    }
+                }
+                segments.forEach { seg ->
+                    if (seg.size >= 2) {
+                        val path = buildSmoothPath(seg)
+                        drawPath(path, color = color, style = Stroke(width = 3f))
                     }
                 }
             }

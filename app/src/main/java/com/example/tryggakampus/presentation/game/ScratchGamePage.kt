@@ -82,7 +82,7 @@ fun ScratchGamePage(modifier: Modifier = Modifier) {
                 addJavascriptInterface(GameBridge(uid), "Android")
 
                 // Load the entry point
-                loadUrl("file:///android_asset/scratch_game/scratch.html")
+                loadUrl("file:///android_asset/scratch_game/scratch2.html")
             }
         },
         update = { /* no-op */ },

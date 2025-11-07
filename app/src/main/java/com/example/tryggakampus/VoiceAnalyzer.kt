@@ -107,23 +107,6 @@ object VoiceAnalyzer {
         return list.distinct()
     }
 
-    suspend fun pingProxy(): String = withContext(Dispatchers.IO) {
-        val results = mutableListOf<String>()
-        for (c in candidates()) {
-            val root = proxyRootFromAnalyzeUrl(c)
-            val req = Request.Builder().url(root).get().build()
-            val line = try {
-                okClient.newCall(req).execute().use { resp ->
-                    "${resp.code} ${resp.message} at $root"
-                }
-            } catch (e: Exception) {
-                "fail: ${e.message} ($root)"
-            }
-            results += line
-        }
-        results.joinToString("; ")
-    }
-
     // --- Direct Google API helpers ---
 
     private fun readAllBytes(file: File): ByteArray {
@@ -295,7 +278,7 @@ object VoiceAnalyzer {
             for (url in candidates()) {
                 try {
                     val resp = voiceApi.analyze(appKeyHeader, url, part)
-                    if (!resp.isSuccessful) throw Exception("Server returned ${resp.code()}: ${resp.message()}")
+                    if (!resp.isSuccessful) throw Exception("Server returned ${'$'}{resp.code()}: ${'$'}{resp.message()}")
                     val body = resp.body()
                     val text = body?.text
                     return@withContext text ?: "(empty response)"
@@ -303,7 +286,7 @@ object VoiceAnalyzer {
                     lastErr = e; continue
                 }
             }
-            throw Exception("All endpoints failed: ${lastErr?.message}")
+            throw Exception("All endpoints failed: ${'$'}{lastErr?.message}")
         }
 
         // 2/3) Direct Google API
@@ -311,7 +294,7 @@ object VoiceAnalyzer {
         val apiKey = API_KEY.trim()
         val mime = guessMimeType(file)
         val sizeKb = (file.length() / 1024).coerceAtLeast(1L)
-        val prompt = "Analyze the provided audio. File: ${file.name}, size=${sizeKb}KB. " +
+        val prompt = "Analyze the provided audio. File: ${'$'}{file.name}, size=${'$'}{sizeKb}KB. " +
             "Identify whether the speaker sounds happy or stressed, give one short label and a brief explanation."
 
         if (apiUrl.isNotEmpty() && apiKey.isNotEmpty()) {
@@ -334,10 +317,10 @@ object VoiceAnalyzer {
                 "happy" in nameLower -> "Happy / Positive"
                 else -> "Neutral / Calm"
             }
-            val explanation = "(Local mock) File ${file.name}, size=${sizeKb}KB. Placeholder analysis."
-            return@withContext "$label — $explanation"
+            val explanation = "(Local mock) File ${'$'}{file.name}, size=${'$'}{sizeKb}KB. Placeholder analysis."
+            return@withContext "${'$'}label — ${'$'}explanation"
         } catch (e: Exception) {
-            return@withContext "Analysis failed locally: ${e.message}"
+            return@withContext "Analysis failed locally: ${'$'}{e.message}"
         }
     }
 }

@@ -14,6 +14,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +29,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.tryggakampus.VoiceAnalyzer
-import com.example.tryggakampus.BuildConfig
 import com.example.tryggakampus.data.VoiceNoteRtdb
 import com.example.tryggakampus.data.VoiceNoteRtdb.VoiceNoteMeta
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +64,10 @@ fun VoiceNoteScreen() {
     var lastSavedKey by remember { mutableStateOf<String?>(null) }
     var lastSavedUid by remember { mutableStateOf<String?>(null) }
     var notes by remember { mutableStateOf<List<VoiceNoteMeta>>(emptyList()) }
+
+    // Selection for analysis (can be a previously saved note temp file)
+    var selectedForAnalysis by remember { mutableStateOf<File?>(null) }
+    var selectedLabel by remember { mutableStateOf<String?>(null) }
 
     // Derived recording availability (re-add)
     var hasRecording by remember { mutableStateOf(outputFile.exists() && outputFile.length() > 0) }
@@ -159,13 +164,9 @@ fun VoiceNoteScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Show current proxy URL for quick diagnosis
-        Text(text = "Proxy: ${BuildConfig.VOICE_PROXY_URL}")
-        Spacer(modifier = Modifier.height(8.dp))
-
         Text(text = if (recording) "Recording... ${elapsed}s" else "Voice Note")
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -178,16 +179,6 @@ fun VoiceNoteScreen() {
         )
 
         Spacer(modifier = Modifier.height(12.dp))
-
-        Button(onClick = {
-            scope.launch {
-                val ping = VoiceAnalyzer.pingProxy()
-                Log.d("VoiceNote", "Ping proxy -> $ping")
-                Toast.makeText(ctx, ping, Toast.LENGTH_LONG).show()
-            }
-        }) { Text("Ping Proxy") }
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
             if (!recording) {
@@ -212,6 +203,9 @@ fun VoiceNoteScreen() {
                     recording = true
                     analysisResult = null
                     elapsed = 0
+                    // When starting a new recording, clear previous selection to avoid confusion
+                    selectedForAnalysis = null
+                    selectedLabel = null
                     timerJob?.cancel()
                     timerJob = scope.launch {
                         while (true) {
@@ -260,6 +254,10 @@ fun VoiceNoteScreen() {
                             tmp.writeBytes(bytes)
                             playFile(tmp.absolutePath)
                             playing = true
+                            // Mark this file as selected for analysis
+                            selectedForAnalysis = tmp
+                            selectedLabel = item.timestamp
+                            Toast.makeText(ctx, "Selected note for analysis", Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
                             Toast.makeText(ctx, "Playback failed: ${e.message}", Toast.LENGTH_LONG).show()
                         }
@@ -271,18 +269,36 @@ fun VoiceNoteScreen() {
             }
         }
 
+        // Show current selection for analysis if any
+        if (selectedForAnalysis != null) {
+            Spacer(Modifier.height(8.dp))
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Selected for analysis: ${selectedLabel ?: selectedForAnalysis!!.name}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(Modifier.width(8.dp))
+                androidx.compose.material3.TextButton(onClick = { selectedForAnalysis = null; selectedLabel = null }) {
+                    Text("Clear")
+                }
+            }
+        }
+
         // Analyze Emotion (restored)
         Spacer(Modifier.height(12.dp))
         Button(onClick = {
-            if (!outputFile.exists() || outputFile.length() == 0L) {
-                Toast.makeText(ctx, "No recording to analyze", Toast.LENGTH_SHORT).show()
+            // Prefer analyzing a selected saved note; else analyze current recording file
+            val target: File? = selectedForAnalysis ?: outputFile.takeIf { it.exists() && it.length() > 0 }
+            if (target == null) {
+                Toast.makeText(ctx, "No audio selected or recorded", Toast.LENGTH_SHORT).show()
                 return@Button
             }
             scope.launch {
                 busy = true
                 analysisResult = "Analyzing tone & words..."
                 try {
-                    val result = withContext(Dispatchers.IO) { VoiceAnalyzer.analyzeVoice(outputFile) }
+                    val result = withContext(Dispatchers.IO) { VoiceAnalyzer.analyzeVoice(target) }
                     analysisResult = result
                 } catch (e: Exception) {
                     analysisResult = "Error: ${e.message}"
@@ -297,8 +313,20 @@ fun VoiceNoteScreen() {
         }
 
         analysisResult?.let { res ->
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "Result: $res")
+            Spacer(Modifier.height(12.dp))
+            Text(text = "Analysis", style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.height(6.dp))
+            androidx.compose.material3.Surface(shape = MaterialTheme.shapes.medium, tonalElevation = 1.dp) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 0.dp, max = 220.dp)
+                        .padding(12.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(text = res, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
         }
     }
 
